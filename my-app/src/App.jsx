@@ -11,6 +11,7 @@ import Platform from "./pages/Platform";
 import Vision from "./pages/Vision";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
 
-        {/* Add more routes as you create pages */}
+        {/* 404 Catch-all Route - Must be at the bottom */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Footer />

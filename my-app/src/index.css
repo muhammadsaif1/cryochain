@@ -1108,3 +1108,141 @@ sup.cite {
   opacity: 1 !important;
   transform: none !important;
 }
+
+/* -----NotFoundpage------ */
+.notfound-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 2rem;
+}
+
+.notfound-content {
+  max-width: 680px;
+  z-index: 2;
+}
+
+.notfound-logo {
+  height: 48px;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.notfound-error {
+  font-size: clamp(6rem, 15vw, 10rem);
+  font-weight: 700;
+  font-family: var(--font-display);
+  background: linear-gradient(90deg, var(--cryo-blue), #67e8f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin: 0;
+}
+
+.notfound-title {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  margin: 1rem 0 1.5rem;
+  color: white;
+}
+
+.notfound-subtitle {
+  font-size: 1.15rem;
+  color: #94a3b8;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.notfound-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.notfound-footer {
+  margin-top: 3rem;
+  color: #64748b;
+}
+
+.notfound-footer p {
+  margin-bottom: 1rem;
+}
+
+.notfound-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.notfound-links a {
+  color: #67e8f9;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.notfound-links a:hover {
+  text-decoration: underline;
+}
+
+/* Decorative Background Elements */
+.notfound-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cold-dot,
+.solar-dot,
+.data-dot {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  animation: float 25s infinite linear;
+}
+
+.cold-dot {
+  width: 300px;
+  height: 300px;
+  background: var(--cryo-blue);
+  top: -100px;
+  left: -100px;
+}
+
+.solar-dot {
+  width: 400px;
+  height: 400px;
+  background: #fbbf24;
+  bottom: -150px;
+  right: -100px;
+  animation-delay: -10s;
+}
+
+.data-dot {
+  width: 250px;
+  height: 250px;
+  background: #22d3ee;
+  top: 40%;
+  right: 15%;
+  animation-delay: -15s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(60px, 40px) rotate(8deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
