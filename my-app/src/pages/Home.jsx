@@ -427,7 +427,7 @@ const CryoChain = () => {
                   Africa cold storage penetration
                 </div>
               </div>
-              <div
+              {/* <div
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "2rem",
@@ -435,7 +435,8 @@ const CryoChain = () => {
                 }}
               >
                 vs.
-              </div>
+              </div> */}
+              <div className="vs-text">vs.</div>
               <div>
                 <div className="bignum green">15%+</div>
                 <div

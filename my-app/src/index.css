@@ -1381,3 +1381,20 @@ body {
 .drawer-open {
   transform: translateX(0);
 }
+
+.vs-text {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--slate-300);
+  text-align: center;
+  line-height: 1;
+}
+
+/* On mobile - force new line + adjust size */
+@media (max-width: 768px) {
+  .vs-text {
+    font-size: 1.8rem;
+    margin: 12px 0;
+    display: block;
+  }
+}

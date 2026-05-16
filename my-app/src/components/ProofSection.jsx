@@ -119,7 +119,7 @@ function ProofSection() {
                 padding: "var(--space-12)",
                 border: "1px solid var(--slate-200)",
                 borderRadius: "var(--radius-lg)",
-                background: "#fff1f9",
+                background: "#e4fafb99",
               }}
             >
               <span
