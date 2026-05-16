@@ -11,7 +11,7 @@ const CryoChain = () => {
       <header className="hero">
         <div className="hero-bg"></div>
         <div className="container">
-          <div className="reveal" style={{ maxWidth: "1100px" }}>
+          <div className="reveal" style={{ maxWidth: "900px" }}>
             <span className="pill">
               <span className="dot"></span>&nbsp;Now Building · Phase I · West
               Africa

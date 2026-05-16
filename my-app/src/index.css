@@ -1398,3 +1398,14 @@ body {
     display: block;
   }
 }
+
+/* Hero headline — large editorial size matching the image */
+/* Hero headline — large editorial size matching the image */
+
+.hero h1 {
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-8);
+}
