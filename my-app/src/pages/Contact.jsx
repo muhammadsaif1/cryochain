@@ -421,7 +421,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="card-tinted green reveal" id="delegation">
+              <div className="card-tinted  reveal" id="delegation">
                 <span className="eyebrow green">Site Visits</span>
                 <h3 style={{ marginTop: "var(--space-2)", fontSize: "1.4rem" }}>
                   Join the West Africa Delegation
