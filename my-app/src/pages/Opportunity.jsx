@@ -1,8 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../index.css";
 
 // Image Import
 import azureRack from "../assets/images/azure-rack.png";
+import Food from "../assets/images/crisis-01-farmer-loss.jpg";
+import Refrigerator from "../assets/images/crisis-02-pharmacy.jpg";
+import Logistics from "../assets/images/crisis-03-ev-logistics.jpg";
 
 const Crisis = () => {
   return (
@@ -124,14 +128,8 @@ const Crisis = () => {
               </p>
             </div>
 
-            {/* Food Image Placeholder */}
-            <div className="img-placeholder reveal">
-              <div className="ph-label">Image · Food</div>
-              <div className="ph-title">"The harvest meets the cold chain"</div>
-              <div className="ph-prompt">
-                A West African farmer beside crates of fresh produce, with a
-                refrigerated electric truck arriving.
-              </div>
+            <div className="img-wrap reveal">
+              <img src={Food} alt="Food That Cannot Wait" />
             </div>
           </div>
         </div>
@@ -150,14 +148,8 @@ const Crisis = () => {
             className="grid grid-2"
             style={{ alignItems: "center", gap: "var(--space-16)" }}
           >
-            {/* Health Image Placeholder */}
-            <div className="img-placeholder reveal">
-              <div className="ph-label">Image · Health</div>
-              <div className="ph-title">"The last mile of medicine"</div>
-              <div className="ph-prompt">
-                A community pharmacist stocking a medical-grade refrigerator
-                with vaccines.
-              </div>
+            <div className="img-wrap reveal">
+              <img src={Refrigerator} alt=" Medicine That Cannot Reach" />
             </div>
 
             <div className="reveal">
@@ -198,14 +190,8 @@ const Crisis = () => {
               </p>
             </div>
 
-            {/* Logistics Image Placeholder */}
-            <div className="img-placeholder reveal">
-              <div className="ph-label">Image · Movement</div>
-              <div className="ph-title">"The fleet powers itself"</div>
-              <div className="ph-prompt">
-                Electric box trucks charging under a solar canopy with battery
-                storage.
-              </div>
+            <div className="img-wrap reveal">
+              <img src={Logistics} alt=" Logistics That Cannot Move" />
             </div>
           </div>
         </div>
@@ -237,12 +223,31 @@ const Crisis = () => {
               </span>
               <h2>Sovereign data needs somewhere to live.</h2>
               <p className="lede">
-                African nations are mandating that citizen and government data
-                remain on national soil.
+                African nations are mandating that citizen data, government
+                workloads, and regulated industry compute remain on national
+                soil.
+                <sup
+                  className="cite"
+                  data-src="Republic of Ghana, Data Protection Act 2012 (Act 843); Cybersecurity Act 2020 (Act 1038)."
+                >
+                  [6]
+                </sup>
               </p>
               <p style={{ color: "var(--slate-700)" }}>
                 The African edge data centre market is projected to grow at
                 roughly <strong>22% CAGR through 2030</strong>.
+              </p>
+              <p style={{ color: "var(--slate-700)" }}>
+                Building in that already has a visible edge appliance on a
+                sovereign-cloud node is, in effect, an enormous data centre
+                facility to do effect, an enormous data centre node — remote
+                control, piloted.
+              </p>
+              <p style={{ color: "var(--slate-700)" }}>
+                Every hub has already a hyperscale-grade edge appliance on every
+                facility data a sovereign-cloud node and is completing the
+                highest margin vertical in modern infrastructure this is a
+                sovereign-AI cold storage.
               </p>
             </div>
           </div>
@@ -371,7 +376,7 @@ const Crisis = () => {
         </div>
       </section>
 
-      {/* CAGR CHART SECTION */}
+      {/* ===================== CAGR CHART SECTION ===================== */}
       <section
         style={{
           background: "var(--surface)",
@@ -380,20 +385,237 @@ const Crisis = () => {
         }}
       >
         <div className="container">
+          {/* Headline */}
           <div
-            className="reveal"
+            className="reveal text-center"
             style={{
-              textAlign: "center",
               maxWidth: "720px",
               margin: "0 auto var(--space-12)",
             }}
           >
             <span className="eyebrow">Three Verticals · One Asset</span>
             <h2>Riding three high-growth curves at once.</h2>
+            <p className="lede" style={{ marginTop: "var(--space-4)" }}>
+              Cold chain. Edge data centres. Electric vehicles. These are the
+              three highest-growth infrastructure categories on the continent —
+              and the only platform serving all three on a single hub.
+            </p>
           </div>
 
-          {/* CAGR SVG Chart - You can keep the full <svg> code here (same as HTML) */}
-          {/* ... Paste the full SVG from your original HTML ... */}
+          {/* Bar chart */}
+          {/* CAGR Chart - Fixed Bar Heights with Better Scale */}
+          <div
+            className="reveal"
+            style={{
+              maxWidth: "760px",
+              margin: "0 auto",
+              background: "#ffffff",
+              borderRadius: "var(--radius-lg)",
+              padding: "var(--space-12)",
+              boxShadow: "var(--shadow)",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "0.72rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "var(--slate-400)",
+                marginBottom: "var(--space-8)",
+                textAlign: "center",
+              }}
+            >
+              Projected CAGR 2024 – 2030
+            </p>
+
+            <div
+              style={{
+                position: "relative",
+                height: "320px", // Slightly taller for better separation
+                marginBottom: "var(--space-8)",
+              }}
+            >
+              {/* Grid Lines + Y Labels - Now goes to 30% */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  flexDirection: "column-reverse",
+                  justifyContent: "space-between",
+                  pointerEvents: "none",
+                }}
+              >
+                {[0, 5, 10, 15, 20, 25, 30].map((val) => (
+                  <div
+                    key={val}
+                    style={{
+                      borderTop:
+                        val === 0
+                          ? "2px solid var(--slate-300)"
+                          : "1px dashed #d1d5db",
+                      width: "100%",
+                      position: "relative",
+                    }}
+                  >
+                    <span
+                      style={{
+                        position: "absolute",
+                        left: "-34px",
+                        top: "-10px",
+                        fontSize: "0.75rem",
+                        color: "var(--slate-400)",
+                        width: "28px",
+                        textAlign: "right",
+                      }}
+                    >
+                      {val}%
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Bars */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "center",
+                  gap: "clamp(60px, 10vw, 100px)",
+                }}
+              >
+                {/* Bar 1 - 17.7% (now relative to 30%) */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "8px",
+                    height: "100%",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "1.45rem",
+                      fontWeight: 700,
+                      color: "var(--cryo-blue)",
+                    }}
+                  >
+                    17.7%
+                  </span>
+                  <div
+                    style={{
+                      width: "80px",
+                      height: `${(17.7 / 30) * 100}%`,
+                      background:
+                        "linear-gradient(to top, var(--cryo-blue), #60a5fa)",
+                      borderRadius: "8px 8px 0 0",
+                      minHeight: "4px",
+                    }}
+                  />
+                </div>
+
+                {/* Bar 2 - 22% (relative to 30%) */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "8px",
+                    height: "100%",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "1.45rem",
+                      fontWeight: 700,
+                      color: "var(--chain-green-deep)",
+                    }}
+                  >
+                    22%
+                  </span>
+                  <div
+                    style={{
+                      width: "80px",
+                      height: `${(22 / 30) * 100}%`,
+                      background:
+                        "linear-gradient(to top, var(--chain-green-deep), var(--chain-green))",
+                      borderRadius: "8px 8px 0 0",
+                      minHeight: "4px",
+                    }}
+                  />
+                </div>
+
+                {/* Bar 3 - 24% (relative to 30%) */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "8px",
+                    height: "100%",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "1.45rem",
+                      fontWeight: 700,
+                      color: "var(--amber)",
+                    }}
+                  >
+                    24%
+                  </span>
+                  <div
+                    style={{
+                      width: "80px",
+                      height: `${(24 / 30) * 100}%`,
+                      background:
+                        "linear-gradient(to top, var(--amber), #fcd34d)",
+                      borderRadius: "8px 8px 0 0",
+                      minHeight: "4px",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* X-Axis Labels */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "clamp(60px, 10vw, 100px)",
+              }}
+            >
+              {[
+                { label: "Cold Chain", desc: "Logistics" },
+                { label: "Edge Data", desc: "Centres" },
+                { label: "Electric", desc: "Logistics" },
+              ].map((item) => (
+                <div key={item.label} style={{ textAlign: "center" }}>
+                  <span
+                    style={{
+                      fontSize: "0.82rem",
+                      fontWeight: 600,
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {item.label}
+                    <br />
+                    <span style={{ fontWeight: 400 }}>{item.desc}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -420,17 +642,241 @@ const Crisis = () => {
             See how nine compounding verticals fit on a single physical asset.
           </p>
           <div className="row" style={{ justifyContent: "center" }}>
-            <a href="/platform" className="btn btn-primary btn-arrow">
+            <Link to="/platform" className="btn btn-primary btn-arrow">
               Explore the platform
-            </a>
-            <a href="/contact" className="btn btn-ghost">
+            </Link>
+            <Link to="/contact" className="btn btn-ghost">
               Talk to the team
-            </a>
+            </Link>
           </div>
         </div>
       </section>
+
+      {/* ===================== REFERENCES SECTION ===================== */}
+      <section
+        style={{
+          background: "var(--paper)",
+          paddingTop: "var(--space-16)",
+          // margin: "0 auto",
+          paddingBottom: "var(--space-16)",
+          borderTop: "1px solid var(--slate-200)",
+        }}
+      >
+        <div className="container">
+          <div
+            className="reveal"
+            style={{
+              maxWidth: "680px",
+              background: "var(--surface)",
+              margin: "0 auto",
+
+              border: "1px solid var(--slate-200)",
+              borderRadius: "var(--radius-lg)",
+              padding: "var(--space-12)",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "0.72rem",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--slate-500)",
+                fontWeight: 600,
+                marginBottom: "var(--space-6)",
+                margin: "0 0 var(--space-6) 0",
+              }}
+            >
+              SOURCES CITED ON THIS PAGE
+            </p>
+
+            <ol
+              style={{
+                listStyleType: "decimal",
+                paddingLeft: "1.4rem",
+                margin: 0,
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-4)",
+              }}
+            >
+              {/* Each item: number auto from <ol>, author normal, title italic, publisher normal */}
+              {[
+                <>
+                  Food and Agriculture Organization.{" "}
+                  <em>
+                    The State of Food and Agriculture 2024: Agrifood Systems and
+                    Post-Harvest Loss in Sub-Saharan Africa.
+                  </em>{" "}
+                  Rome: FAO, 2024.
+                </>,
+                <>
+                  World Health Organization.{" "}
+                  <em>
+                    Good Distribution Practices for Pharmaceutical Products: WHO
+                    Technical Report Series 1025, Annex 7.
+                  </em>{" "}
+                  WHO, 2023.
+                </>,
+                <>
+                  International Finance Corporation.{" "}
+                  <em>Cold Chain Development in Africa.</em> IFC / World Bank
+                  Group, 2023.
+                </>,
+                <>
+                  World Bank.{" "}
+                  <em>
+                    West Africa Food Security Outlook: Cold Chain and
+                    Post-Harvest Loss Mitigation.
+                  </em>{" "}
+                  World Bank, 2023.
+                </>,
+                <>
+                  FAO / UN Statistical Division.{" "}
+                  <em>Africa's Uncultivated Arable Land Inventory.</em> 2023.
+                </>,
+                <>
+                  Republic of Ghana.{" "}
+                  <em>
+                    Data Protection Act 2012 (Act 843); Cybersecurity Act 2020
+                    (Act 1038).
+                  </em>{" "}
+                  Comparable frameworks exist across West African jurisdictions.
+                </>,
+                <>
+                  Mordor Intelligence.{" "}
+                  <em>
+                    Africa Cold Chain Logistics Market — Growth, Trends, and
+                    Forecasts (2024–2030).
+                  </em>
+                </>,
+                <>
+                  Arizton Advisory &amp; Intelligence.{" "}
+                  <em>
+                    Africa Data Center Market — Industry Outlook &amp; Forecast
+                    2024–2030.
+                  </em>
+                </>,
+                <>
+                  McKinsey &amp; Company.{" "}
+                  <em>
+                    Power to Move: Accelerating the Electric Transition in
+                    Africa.
+                  </em>{" "}
+                  2024.
+                </>,
+                <>
+                  Global Cold Chain Alliance.{" "}
+                  <em>Global Cold Chain Capacity Report.</em> GCCA, 2023.
+                </>,
+              ].map((content, i) => (
+                <li
+                  key={i}
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "var(--slate-600)",
+                    lineHeight: 1.65,
+                    paddingLeft: "var(--space-2)",
+                  }}
+                >
+                  {content}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== MOBILE RESPONSIVE OVERRIDES ===================== */}
+      <style>{`
+        @media (max-width: 768px) {
+          /* Stack all two-col grids */
+          .grid.grid-2 {
+            grid-template-columns: 1fr !important;
+          }
+          /* Stack four-col stat cards to two */
+          .grid.grid-4 {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          /* Footer nav grid 2-col on tablet */
+          footer .container > div:first-child {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          /* CTA buttons stack */
+          .row {
+            flex-wrap: wrap;
+          }
+          /* CAGR chart: shrink grid lines label */
+          .cagr-y-label {
+            display: none;
+          }
+        }
+
+        @media (max-width: 480px) {
+          /* Stat cards single col on small phones */
+          .grid.grid-4 {
+            grid-template-columns: 1fr !important;
+          }
+          /* Footer single col */
+          footer .container > div:first-child {
+            grid-template-columns: 1fr !important;
+          }
+          /* Footer bottom row stack */
+          footer .container > div:last-child {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          /* References grid single col */
+          ol[style] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </>
   );
 };
+
+/* ── tiny helper so footer columns stay DRY ── */
+const FooterCol = ({ title, links }) => (
+  <div>
+    <p
+      className="small"
+      style={{
+        fontWeight: 700,
+        textTransform: "uppercase",
+        letterSpacing: "0.08em",
+        color: "#fff",
+        marginBottom: "var(--space-4)",
+      }}
+    >
+      {title}
+    </p>
+    <nav
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--space-3)",
+      }}
+    >
+      {links.map(([label, to]) => (
+        <Link
+          key={label}
+          to={to}
+          className="small"
+          style={{
+            color: "var(--slate-400)",
+            textDecoration: "none",
+            transition: "color 0.2s",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.color = "var(--slate-400)")
+          }
+        >
+          {label}
+        </Link>
+      ))}
+    </nav>
+  </div>
+);
 
 export default Crisis;

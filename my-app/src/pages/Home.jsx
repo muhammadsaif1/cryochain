@@ -2,6 +2,7 @@ import React from "react";
 import "../index.css"; // Your styles (converted from styles.css)
 import logo from "../assets/images/logo-horizontal.png";
 import hubVision from "../assets/images/hub-vision.png";
+import MissingSections from "../components/HomeMissingSections";
 
 const CryoChain = () => {
   return (
@@ -464,6 +465,7 @@ const CryoChain = () => {
       </section>
 
       {/* Add remaining sections (Proof, Microsoft Partners, CTA, Footer) similarly... */}
+      <MissingSections />
     </>
   );
 };

@@ -1,15 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../index.css";
 
-// Import all images
-import logoHorizontal from "../assets/images/logo-horizontal.png";
 import opsCollage from "../assets/images/ops-collage.png";
 import azureRack from "../assets/images/azure-rack.png";
+import ProofSection from "../components/ProofSection";
 
 const Platform = () => {
   return (
     <>
-      {/* HERO */}
+      {/* ========================== HERO ========================== */}
       <header className="hero" style={{ paddingBottom: "var(--space-12)" }}>
         <div className="hero-bg"></div>
         <div className="container">
@@ -34,7 +34,7 @@ const Platform = () => {
         </div>
       </header>
 
-      {/* INTERACTIVE HUB DIAGRAM */}
+      {/* ========================== HUB DIAGRAM ========================== */}
       <section className="tight">
         <div className="container">
           <div
@@ -112,7 +112,7 @@ const Platform = () => {
         </div>
       </section>
 
-      {/* NINE VERTICALS GRID */}
+      {/* ========================== NINE VERTICALS GRID ========================== */}
       <section
         style={{
           background: "var(--surface)",
@@ -130,7 +130,6 @@ const Platform = () => {
           </div>
 
           <div className="grid grid-3">
-            {/* Add all 9 cards here (same as HTML) */}
             <div className="card card-accent reveal">
               <span
                 className="eyebrow"
@@ -271,7 +270,7 @@ const Platform = () => {
         </div>
       </section>
 
-      {/* HOW IT WORKS DIAGRAM */}
+      {/* ========================== HOW IT COMPOUNDS ========================== */}
       <section>
         <div className="container">
           <div
@@ -291,7 +290,6 @@ const Platform = () => {
             </p>
           </div>
 
-          {/* System Diagram */}
           <div
             className="reveal"
             style={{
@@ -303,48 +301,64 @@ const Platform = () => {
               margin: "0 auto",
             }}
           >
-            {/* ... (I kept the grid as-is for brevity - you can keep the same inline styles) */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "var(--space-4)",
-                alignItems: "center",
-              }}
-            >
-              {/* Solar */}
-              <div style={{ textAlign: "center" }}>
-                <div
-                  style={{
-                    width: "86px",
-                    height: "86px",
-                    borderRadius: "50%",
-                    background:
-                      "linear-gradient(135deg, #FFE9A0, var(--amber))",
-                    margin: "0 auto var(--space-3)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "2.4rem",
-                  }}
-                >
-                  ☀️
+            <div className="compounds-grid">
+              {[
+                {
+                  emoji: "☀️",
+                  bg: "linear-gradient(135deg, #FFF3C4, #F5C842)",
+                  label: "Solar generates",
+                  text: "Rooftop PV powers the building during daylight. Surplus is stored in the battery bank.",
+                },
+                {
+                  emoji: "❄️",
+                  bg: "linear-gradient(135deg, #D6EFFF, #4FA8DC)",
+                  label: "Cold rooms preserve",
+                  text: "Multi-zone storage holds produce, dairy, fish, and pharmaceuticals at validated temperature.",
+                },
+                {
+                  emoji: "🚚",
+                  bg: "linear-gradient(135deg, #D4F5E2, #3DAB6B)",
+                  label: "EV fleet distributes",
+                  text: "Battery-electric refrigerated trucks deliver to urban grocers, pharmacies, and export gateways.",
+                },
+                {
+                  emoji: "🧠",
+                  bg: "linear-gradient(135deg, #FFD6D6, #E05C5C)",
+                  label: "AI optimises",
+                  text: "The edge data layer runs the SCADA, predicts demand, and routes the fleet ─ feeding insight back upstream.",
+                },
+              ].map(({ emoji, bg, label, text }, idx, arr) => (
+                <div key={label} className="compound-step">
+                  <div
+                    className="compound-icon-wrap"
+                    style={{ background: bg }}
+                  >
+                    <span className="compound-emoji">{emoji}</span>
+                  </div>
+                  {idx < arr.length - 1 && (
+                    <span className="compound-arrow">→</span>
+                  )}
+                  <h4
+                    style={{
+                      marginBottom: "var(--space-2)",
+                      marginTop: "var(--space-4)",
+                    }}
+                  >
+                    {label}
+                  </h4>
+                  <p
+                    className="small"
+                    style={{ color: "var(--slate-600)", margin: 0 }}
+                  >
+                    {text}
+                  </p>
                 </div>
-                <h4 style={{ marginBottom: "var(--space-2)" }}>
-                  Solar generates
-                </h4>
-                <p className="small">
-                  Rooftop PV powers the building during daylight.
-                </p>
-              </div>
-
-              {/* Add the other 3 steps similarly... */}
-              {/* Cold Storage, EV Fleet, AI */}
+              ))}
             </div>
 
             <div
               style={{
-                marginTop: "var(--space-12)",
+                marginTop: "var(--space-10)",
                 paddingTop: "var(--space-8)",
                 borderTop: "1px solid var(--slate-100)",
                 textAlign: "center",
@@ -359,14 +373,15 @@ const Platform = () => {
                 }}
               >
                 The loop closes when the AI's demand forecasts tell the cold
-                rooms which crops to prioritise.
+                rooms which crops to prioritise — and tell the farmer, by SMS,
+                what to plant next.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* OPERATIONS COLLAGE */}
+      {/* ========================== IN OPERATION ========================== */}
       <section
         style={{
           background: "linear-gradient(180deg, var(--paper), var(--leaf-mint))",
@@ -387,7 +402,27 @@ const Platform = () => {
                 storage, to fresh retail and pharmaceutical distribution — runs
                 on the same underlying asset.
               </p>
-              {/* List items */}
+              <p
+                style={{
+                  color: "var(--slate-700)",
+                  marginBottom: "var(--space-6)",
+                }}
+              >
+                The hub is not a single business, it is five-acre operating
+                system for everything that must be kept cold, moved efficiently,
+                powered cleanly, and tracked digitally.
+              </p>
+
+              <ul className="op-list">
+                <li>
+                  Multi-Zone temperature cold storage (frozen, chilled,
+                  controlled ambient)
+                </li>
+                <li>HACCP and WHO GDP-compliant pharmaceutical zones</li>
+                <li>250 kW solar + 500 kWh BESS microgrid</li>
+                <li>Sovereign-cloud edge appliance, hyperscale-grade</li>
+                <li>V2G-capable electric refrigerated fleet, AI-routed</li>
+              </ul>
             </div>
 
             <div className="img-wrap reveal">
@@ -400,7 +435,7 @@ const Platform = () => {
         </div>
       </section>
 
-      {/* MICROSOFT AZURE SECTION */}
+      {/* ========================== THE HIDDEN VERTICAL ========================== */}
       <section>
         <div className="container">
           <div
@@ -422,12 +457,30 @@ const Platform = () => {
                 colocation — becomes a co-product of cold storage at near-zero
                 incremental capital cost.
               </p>
+              <p
+                style={{
+                  color: "var(--slate-700)",
+                  marginBottom: "var(--space-8)",
+                }}
+              >
+                Each hub embeds a hyperscale-grade edge appliances, satisfying
+                national data-residency requirements and unlocking AI workloads
+                that need to run close to where they are consumed
+              </p>
+              <div className="row" style={{ gap: "var(--space-4)" }}>
+                <Link to="/contact" className="btn btn-primary btn-arrow">
+                  See the rollout path
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ========================== THE PROOF ========================== */}
+      <ProofSection />
+
+      {/* ========================== CTA ========================== */}
       <section>
         <div className="container-narrow text-center reveal">
           <h2
@@ -450,18 +503,227 @@ const Platform = () => {
             See the path from the first West African hub to the Pan-African
             network by 2031.
           </p>
-          <div className="row" style={{ justifyContent: "center" }}>
-            <a href="/vision" className="btn btn-green btn-arrow">
+          <div
+            className="row"
+            style={{ justifyContent: "center", gap: "var(--space-4)" }}
+          >
+            <Link to="/vision" className="btn btn-green btn-arrow">
               See the vision
-            </a>
-            <a href="/contact" className="btn btn-ghost">
+            </Link>
+            <Link to="/contact" className="btn btn-ghost">
               Talk to the team
-            </a>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* You can add References and other sections as needed */}
+      {/* ========================== SOURCES ========================== */}
+      <section
+        style={{
+          paddingTop: "var(--space-16)",
+          paddingBottom: "var(--space-20)",
+          background: "var(--paper)",
+        }}
+      >
+        <div className="container">
+          <div
+            className="reveal"
+            style={{
+              maxWidth: "780px",
+              margin: "0 auto",
+              background: "#fff",
+              border: "1px solid var(--slate-200)",
+              borderRadius: "var(--radius-lg)",
+              padding: "var(--space-12) var(--space-12)",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "0.72rem",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--slate-500)",
+                fontWeight: 600,
+                margin: "0 0 var(--space-7) 0",
+              }}
+            >
+              SOURCES CITED ON THIS PAGE
+            </p>
+            <br />
+
+            {/* Reference rows — number in blue, rest in dark */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-6)",
+              }}
+            >
+              {[
+                {
+                  num: 2,
+                  text: (
+                    <>
+                      World Health Organization.{" "}
+                      <em>
+                        Good Distribution Practices for Pharmaceutical Products:
+                        WHO Technical Report Series 1025, Annex 7.
+                      </em>{" "}
+                      WHO, 2023.
+                    </>
+                  ),
+                },
+                {
+                  num: 10,
+                  text: (
+                    <>
+                      Lineage, Inc.{" "}
+                      <em>
+                        Form S-1 Registration Statement and IPO Prospectus.
+                      </em>{" "}
+                      U.S. Securities and Exchange Commission / NASDAQ, 2024.
+                    </>
+                  ),
+                },
+                {
+                  num: 11,
+                  text: (
+                    <>
+                      Microsoft Corporation.{" "}
+                      <em>
+                        Microsoft Azure Local: Hybrid Cloud Infrastructure for
+                        Sovereign and Edge Workloads.
+                      </em>{" "}
+                      Microsoft, 2024.
+                    </>
+                  ),
+                },
+              ].map(({ num, text }) => (
+                <div
+                  key={num}
+                  style={{
+                    display: "flex",
+                    gap: "var(--space-3)",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <span
+                    style={{
+                      flexShrink: 0,
+                      fontSize: "0.85rem",
+                      fontWeight: 700,
+                      color: "var(--cryo-blue)",
+                      minWidth: "2rem",
+                      paddingTop: "1px",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    {num}.
+                  </span>
+                  <p
+                    style={{
+                      fontSize: "0.85rem",
+                      color: "var(--ink)",
+                      lineHeight: 1.65,
+                      margin: 0,
+                    }}
+                  >
+                    {text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================== STYLES ========================== */}
+      <style>{`
+        /* Compounds flow */
+        .compounds-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: var(--space-6);
+          align-items: start;
+        }
+        .compound-step {
+          position: relative;
+          text-align: center;
+        }
+        .compound-icon-wrap {
+          width: 88px;
+          height: 88px;
+          border-radius: 50%;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .compound-emoji {
+          font-size: 2.2rem;
+          line-height: 1;
+        }
+        .compound-arrow {
+          position: absolute;
+          top: 30px;
+          right: -14px;
+          font-size: 1.3rem;
+          color: var(--slate-300);
+          z-index: 2;
+          pointer-events: none;
+        }
+
+        /* Operation bullet list */
+        .op-list {
+          list-style: none;
+          padding: 0;
+          margin: var(--space-6) 0 0;
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-4);
+        }
+        .op-list li {
+          display: flex;
+          align-items: flex-start;
+          gap: var(--space-3);
+          font-size: 0.9rem;
+          color: var(--slate-700);
+          line-height: 1.55;
+        }
+        .op-list li::before {
+          content: "✓";
+          flex-shrink: 0;
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          background: var(--leaf-mint);
+          color: var(--chain-green-deep);
+          font-size: 0.72rem;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+          .compounds-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-8);
+          }
+          .compound-arrow { display: none !important; }
+        }
+        @media (max-width: 768px) {
+          .grid.grid-2 { grid-template-columns: 1fr !important; }
+          .grid.grid-3 { grid-template-columns: 1fr 1fr !important; }
+          .row { flex-wrap: wrap; }
+        }
+        @media (max-width: 540px) {
+          .compounds-grid { grid-template-columns: 1fr !important; }
+          .grid.grid-3 { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </>
   );
 };
