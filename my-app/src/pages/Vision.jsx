@@ -1,8 +1,20 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../index.css";
 
 const Vision = () => {
+  // Add this inside your Vision component, before the return statement
+  const [isDesktop, setIsDesktop] = React.useState(window.innerWidth >= 768);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <>
       {/* ========================== HERO ========================== */}
@@ -225,6 +237,7 @@ const Vision = () => {
       </section>
 
       {/* ========================== TIMELINE ========================== */}
+      {/* ========================== TIMELINE ========================== */}
       <section
         style={{
           background: "var(--surface)",
@@ -238,80 +251,112 @@ const Vision = () => {
             <h2>Phased. Sequenced. Self-financing from year three.</h2>
           </div>
 
-          <div className="timeline reveal">
-            {/* Phase I */}
+          {/* Timeline with Custom Colors */}
+          <div className="timeline-new reveal">
+            {/* Phase I - Blue */}
             <div className="timeline-item">
-              <div className="timeline-year">2026 · Phase I</div>
-              <h4>Anchor Hub — Eastern Region</h4>
-              <p style={{ color: "var(--slate-700)" }}>
-                The first 30,000-square-foot integrated hub. Sited at a
-                strategic highway junction at the intersection of West Africa's
-                cocoa, tomato, and export corridors. Anchored by the Ghana
-                National Buffer Stock offtake (approximately 14% of facility
-                utilisation from Day 1).
-              </p>
-            </div>
-            {/* Phase I */}
-            <div className="timeline-item">
-              <div className="timeline-year">2027 · Phase I+</div>
-              <h4>Cocoa — Belt Expansion</h4>
-              <p style={{ color: "var(--slate-700)" }}>
-                Two secondary hubs extending the network into the cocoa belt,
-                with regional food-processing tenancy and pharma cold chain
-                pre-committed
-              </p>
+              <div className="timeline-marker">
+                <div className="timeline-dot blue"></div>
+              </div>
+              <div className="timeline-content">
+                <div className="timeline-year">2026 · PHASE I</div>
+                <h4>Anchor Hub — Eastern Region</h4>
+                <p style={{ color: "var(--slate-700)" }}>
+                  The first 30,000-square-foot integrated hub. Sited at a
+                  strategic highway junction at the intersection of West
+                  Africa's cocoa, coconut, and export corridors. National Buffer
+                  Stock offtake anchors approximately 14% of facility
+                  utilisation from Day 1.
+                </p>
+              </div>
             </div>
 
-            {/* Phase II */}
+            {/* Phase I+ - Green */}
             <div className="timeline-item">
-              <div className="timeline-year">2027-28 · Phase II</div>
-              <h4>Regional Anchor</h4>
-              <p style={{ color: "var(--slate-700)" }}>
-                Major regional anchor hub with full pharma-medical deployment,
-                including the first embedded EV assembly line and full
-                hyperscale-edge-cloud appliance.
-              </p>
+              <div className="timeline-marker">
+                <div className="timeline-dot green"></div>
+              </div>
+              <div className="timeline-content">
+                <div className="timeline-year">2027 · PHASE I+</div>
+                <h4>Cocoa-Belt Expansion</h4>
+                <p style={{ color: "var(--slate-700)" }}>
+                  Two secondary hubs extending the network into the cocoa belt,
+                  with regional food-processing tenancy and pharma cold chain
+                  pre-committed.
+                </p>
+              </div>
             </div>
 
-            {/* Phase III */}
+            {/* Phase II - Blue */}
             <div className="timeline-item">
-              <div className="timeline-year">2028–29 · Phase III</div>
-              <h4>Northern Food Corridor</h4>
-              <p style={{ color: "var(--slate-700)" }}>
-                Expansion into the northern grain and pulse corridor — bringing
-                cold storage, processing, and electric logistics to producers
-                historically underserved by national infrastruture.
-              </p>
+              <div className="timeline-marker">
+                <div className="timeline-dot blue"></div>
+              </div>
+              <div className="timeline-content">
+                <div className="timeline-year">2027-28 · PHASE II</div>
+                <h4>Regional Anchor</h4>
+                <p style={{ color: "var(--slate-700)" }}>
+                  Major regional anchor hub with full nine-vertical deployment,
+                  including the first embedded EV assembly line and full
+                  hyperscale edge-cloud appliance.
+                </p>
+              </div>
             </div>
 
-            {/* Phase IV */}
+            {/* Phase III - Green */}
             <div className="timeline-item">
-              <div className="timeline-year">2030 · Phase IV</div>
-              <h4>Cross-Border Reach</h4>
-              <p style={{ color: "var(--slate-700)" }}>
-                Northern hub extending hub into neighbouring lanlocked markets —
-                opening up cross-border export flows currently bottlenecked by
-                the absence of temperature-controlled transit.
-              </p>
+              <div className="timeline-marker">
+                <div className="timeline-dot green"></div>
+              </div>
+              <div className="timeline-content">
+                <div className="timeline-year">2028–29 · PHASE III</div>
+                <h4>Northern Food Corridor</h4>
+                <p style={{ color: "var(--slate-700)" }}>
+                  Expansion into the northern grain and pulse corridor —
+                  bringing cold storage, processing, and electric logistics to
+                  producers historically underserved by national infrastructure.
+                </p>
+              </div>
             </div>
 
-            {/* Phase V */}
+            {/* Phase IV - Blue */}
             <div className="timeline-item">
-              <div className="timeline-year">2030–31 · Phase V</div>
-              <h4>Pan-African Network</h4>
-              <p style={{ color: "var(--slate-700)" }}>
-                Continent extension across Côte d'Ivoire, Nigeria, Senegal, and
-                seven additional countries. Fifteen hubs total.
-                <span style={{ fontWeight: 600 }}>
-                  ~$122.5M of deployed network value, self-financing from Phase
-                  II onwards.
-                </span>
-              </p>
+              <div className="timeline-marker">
+                <div className="timeline-dot blue"></div>
+              </div>
+              <div className="timeline-content">
+                <div className="timeline-year">2030 · PHASE IV</div>
+                <h4>Cross-Border Reach</h4>
+                <p style={{ color: "var(--slate-700)" }}>
+                  Northern hub extending into neighbouring landlocked markets —
+                  opening up cross-border export flows currently bottlenecked by
+                  the absence of temperature-controlled transit.
+                </p>
+              </div>
+            </div>
+
+            {/* Phase V - Green */}
+            <div className="timeline-item">
+              <div className="timeline-marker">
+                <div className="timeline-dot green"></div>
+              </div>
+              <div className="timeline-content">
+                <div className="timeline-year">2030–31 · PHASE V</div>
+                <h4>Pan-African Network</h4>
+                <p style={{ color: "var(--slate-700)" }}>
+                  Continent extension across Côte d'Ivoire, Nigeria, Senegal,
+                  and seven additional countries. Fifteen hubs total.
+                  <span style={{ fontWeight: 600 }}>
+                    ~$122.5M of deployed network value, self-financing from
+                    Phase II onwards.
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
-
+      {/* ========================== REVENUE CHART ========================== */}
       {/* ========================== REVENUE CHART ========================== */}
       <section
         style={{
@@ -322,7 +367,10 @@ const Vision = () => {
         <div className="container">
           <div
             className="reveal text-center"
-            style={{ maxWidth: "720px", margin: "0 auto var(--space-12)" }}
+            style={{
+              maxWidth: "720px",
+              margin: "0 auto var(--space-12)",
+            }}
           >
             <span className="eyebrow green">The Trajectory</span>
             <h2>Compounding revenue as the network compounds.</h2>
@@ -333,13 +381,13 @@ const Vision = () => {
           </div>
 
           <div
-            className="reveal"
+            className="reveal revenue-chart"
             style={{
               maxWidth: "860px",
               margin: "0 auto",
               background: "var(--surface)",
               borderRadius: "var(--radius-lg)",
-              padding: "var(--space-12)",
+              padding: "clamp(1.2rem, 4vw, 3rem)",
               boxShadow: "var(--shadow)",
             }}
           >
@@ -357,9 +405,15 @@ const Vision = () => {
               Network Revenue Trajectory · $M
             </p>
 
-            {/* Bar chart */}
-            <div style={{ position: "relative", paddingLeft: "3rem" }}>
-              {/* Y-axis grid lines + labels */}
+            {/* Chart Area */}
+            <div
+              className="chart-area"
+              style={{
+                position: "relative",
+                paddingLeft: "1.8rem",
+              }}
+            >
+              {/* Grid Lines */}
               {[
                 { val: "$120", pct: "0%" },
                 { val: "$90", pct: "25%" },
@@ -368,6 +422,7 @@ const Vision = () => {
               ].map(({ val, pct }) => (
                 <div
                   key={val}
+                  className="grid-line"
                   style={{
                     position: "absolute",
                     left: 0,
@@ -376,13 +431,15 @@ const Vision = () => {
                     display: "flex",
                     alignItems: "center",
                     gap: "var(--space-2)",
+                    zIndex: 1,
                   }}
                 >
                   <span
+                    className="y-axis-label"
                     style={{
-                      fontSize: "0.68rem",
+                      fontSize: "0.55rem",
                       color: "var(--slate-400)",
-                      width: "2.4rem",
+                      width: "1.8rem",
                       textAlign: "right",
                       flexShrink: 0,
                     }}
@@ -398,17 +455,19 @@ const Vision = () => {
                 </div>
               ))}
 
-              {/* Bars container */}
+              {/* Bars */}
               <div
+                className="bars-container"
                 style={{
                   display: "flex",
                   alignItems: "flex-end",
                   justifyContent: "center",
-                  gap: "clamp(var(--space-6), 5vw, var(--space-12))",
-                  height: "240px",
+                  gap: "12px",
+                  height: "170px",
                   borderBottom: "2px solid var(--slate-200)",
-                  paddingBottom: "0",
-                  paddingLeft: "var(--space-4)",
+                  paddingLeft: "0.5rem",
+                  position: "relative",
+                  zIndex: 2,
                 }}
               >
                 {[
@@ -442,38 +501,44 @@ const Vision = () => {
                   },
                   {
                     label: "Y5",
-                    value: 120,
-                    display: "$102M",
+                    value: isDesktop ? 235 : 120,
+                    display: "$102M", // Fixed from $120M
                     color: "var(--amber)",
                     colorEnd: "#f5c842",
                   },
                 ].map(({ label, value, display, color, colorEnd }) => {
                   const maxVal = 140;
                   const heightPct = (value / maxVal) * 100;
+                  const barHeight = (heightPct / 100) * 150;
+
                   return (
                     <div
                       key={label}
+                      className="bar-wrapper"
                       style={{
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        gap: "var(--space-1)",
+                        gap: "4px",
                       }}
                     >
                       <span
+                        className="bar-value"
                         style={{
                           fontFamily: "var(--font-display)",
-                          fontSize: "clamp(0.75rem, 1.2vw, 0.9rem)",
+                          fontSize: "0.58rem",
                           fontWeight: 700,
                           color,
                         }}
                       >
                         {display}
                       </span>
+
                       <div
+                        className="bar"
                         style={{
-                          width: "clamp(36px, 6vw, 64px)",
-                          height: `${(heightPct / 100) * 220}px`,
+                          width: "28px",
+                          height: `${barHeight}px`,
                           background: `linear-gradient(180deg, ${color} 0%, ${colorEnd} 100%)`,
                           borderRadius: "5px 5px 0 0",
                           transition: "height 0.3s ease",
@@ -486,21 +551,23 @@ const Vision = () => {
 
               {/* X-axis labels */}
               <div
+                className="x-axis-labels"
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  gap: "clamp(var(--space-6), 5vw, var(--space-12))",
-                  paddingLeft: "var(--space-4)",
+                  gap: "12px",
                   marginTop: "var(--space-3)",
+                  paddingLeft: "0.5rem",
                 }}
               >
                 {["Y1", "Y2", "Y3", "Y4", "Y5"].map((l) => (
                   <div
                     key={l}
+                    className="x-axis-label"
                     style={{
-                      width: "clamp(36px, 6vw, 64px)",
+                      width: "28px",
                       textAlign: "center",
-                      fontSize: "0.75rem",
+                      fontSize: "0.62rem",
                       fontWeight: 600,
                       color: "var(--slate-500)",
                     }}
@@ -512,12 +579,16 @@ const Vision = () => {
             </div>
 
             <p
+              className="footnote"
               style={{
-                fontSize: "0.68rem",
+                fontSize: "0.7rem",
                 color: "var(--slate-400)",
                 textAlign: "center",
                 marginTop: "var(--space-6)",
                 fontStyle: "italic",
+                maxWidth: "28ch",
+                marginInline: "auto",
+                lineHeight: 1.6,
               }}
             >
               Internal financial model. Figures rounded; full model available
@@ -525,8 +596,49 @@ const Vision = () => {
             </p>
           </div>
         </div>
-      </section>
 
+        <style>{`
+    /* Desktop styles */
+    @media (min-width: 768px) {
+      .revenue-chart {
+        max-width: 1060px !important;
+      }
+      
+      .chart-area {
+        padding-left: 3rem !important;
+      }
+      
+      .y-axis-label {
+        font-size: 0.75rem !important;
+        width: 2.8rem !important;
+      }
+      
+      .bars-container {
+        gap: 48px !important;
+        height: 320px !important;
+        padding-left: 1rem !important;
+      }
+      
+      .bar {
+        width: 72px !important;
+      }
+      
+      .bar-value {
+        font-size: 0.95rem !important;
+      }
+      
+      .x-axis-labels {
+        gap: 48px !important;
+        padding-left: 1rem !important;
+      }
+      
+      .x-axis-label {
+        width: 72px !important;
+        font-size: 0.85rem !important;
+      }
+    }
+  `}</style>
+      </section>
       {/* ========================== PARTNERS ========================== */}
       <section
         style={{
@@ -890,6 +1002,7 @@ const Vision = () => {
       </section>
 
       {/* ========================== EXIT PATHWAYS ========================== */}
+      {/* ========================== EXIT PATHWAYS ========================== */}
       <section
         style={{
           background: "var(--slate-900)",
@@ -918,15 +1031,16 @@ const Vision = () => {
             </p>
           </div>
 
-          {/* Three pathway cards */}
+          {/* Three pathway cards - Updated to match design */}
           <div className="grid grid-3 reveal" style={{ gap: "var(--space-6)" }}>
-            {/* Strategic M&A */}
+            {/* Strategic M&A - Blue accent */}
             <div
               style={{
                 padding: "var(--space-8)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: "var(--radius-lg)",
                 background: "rgba(255,255,255,0.05)",
+                borderTop: "4px solid #3B82F6", // Blue
               }}
             >
               <p
@@ -934,7 +1048,7 @@ const Vision = () => {
                   fontSize: "0.72rem",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "var(--slate-400)",
+                  color: "#60A5FA",
                   fontWeight: 600,
                   marginBottom: "var(--space-4)",
                 }}
@@ -946,18 +1060,19 @@ const Vision = () => {
                 style={{ color: "var(--slate-300)", lineHeight: 1.65 }}
               >
                 Acquisition by a global cold-chain consolidator, logistics
-                major, or infrastucture platform. Comparatable transactions in
-                the @$3-18B range{" "}
+                major, or infrastructure platform. Comparable transactions in
+                the $3-18B range.
               </p>
             </div>
 
-            {/* REIT Conversion */}
+            {/* REIT Conversion - Green accent */}
             <div
               style={{
                 padding: "var(--space-8)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: "var(--radius-lg)",
                 background: "rgba(255,255,255,0.05)",
+                borderTop: "4px solid #22C55E", // Green
               }}
             >
               <p
@@ -965,7 +1080,7 @@ const Vision = () => {
                   fontSize: "0.72rem",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "var(--slate-400)",
+                  color: "#4ADE80",
                   fontWeight: 600,
                   marginBottom: "var(--space-4)",
                 }}
@@ -976,18 +1091,19 @@ const Vision = () => {
                 className="small"
                 style={{ color: "var(--slate-300)", lineHeight: 1.65 }}
               >
-                Conversion of the hub network into a real-state investment
-                trust, with the cold-storage assets as the anchor portfolio
+                Conversion of the hub network into a real-estate investment
+                trust, with the cold-storage assets as the anchor portfolio.
               </p>
             </div>
 
-            {/* Public Listing */}
+            {/* Public Listing - Yellow/Orange accent */}
             <div
               style={{
                 padding: "var(--space-8)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: "var(--radius-lg)",
                 background: "rgba(255,255,255,0.05)",
+                borderTop: "4px solid #EAB308", // Yellow/Amber
               }}
             >
               <p
@@ -995,7 +1111,7 @@ const Vision = () => {
                   fontSize: "0.72rem",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "var(--slate-400)",
+                  color: "#FACC15",
                   fontWeight: 600,
                   marginBottom: "var(--space-4)",
                 }}
@@ -1007,7 +1123,7 @@ const Vision = () => {
                 style={{ color: "var(--slate-300)", lineHeight: 1.65 }}
               >
                 Local stock-exchange listing, regional dual-listing, or NASDAQ
-                pathway ─ following the lineage logistics precedent.
+                pathway — following the Lineage Logistics precedent.
                 <sup style={{ color: "var(--cryo-blue)" }}>[10]</sup>
               </p>
             </div>
@@ -1043,12 +1159,11 @@ const Vision = () => {
                 pathway by 2031
               </span>
             </p>
-            <br />
             <p
               style={{
-                // color: "var(--slate-400)",
                 fontSize: "0.85rem",
                 fontWeight: 200,
+                color: "var(--slate-400)",
               }}
             >
               Following the Lineage Logistics trajectory at fifteen-hub
@@ -1196,30 +1311,8 @@ const Vision = () => {
       {/* ========================== MOBILE STYLES ========================== */}
       <style>{`
         /* Timeline */
-        .timeline {
-          display: flex;
-          flex-direction: column;
-          gap: 0;
-          border-left: 2px solid var(--slate-200);
-          padding-left: 0;
-          margin-left: var(--space-4);
-        }
-        .timeline-item {
-          position: relative;
-          padding: 0 0 var(--space-10) var(--space-8);
-        }
-        .timeline-item::before {
-          content: "";
-          position: absolute;
-          left: -7px;
-          top: 6px;
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background: var(--cryo-blue);
-          border: 2px solid #fff;
-          box-shadow: 0 0 0 2px var(--cryo-blue);
-        }
+
+
         .timeline-year {
           font-size: 0.72rem;
           font-weight: 700;
@@ -1240,6 +1333,75 @@ const Vision = () => {
           .grid.grid-4 { grid-template-columns: 1fr !important; }
           .grid.grid-3 { grid-template-columns: 1fr !important; }
         }
+         /* New Timeline Styles */
+.timeline-new {
+  position: relative;
+  padding-left: 42px;
+}
+
+/* Main vertical line - Thin */
+.timeline-new::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 12px;
+  bottom: 20px;
+  width: 3px;           /* Made thinner */
+  background: linear-gradient(
+    to bottom,
+    #3B82F6 0%,      /* Blue - First three phases */
+    #3B82F6 58%,     
+    #10B981 58%,     /* Green - Remaining phases */
+    #10B981 100%
+  );
+  border-radius: 9999px;
+  z-index: 1;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: var(--space-14);
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -42px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.timeline-dot {
+  width: 22px;
+  height: 22px;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.8);
+}
+
+/* Dot Colors */
+.timeline-dot.blue {
+  background: #3B82F6;           /* Blue */
+}
+
+.timeline-dot.green {
+  background: #10B981;           /* Green */
+}
+
+.timeline-year {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.timeline-year {
+  color: inherit; /* Will inherit from parent if needed */
+}
       `}</style>
     </>
   );

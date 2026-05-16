@@ -403,9 +403,9 @@ const Crisis = () => {
           </div>
 
           {/* Bar chart */}
-          {/* CAGR Chart - Fixed Bar Heights with Better Scale */}
+          {/* CAGR Chart - Fully Responsive */}
           <div
-            className="reveal"
+            className="reveal cagr-chart"
             style={{
               maxWidth: "760px",
               margin: "0 auto",
@@ -416,6 +416,7 @@ const Crisis = () => {
             }}
           >
             <p
+              className="chart-title"
               style={{
                 fontSize: "0.72rem",
                 letterSpacing: "0.12em",
@@ -429,14 +430,16 @@ const Crisis = () => {
             </p>
 
             <div
+              className="chart-container"
               style={{
                 position: "relative",
-                height: "320px", // Slightly taller for better separation
+                height: "320px",
                 marginBottom: "var(--space-8)",
               }}
             >
               {/* Grid Lines + Y Labels - Now goes to 30% */}
               <div
+                className="grid-lines"
                 style={{
                   position: "absolute",
                   inset: 0,
@@ -449,6 +452,7 @@ const Crisis = () => {
                 {[0, 5, 10, 15, 20, 25, 30].map((val) => (
                   <div
                     key={val}
+                    className="grid-line"
                     style={{
                       borderTop:
                         val === 0
@@ -459,6 +463,7 @@ const Crisis = () => {
                     }}
                   >
                     <span
+                      className="y-label"
                       style={{
                         position: "absolute",
                         left: "-34px",
@@ -477,6 +482,7 @@ const Crisis = () => {
 
               {/* Bars */}
               <div
+                className="bars-wrapper"
                 style={{
                   position: "absolute",
                   bottom: 0,
@@ -489,8 +495,9 @@ const Crisis = () => {
                   gap: "clamp(60px, 10vw, 100px)",
                 }}
               >
-                {/* Bar 1 - 17.7% (now relative to 30%) */}
+                {/* Bar 1 - 17.7% */}
                 <div
+                  className="bar-item"
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -501,6 +508,7 @@ const Crisis = () => {
                   }}
                 >
                   <span
+                    className="bar-value"
                     style={{
                       fontSize: "1.45rem",
                       fontWeight: 700,
@@ -510,6 +518,7 @@ const Crisis = () => {
                     17.7%
                   </span>
                   <div
+                    className="bar"
                     style={{
                       width: "80px",
                       height: `${(17.7 / 30) * 100}%`,
@@ -521,8 +530,9 @@ const Crisis = () => {
                   />
                 </div>
 
-                {/* Bar 2 - 22% (relative to 30%) */}
+                {/* Bar 2 - 22% */}
                 <div
+                  className="bar-item"
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -533,6 +543,7 @@ const Crisis = () => {
                   }}
                 >
                   <span
+                    className="bar-value"
                     style={{
                       fontSize: "1.45rem",
                       fontWeight: 700,
@@ -542,6 +553,7 @@ const Crisis = () => {
                     22%
                   </span>
                   <div
+                    className="bar"
                     style={{
                       width: "80px",
                       height: `${(22 / 30) * 100}%`,
@@ -553,8 +565,9 @@ const Crisis = () => {
                   />
                 </div>
 
-                {/* Bar 3 - 24% (relative to 30%) */}
+                {/* Bar 3 - 24% */}
                 <div
+                  className="bar-item"
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -565,6 +578,7 @@ const Crisis = () => {
                   }}
                 >
                   <span
+                    className="bar-value"
                     style={{
                       fontSize: "1.45rem",
                       fontWeight: 700,
@@ -574,6 +588,7 @@ const Crisis = () => {
                     24%
                   </span>
                   <div
+                    className="bar"
                     style={{
                       width: "80px",
                       height: `${(24 / 30) * 100}%`,
@@ -589,6 +604,7 @@ const Crisis = () => {
 
             {/* X-Axis Labels */}
             <div
+              className="x-axis"
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -600,7 +616,11 @@ const Crisis = () => {
                 { label: "Edge Data", desc: "Centres" },
                 { label: "Electric", desc: "Logistics" },
               ].map((item) => (
-                <div key={item.label} style={{ textAlign: "center" }}>
+                <div
+                  key={item.label}
+                  className="x-label"
+                  style={{ textAlign: "center" }}
+                >
                   <span
                     style={{
                       fontSize: "0.82rem",
@@ -617,8 +637,96 @@ const Crisis = () => {
             </div>
           </div>
         </div>
-      </section>
 
+        <style>{`
+    /* Mobile styles (up to 767px) */
+    @media (max-width: 767px) {
+      .cagr-chart {
+        padding: var(--space-6) !important;
+        max-width: 100% !important;
+      }
+      
+      .chart-title {
+        font-size: 0.6rem !important;
+        margin-bottom: var(--space-4) !important;
+      }
+      
+      .chart-container {
+        height: 220px !important;
+        margin-bottom: var(--space-4) !important;
+      }
+      
+      .y-label {
+        font-size: 0.55rem !important;
+        left: -24px !important;
+        width: 20px !important;
+        top: -8px !important;
+      }
+      
+      .grid-line {
+        border-top-width: 0.5px !important;
+      }
+      
+      .bars-wrapper {
+        gap: 20px !important;
+      }
+      
+      .bar-item {
+        gap: 4px !important;
+      }
+      
+      .bar-value {
+        font-size: 0.85rem !important;
+      }
+      
+      .bar {
+        width: 40px !important;
+        border-radius: 4px 4px 0 0 !important;
+      }
+      
+      .x-axis {
+        gap: 20px !important;
+      }
+      
+      .x-label span {
+        font-size: 0.65rem !important;
+      }
+    }
+    
+    /* Small mobile (up to 480px) */
+    @media (max-width: 480px) {
+      .bars-wrapper {
+        gap: 12px !important;
+      }
+      
+      .bar {
+        width: 32px !important;
+      }
+      
+      .bar-value {
+        font-size: 0.7rem !important;
+      }
+      
+      .x-axis {
+        gap: 12px !important;
+      }
+      
+      .x-label span {
+        font-size: 0.55rem !important;
+      }
+      
+      .y-label {
+        font-size: 0.5rem !important;
+        left: -20px !important;
+        width: 16px !important;
+      }
+      
+      .chart-container {
+        height: 180px !important;
+      }
+    }
+  `}</style>
+      </section>
       {/* FINAL CTA */}
       <section>
         <div className="container-narrow text-center reveal">
