@@ -1409,3 +1409,11 @@ body {
   margin-top: var(--space-6);
   margin-bottom: var(--space-8);
 }
+
+/* .hero p {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-8);
+} */
