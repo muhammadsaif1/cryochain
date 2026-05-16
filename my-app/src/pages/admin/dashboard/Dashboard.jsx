@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/slices/authSlice"; // adjust path if needed
@@ -24,6 +24,43 @@ const Dashboard = () => {
   };
 
   const initials = user?.email ? user.email.slice(0, 2).toUpperCase() : "AD";
+
+  // Scroll lock when modal is open
+  useEffect(() => {
+    let scrollY = 0;
+
+    if (sidebarOpen) {
+      scrollY = window.scrollY;
+
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      document.body.style.touchAction = "none";
+    } else {
+      const savedY = parseInt(document.body.style.top || "0", 10) * -1;
+
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.touchAction = "";
+
+      window.scrollTo({ top: savedY, behavior: "instant" });
+    }
+
+    return () => {
+      // Cleanup
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.touchAction = "";
+    };
+  }, [sidebarOpen]);
 
   return (
     <div className="db-root">

@@ -258,24 +258,79 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Area of interest */}
-                <div className="form-field">
+                {/* Area of interest — custom dropdown */}
+                <div className="form-field" style={{ position: "relative" }}>
                   <label htmlFor="interest">Area of Interest</label>
-                  <select
-                    id="interest"
-                    name="interest"
-                    value={form.interest}
-                    onChange={handleChange}
-                    disabled={loading}
+                  <div
+                    className="custom-select-wrapper"
+                    style={{ position: "relative" }}
                   >
-                    <option>Strategic partnership</option>
-                    <option>Family office / capital partner</option>
-                    <option>Development finance institution</option>
-                    <option>Government / sovereign engagement</option>
-                    <option>Industry / commercial partner</option>
-                    <option>Press / media inquiry</option>
-                    <option>Other</option>
-                  </select>
+                    <button
+                      type="button"
+                      className="custom-select-trigger"
+                      onClick={() =>
+                        setForm((prev) => ({
+                          ...prev,
+                          _open: !prev._open,
+                        }))
+                      }
+                      disabled={loading}
+                    >
+                      <span>{form.interest}</span>
+                      <span
+                        style={{
+                          transition: "transform 0.2s",
+                          transform: form._open
+                            ? "rotate(180deg)"
+                            : "rotate(0deg)",
+                          fontSize: "0.75rem",
+                        }}
+                      >
+                        ▾
+                      </span>
+                    </button>
+
+                    {form._open && (
+                      <>
+                        {/* invisible overlay to close on outside click */}
+                        <div
+                          style={{
+                            position: "fixed",
+                            inset: 0,
+                            zIndex: 10,
+                          }}
+                          onClick={() =>
+                            setForm((prev) => ({ ...prev, _open: false }))
+                          }
+                        />
+                        <ul className="custom-select-list">
+                          {[
+                            "Strategic partnership",
+                            "Family office / capital partner",
+                            "Development finance institution",
+                            "Government / sovereign engagement",
+                            "Industry / commercial partner",
+                            "Press / media inquiry",
+                            "Other",
+                          ].map((opt) => (
+                            <li
+                              key={opt}
+                              className={`custom-select-option ${form.interest === opt ? "selected" : ""}`}
+                              onClick={() => {
+                                setForm((prev) => ({
+                                  ...prev,
+                                  interest: opt,
+                                  _open: false,
+                                }));
+                              }}
+                            >
+                              {opt}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 {/* Message */}
@@ -493,6 +548,101 @@ const Contact = () => {
             padding-right: 1.25rem !important;
           }
         }
+          /* Select wrapper — constrains dropdown to container */
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-wrapper select {
+  width: 100%;
+  max-width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--slate-500);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Prevent native dropdown from escaping on mobile */
+@media (max-width: 768px) {
+  .select-wrapper select {
+    font-size: 16px; /* prevents iOS zoom on focus */
+    max-width: 100%;
+  }
+}
+  .custom-select-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.9rem;
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.custom-select-trigger:focus {
+  outline: 2px solid var(--cryo-blue);
+  outline-offset: 2px;
+}
+
+.custom-select-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;           /* ← keys to staying in frame */
+  width: 100%;
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  z-index: 20;
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.custom-select-option {
+  padding: 0.65rem 1rem;
+  font-size: 0.92rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.custom-select-option:hover {
+  background: var(--sky-tint, #f0f7ff);
+}
+
+.custom-select-option.selected {
+  background: var(--leaf-mint, #f0faf4);
+  font-weight: 600;
+  color: var(--chain-green-deep);
+}
       `}</style>
     </>
   );

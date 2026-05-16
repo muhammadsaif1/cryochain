@@ -33,7 +33,7 @@
   flex-direction: column;
   background: var(--ink, #1a2330);
   padding: 1.5rem 1rem 1.25rem;
-  position: sticky;
+  position: fixed;
   top: 0;
   height: 100vh;
   overflow-y: auto;
@@ -235,6 +235,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  margin-left: 240px;
 }
 
 /* ── top bar (mobile only) ── */
@@ -315,6 +316,12 @@
   background: rgba(0, 0, 0, 0.42);
   z-index: 90;
   animation: fadeIn 0.2s ease;
+}
+@media (max-width: 768px) {
+  .db-main {
+    margin-left: 0; /* add this */
+  }
+  /* ... rest of your existing mobile rules ... */
 }
 
 /* ============================================================

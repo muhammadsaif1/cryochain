@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllNotes,
@@ -38,16 +38,81 @@ const fmt = (iso) => {
   });
 };
 
+/* ── Reusable Custom Dropdown ── */
+const CustomDropdown = ({ value, onChange, options, className }) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  // Close on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const selected = options.find((o) => o.value === value) || options[0];
+
+  return (
+    <div ref={ref} className={`np-custom-select ${className || ""}`}>
+      <button
+        type="button"
+        className="np-custom-select__trigger"
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="np-custom-select__label">{selected.label}</span>
+        <span
+          className="np-custom-select__arrow"
+          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+        >
+          ▾
+        </span>
+      </button>
+
+      {open && (
+        <>
+          {/* Invisible overlay to close on outside tap */}
+          <div
+            style={{ position: "fixed", inset: 0, zIndex: 98 }}
+            onClick={() => setOpen(false)}
+          />
+          <ul className="np-custom-select__list">
+            {options.map((opt) => (
+              <li
+                key={opt.value}
+                className={`np-custom-select__option ${
+                  opt.value === value
+                    ? "np-custom-select__option--selected"
+                    : ""
+                }`}
+                onClick={() => {
+                  onChange(opt.value);
+                  setOpen(false);
+                }}
+              >
+                {opt.label}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  );
+};
+
 const NotesPanel = () => {
   const dispatch = useDispatch();
   const { notes, loading, error, pagination, filters } = useSelector(
     (s) => s.notes,
   );
 
-  /* local filter bar state (mirrors Redux filters) */
+  /* local filter bar state */
   const [localInterest, setLocalInterest] = useState("");
+  const [localSort, setLocalSort] = useState("0");
   const [localOrg, setLocalOrg] = useState("");
-  const [localSort, setLocalSort] = useState(0); // index into SORT_OPTIONS
   const [search, setSearch] = useState("");
 
   /* detail modal */
@@ -62,7 +127,7 @@ const NotesPanel = () => {
   /* ── fetch ── */
   const fetchNotes = useCallback(
     (page = 1) => {
-      const { sortBy, sortOrder } = SORT_OPTIONS[localSort];
+      const { sortBy, sortOrder } = SORT_OPTIONS[Number(localSort)];
       dispatch(
         getAllNotes({
           page,
@@ -116,17 +181,25 @@ const NotesPanel = () => {
   };
 
   /* ── filter search (client-side on loaded page) ── */
-  const displayed = search.trim()
-    ? notes.filter((n) => {
-        const q = search.toLowerCase();
-        return (
-          n.firstName?.toLowerCase().includes(q) ||
-          n.lastName?.toLowerCase().includes(q) ||
-          n.email?.toLowerCase().includes(q) ||
-          n.organisation?.toLowerCase().includes(q)
-        );
-      })
-    : notes;
+  const displayed = notes.filter((n) => {
+    const searchQuery = search.toLowerCase().trim();
+    const orgQuery = localOrg.toLowerCase().trim();
+
+    const matchesSearch =
+      !searchQuery ||
+      n.firstName?.toLowerCase().includes(searchQuery) ||
+      n.lastName?.toLowerCase().includes(searchQuery) ||
+      n.email?.toLowerCase().includes(searchQuery) ||
+      n.organisation?.toLowerCase().includes(searchQuery);
+
+    const matchesOrg =
+      !orgQuery || n.organisation?.toLowerCase().includes(orgQuery);
+
+    const matchesInterest =
+      !localInterest || n.areaOfInterest === localInterest;
+
+    return matchesSearch && matchesOrg && matchesInterest;
+  });
 
   /* ── badge colour by interest ── */
   const badgeColor = (interest) => {
@@ -140,6 +213,48 @@ const NotesPanel = () => {
     };
     return map[interest] ?? "#6B7785";
   };
+
+  /* ── scroll lock when any modal is open ── */
+  useEffect(() => {
+    const isOpen = modalOpen || !!deleteId;
+    if (isOpen) {
+      const scrollY = window.scrollY;
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      document.body.style.touchAction = "none";
+    } else {
+      const savedY = parseInt(document.body.style.top || "0", 10) * -1;
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.touchAction = "";
+      window.scrollTo({ top: savedY, behavior: "instant" });
+    }
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.touchAction = "";
+    };
+  }, [modalOpen, deleteId]);
+
+  /* ── dropdown option arrays ── */
+  const interestDropdownOptions = INTEREST_OPTIONS.map((o) => ({
+    label: o,
+    value: o === "All" ? "" : o,
+  }));
+
+  const sortDropdownOptions = SORT_OPTIONS.map((o, i) => ({
+    label: o.label,
+    value: String(i),
+  }));
 
   return (
     <div className="np-root">
@@ -190,42 +305,23 @@ const NotesPanel = () => {
           )}
         </div>
 
-        {/* Interest filter */}
-        <select
-          className="np-filter-select"
+        {/* Interest filter — custom dropdown */}
+        <CustomDropdown
           value={localInterest}
-          onChange={(e) => {
-            setLocalInterest(e.target.value === "All" ? "" : e.target.value);
-          }}
-        >
-          {INTEREST_OPTIONS.map((o) => (
-            <option key={o} value={o === "All" ? "" : o}>
-              {o}
-            </option>
-          ))}
-        </select>
-
-        {/* Org filter */}
-        <input
-          className="np-filter-input"
-          type="text"
-          placeholder="Filter by organisation…"
-          value={localOrg}
-          onChange={(e) => setLocalOrg(e.target.value)}
+          onChange={setLocalInterest}
+          options={interestDropdownOptions}
+          className="np-filter-dropdown"
         />
 
-        {/* Sort */}
-        <select
-          className="np-filter-select"
+        {/* Org filter */}
+
+        {/* Sort — custom dropdown */}
+        <CustomDropdown
           value={localSort}
-          onChange={(e) => setLocalSort(Number(e.target.value))}
-        >
-          {SORT_OPTIONS.map((o, i) => (
-            <option key={o.label} value={i}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+          onChange={setLocalSort}
+          options={sortDropdownOptions}
+          className="np-filter-dropdown"
+        />
 
         {/* Clear */}
         {(localInterest || localOrg || search) && (
@@ -271,7 +367,6 @@ const NotesPanel = () => {
       {/* ══ Notes list ══ */}
       {displayed.length > 0 && (
         <div className="np-list">
-          {/* List header */}
           <div className="np-list__head">
             <span>Sender</span>
             <span className="np-col--email">Email</span>
@@ -288,7 +383,6 @@ const NotesPanel = () => {
               onClick={() => openDetail(note)}
               style={{ animationDelay: `${idx * 30}ms` }}
             >
-              {/* Name */}
               <div className="np-row__name">
                 <div className="np-row__avatar">
                   {(note.firstName?.[0] ?? "?").toUpperCase()}
@@ -297,16 +391,10 @@ const NotesPanel = () => {
                   {note.firstName} {note.lastName}
                 </span>
               </div>
-
-              {/* Email */}
               <span className="np-row__email np-col--email">{note.email}</span>
-
-              {/* Org */}
               <span className="np-row__org np-col--org">
                 {note.organisation || <em style={{ opacity: 0.4 }}>—</em>}
               </span>
-
-              {/* Interest badge */}
               <span className="np-col--interest">
                 <span
                   className="np-badge"
@@ -315,13 +403,9 @@ const NotesPanel = () => {
                   {note.areaOfInterest ?? "—"}
                 </span>
               </span>
-
-              {/* Date */}
               <span className="np-row__date np-col--date">
                 {fmt(note.createdAt)}
               </span>
-
-              {/* Delete */}
               <button
                 className="np-row__delete"
                 onClick={(e) => confirmDelete(e, note._id)}
@@ -371,14 +455,12 @@ const NotesPanel = () => {
             <button className="np-modal__close" onClick={closeModal}>
               ✕
             </button>
-
             {detailLoad ? (
               <div className="np-state" style={{ padding: "3rem" }}>
                 <div className="np-spinner" />
               </div>
             ) : (
               <>
-                {/* Modal header */}
                 <div className="np-modal__header">
                   <div className="np-modal__avatar">
                     {(modalNote.firstName?.[0] ?? "?").toUpperCase()}
@@ -395,8 +477,6 @@ const NotesPanel = () => {
                     </a>
                   </div>
                 </div>
-
-                {/* Meta grid */}
                 <div className="np-modal__meta">
                   {[
                     {
@@ -416,8 +496,6 @@ const NotesPanel = () => {
                     </div>
                   ))}
                 </div>
-
-                {/* Message */}
                 <div className="np-modal__message-wrap">
                   <p className="np-modal__message-label">Message</p>
                   <p className="np-modal__message">
@@ -426,8 +504,6 @@ const NotesPanel = () => {
                     )}
                   </p>
                 </div>
-
-                {/* Modal footer */}
                 <div className="np-modal__footer">
                   <a
                     className="np-modal__reply"
@@ -483,6 +559,109 @@ const NotesPanel = () => {
           </div>
         </div>
       )}
+
+      {/* ══ Custom dropdown styles ══ */}
+      <style>{`
+        .np-custom-select {
+          position: relative;
+          width: 100%;
+        }
+
+        .np-custom-select__trigger {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.5rem;
+          padding: 0.45rem 0.75rem;
+          background: var(--paper, #f7f5f0);
+          border: 1.5px solid var(--slate-200, #e3e7ea);
+          border-radius: 8px;
+          font-family: inherit;
+          font-size: 0.8rem;
+          color: var(--ink, #1a2330);
+          cursor: pointer;
+          text-align: left;
+          box-sizing: border-box;
+          transition: border-color 0.2s, background 0.2s;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+
+        .np-custom-select__trigger:hover {
+          background: #fff;
+          border-color: var(--cryo-blue, #1f78b4);
+        }
+
+        .np-custom-select__trigger:focus {
+          outline: none;
+          border-color: var(--cryo-blue, #1f78b4);
+          box-shadow: 0 0 0 3px rgba(31, 120, 180, 0.1);
+        }
+
+        .np-custom-select__label {
+          flex: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .np-custom-select__arrow {
+          font-size: 0.7rem;
+          color: var(--slate-500, #6b7785);
+          transition: transform 0.2s ease;
+          flex-shrink: 0;
+        }
+
+        .np-custom-select__list {
+          position: absolute;
+          top: calc(100% + 4px);
+          left: 0;
+          right: 0;           /* stays within parent width */
+          width: 100%;
+          background: #fff;
+          border: 1.5px solid var(--slate-200, #e3e7ea);
+          border-radius: 10px;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+          z-index: 99;
+          list-style: none;
+          margin: 0;
+          padding: 0.3rem 0;
+          overflow: hidden;
+          box-sizing: border-box;
+        }
+
+        .np-custom-select__option {
+          padding: 0.55rem 0.9rem;
+          font-size: 0.8rem;
+          color: var(--ink, #1a2330);
+          cursor: pointer;
+          transition: background 0.12s;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .np-custom-select__option:hover {
+          background: var(--paper, #f7f5f0);
+        }
+
+        .np-custom-select__option--selected {
+          background: rgba(31, 120, 180, 0.08);
+          font-weight: 600;
+          color: var(--cryo-blue, #1f78b4);
+        }
+
+        /* Mobile: stack filters vertically */
+        @media (max-width: 768px) {
+          .np-custom-select {
+            width: 100%;
+          }
+          .np-filter-dropdown {
+            width: 100%;
+          }
+        }
+      `}</style>
     </div>
   );
 };

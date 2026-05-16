@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck, Mail, Lock } from "lucide-react";
+import { ShieldCheck, Mail, Lock, ArrowLeft } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import "./profile.css";
 
-// import your redux thunk
 import { updateUser } from "../../../redux/slices/authSlice";
 
 const Profile = () => {
@@ -89,6 +88,7 @@ const Profile = () => {
           } updated successfully`,
         );
 
+        // Clear fields
         setEmail("");
         setConfirmEmail("");
         setPassword("");
@@ -116,14 +116,23 @@ const Profile = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {/* LEFT */}
+        {/* Back Button */}
+        <button
+          className="profile-back-btn"
+          onClick={() => navigate("/admin/dashboard")}
+          aria-label="Back to Dashboard"
+        >
+          <ArrowLeft size={20} />
+          Back to Dashboard
+        </button>
+
+        {/* LEFT SIDE */}
         <div className="profile-info">
           <div className="profile-icon-wrap">
             <ShieldCheck size={42} />
           </div>
 
           <span className="profile-eyebrow">ADMIN SETTINGS</span>
-
           <h2>Manage Your Profile</h2>
 
           <p>
@@ -137,9 +146,9 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* RIGHT */}
+        {/* RIGHT SIDE */}
         <div className="profile-form-wrapper">
-          {/* TOGGLE */}
+          {/* Toggle Buttons */}
           <div className="profile-toggle">
             <button
               className={updateType === "email" ? "active" : ""}
@@ -169,7 +178,6 @@ const Profile = () => {
               <>
                 <div className="form-group">
                   <label>New Email</label>
-
                   <input
                     type="email"
                     placeholder="Enter new email"
@@ -180,7 +188,6 @@ const Profile = () => {
 
                 <div className="form-group">
                   <label>Confirm Email</label>
-
                   <input
                     type="email"
                     placeholder="Confirm new email"
@@ -193,7 +200,6 @@ const Profile = () => {
               <>
                 <div className="form-group">
                   <label>New Password</label>
-
                   <input
                     type="password"
                     placeholder="Enter new password"
@@ -204,7 +210,6 @@ const Profile = () => {
 
                 <div className="form-group">
                   <label>Confirm Password</label>
-
                   <input
                     type="password"
                     placeholder="Confirm new password"
@@ -216,7 +221,6 @@ const Profile = () => {
             )}
 
             {error && <p className="profile-error">{error}</p>}
-
             {success && <p className="profile-success">{success}</p>}
 
             <button type="submit" className="profile-btn" disabled={loading}>

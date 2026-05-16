@@ -259,7 +259,12 @@ const Vision = () => {
                 <div className="timeline-dot blue"></div>
               </div>
               <div className="timeline-content">
-                <div className="timeline-year">2026 · PHASE I</div>
+                <div
+                  style={{ color: "var(--cryo-blue)" }}
+                  className="timeline-year"
+                >
+                  2026 · PHASE I
+                </div>
                 <h4>Anchor Hub — Eastern Region</h4>
                 <p style={{ color: "var(--slate-700)" }}>
                   The first 30,000-square-foot integrated hub. Sited at a
@@ -293,7 +298,12 @@ const Vision = () => {
                 <div className="timeline-dot blue"></div>
               </div>
               <div className="timeline-content">
-                <div className="timeline-year">2027-28 · PHASE II</div>
+                <div
+                  style={{ color: "var(--cryo-blue)" }}
+                  className="timeline-year"
+                >
+                  2027-28 · PHASE II
+                </div>
                 <h4>Regional Anchor</h4>
                 <p style={{ color: "var(--slate-700)" }}>
                   Major regional anchor hub with full nine-vertical deployment,
@@ -325,7 +335,12 @@ const Vision = () => {
                 <div className="timeline-dot blue"></div>
               </div>
               <div className="timeline-content">
-                <div className="timeline-year">2030 · PHASE IV</div>
+                <div
+                  style={{ color: "var(--cryo-blue)" }}
+                  className="timeline-year"
+                >
+                  2030 · PHASE IV
+                </div>
                 <h4>Cross-Border Reach</h4>
                 <p style={{ color: "var(--slate-700)" }}>
                   Northern hub extending into neighbouring landlocked markets —
@@ -487,14 +502,14 @@ const Vision = () => {
                   },
                   {
                     label: "Y3",
-                    value: 9,
+                    value: 13,
                     display: "$13M",
                     color: "var(--chain-green-deep)",
                     colorEnd: "var(--chain-green)",
                   },
                   {
                     label: "Y4",
-                    value: 49,
+                    value: 69,
                     display: "$49M",
                     color: "var(--chain-green-deep)",
                     colorEnd: "var(--chain-green)",
@@ -673,7 +688,8 @@ const Vision = () => {
                 style={{
                   fontWeight: 700,
                   fontSize: "0.85rem",
-                  color: "var(--ink)",
+
+                  color: "var(--cryo-blue)",
                   marginBottom: "var(--space-3)",
                 }}
               >
@@ -682,7 +698,7 @@ const Vision = () => {
               <p
                 className="small"
                 style={{
-                  color: "var(--cryo-blue)",
+                  color: "var(--ink)",
                   fontWeight: 600,
                   marginBottom: "var(--space-3)",
                 }}
@@ -711,7 +727,8 @@ const Vision = () => {
                 style={{
                   fontWeight: 700,
                   fontSize: "0.85rem",
-                  color: "var(--ink)",
+
+                  color: "var(--cryo-blue)",
                   marginBottom: "var(--space-3)",
                 }}
               >
@@ -720,7 +737,7 @@ const Vision = () => {
               <p
                 className="small"
                 style={{
-                  color: "var(--chain-green-deep)",
+                  color: "var(--ink)",
                   fontWeight: 600,
                   marginBottom: "var(--space-3)",
                 }}
@@ -748,7 +765,7 @@ const Vision = () => {
                 style={{
                   fontWeight: 700,
                   fontSize: "0.85rem",
-                  color: "var(--ink)",
+                  color: "var(--chain-green-deep)",
                   marginBottom: "var(--space-3)",
                 }}
               >
@@ -757,7 +774,7 @@ const Vision = () => {
               <p
                 className="small"
                 style={{
-                  color: "var(--amber)",
+                  color: "var(--ink)",
                   fontWeight: 600,
                   marginBottom: "var(--space-3)",
                 }}
@@ -785,7 +802,7 @@ const Vision = () => {
                 style={{
                   fontWeight: 700,
                   fontSize: "0.85rem",
-                  color: "var(--ink)",
+                  color: "var(--chain-green-deep)",
                   marginBottom: "var(--space-3)",
                 }}
               >
@@ -794,7 +811,7 @@ const Vision = () => {
               <p
                 className="small"
                 style={{
-                  color: "var(--coral)",
+                  color: "var(--ink)",
                   fontWeight: 600,
                   marginBottom: "var(--space-3)",
                 }}
@@ -983,7 +1000,7 @@ const Vision = () => {
               <p
                 className="small"
                 style={{
-                  color: "var(--amber)",
+                  // color: "var(--amber)",
                   fontWeight: 600,
                   marginBottom: "var(--space-4)",
                 }}
@@ -1016,8 +1033,11 @@ const Vision = () => {
             className="reveal text-center"
             style={{ maxWidth: "680px", margin: "0 auto var(--space-12)" }}
           >
-            <span className="eyebrow" style={{ color: "var(--slate-400)" }}>
-              The Long Game
+            <span
+              className="eyebrow"
+              style={{ color: "var(--chain-green-light)" }}
+            >
+              The Long Arc
             </span>
             <h2 style={{ color: "#fff" }}>
               Three pathways to a billion-dollar valuation by 2031.
@@ -1162,8 +1182,10 @@ const Vision = () => {
             <p
               style={{
                 fontSize: "0.85rem",
-                fontWeight: 200,
+                fontWeight: "normal",
                 color: "var(--slate-400)",
+                opacity: 0.7,
+                marginTop: "36px",
               }}
             >
               Following the Lineage Logistics trajectory at fifteen-hub
@@ -1216,7 +1238,7 @@ const Vision = () => {
           <div
             className="reveal"
             style={{
-              maxWidth: "780px",
+              maxWidth: "1000px",
               margin: "0 auto",
               background: "#fff",
               border: "1px solid var(--slate-200)",
@@ -1333,25 +1355,26 @@ const Vision = () => {
           .grid.grid-4 { grid-template-columns: 1fr !important; }
           .grid.grid-3 { grid-template-columns: 1fr !important; }
         }
-         /* New Timeline Styles */
+          
+       /* New Timeline Styles */
 .timeline-new {
   position: relative;
   padding-left: 42px;
 }
 
-/* Main vertical line - Thin */
+/* Main vertical line */
 .timeline-new::before {
   content: '';
   position: absolute;
   left: 19px;
   top: 12px;
   bottom: 20px;
-  width: 3px;           /* Made thinner */
+  width: 3px;
   background: linear-gradient(
     to bottom,
-    #3B82F6 0%,      /* Blue - First three phases */
-    #3B82F6 58%,     
-    #10B981 58%,     /* Green - Remaining phases */
+    #3B82F6 0%,
+    #3B82F6 58%,
+    #10B981 58%,
     #10B981 100%
   );
   border-radius: 9999px;
@@ -1375,20 +1398,23 @@ const Vision = () => {
 }
 
 .timeline-dot {
-  width: 22px;
-  height: 22px;
-  border: 3px solid white;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(255,255,255,0.8);
+  background: #ffffff;        /* hollow — white fill */
+  border: 3px solid transparent;
+  box-shadow: 0 0 0 2px #ffffff; /* kills the stray artifact ring */
+  position: relative;
+  z-index: 3;
 }
 
-/* Dot Colors */
+/* Dot border colors */
 .timeline-dot.blue {
-  background: #3B82F6;           /* Blue */
+  border-color: #3B82F6;
 }
 
 .timeline-dot.green {
-  background: #10B981;           /* Green */
+  border-color: #10B981;
 }
 
 .timeline-year {
@@ -1397,14 +1423,12 @@ const Vision = () => {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 4px;
+  color: inherit;
 }
-
-.timeline-year {
-  color: inherit; /* Will inherit from parent if needed */
-}
-      `}</style>
+              `}</style>
     </>
   );
 };
 
 export default Vision;
+/* New Timeline Styles */

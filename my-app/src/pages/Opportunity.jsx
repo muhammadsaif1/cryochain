@@ -372,6 +372,12 @@ const Crisis = () => {
                 ></div>
               </div>
             </div>
+            <br />
+            <p style={{ margin: 0, textAlign: "center", fontWeight: 100 }}>
+              Source: IFC, Cold Chain Development in Africa, 2023
+              <sup className="cite">[3]</sup>
+              Bars scaled for visual clarity.
+            </p>
           </div>
         </div>
       </section>
@@ -635,6 +641,13 @@ const Crisis = () => {
                 </div>
               ))}
             </div>
+            <br />
+            <p style={{ margin: 0, textAlign: "center", fontWeight: 100 }}>
+              Sources: Mordor Intelligence (Cold Chain)
+              <sup className="cite">[7]</sup>, Arizton (Edge Data)
+              <sup className="cite">[8]</sup>, McKinsey (EV)
+              <sup className="cite">[9]</sup>.
+            </p>
           </div>
         </div>
 
@@ -774,7 +787,7 @@ const Crisis = () => {
           <div
             className="reveal"
             style={{
-              maxWidth: "680px",
+              maxWidth: "1000px",
               background: "var(--surface)",
               margin: "0 auto",
 
@@ -806,6 +819,7 @@ const Crisis = () => {
                 flexDirection: "column",
                 gap: "var(--space-4)",
               }}
+              className="sources-list"
             >
               {/* Each item: number auto from <ol>, author normal, title italic, publisher normal */}
               {[

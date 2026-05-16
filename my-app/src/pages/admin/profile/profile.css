@@ -249,3 +249,52 @@
     height: 54px;
   }
 }
+
+/* Back Button */
+.profile-card {
+  position: relative; /* Important for absolute positioning */
+}
+
+.profile-back-btn {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: white;
+  border: 1.5px solid var(--slate-200);
+  border-radius: 12px;
+  color: var(--slate-700);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 10;
+}
+
+.profile-back-btn:hover {
+  background: var(--cryo-blue, #007bff);
+  color: white;
+  border-color: var(--cryo-blue, #007bff);
+  transform: translateY(-2px);
+}
+
+.profile-back-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.profile-back-btn:hover svg {
+  transform: translateX(-4px);
+}
+
+/* Responsive adjustment for back button */
+@media (max-width: 640px) {
+  .profile-back-btn {
+    top: 16px;
+    left: 16px;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+}

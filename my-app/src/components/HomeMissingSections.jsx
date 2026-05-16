@@ -73,8 +73,8 @@ const MissingSections = () => {
                 corporate tax holiday and full ICSID investor protections.
               </p>
 
-              <Link to="/opportunity" className="btn btn-ghost btn-arrow">
-                See the path forward →
+              <Link to="/opportunity" className="btn btn-primary btn-arrow">
+                See the path forward
               </Link>
             </div>
 

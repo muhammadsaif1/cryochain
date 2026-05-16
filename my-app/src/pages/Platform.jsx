@@ -335,9 +335,9 @@ const Platform = () => {
                   >
                     <span className="compound-emoji">{emoji}</span>
                   </div>
-                  {idx < arr.length - 1 && (
+                  {/* {idx < arr.length - 1 && (
                     <span className="compound-arrow">→</span>
-                  )}
+                  )} */}
                   <h4
                     style={{
                       marginBottom: "var(--space-2)",
@@ -529,7 +529,7 @@ const Platform = () => {
           <div
             className="reveal"
             style={{
-              maxWidth: "780px",
+              maxWidth: "980px",
               margin: "0 auto",
               background: "#fff",
               border: "1px solid var(--slate-200)",
