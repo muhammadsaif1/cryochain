@@ -78,6 +78,10 @@ const Header = () => {
             <li>
               <NavLink to="/vision">The Vision</NavLink>
             </li>
+
+            <li>
+              <NavLink to="/insights">Insights</NavLink>
+            </li>
             <li>
               <NavLink
                 to="/contact"
@@ -127,6 +131,9 @@ const Header = () => {
               The Vision
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/insights"> Insights</NavLink>
+          </li>
           <li style={{ marginTop: "auto", paddingTop: "var(--space-8)" }}>
             <NavLink
               to="/contact"
@@ -144,6 +151,7 @@ const Header = () => {
         /* Fix CTA button hover — lift instead of color change */
         .nav-cta {
           transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+           color: white !important;
         }
         .nav-cta:hover {
           background: inherit !important;

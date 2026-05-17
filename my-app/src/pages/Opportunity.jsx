@@ -6,7 +6,7 @@ import "../index.css";
 import azureRack from "../assets/images/azure-rack.png";
 import Food from "../assets/images/crisis-01-farmer-loss.jpg";
 import Refrigerator from "../assets/images/crisis-02-pharmacy.jpg";
-import Logistics from "../assets/images/crisis-03-ev-logistics.jpg";
+import Logistics from "../assets/images/movement.png";
 
 const Crisis = () => {
   return (
@@ -238,17 +238,20 @@ const Crisis = () => {
                 roughly <strong>22% CAGR through 2030</strong>.
               </p>
               <p style={{ color: "var(--slate-700)" }}>
-                Building in that already has a visible edge appliance on a
-                sovereign-cloud node is, in effect, an enormous data centre
-                facility to do effect, an enormous data centre node — remote
-                control, piloted.
+                Each CryoChain hub integrates a hyperscale-grade edge appliance
+                operating as a sovereign cloud node, transforming every facility
+                into a distributed AI-enabled infrastructure asset. Beyond cold
+                storage, each site functions as a secure in-country data centre
+                node supporting localized processing, remote operations, and
+                real-time orchestration — converging sovereign AI infrastructure
+                with mission-critical food and logistics infrastructure.
               </p>
-              <p style={{ color: "var(--slate-700)" }}>
+              {/* <p style={{ color: "var(--slate-700)" }}>
                 Every hub has already a hyperscale-grade edge appliance on every
                 facility data a sovereign-cloud node and is completing the
                 highest margin vertical in modern infrastructure this is a
                 sovereign-AI cold storage.
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

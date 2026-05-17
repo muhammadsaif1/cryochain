@@ -22,6 +22,8 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/admin/Login/Login";
 import Dashboard from "./pages/admin/dashboard/Dashboard";
 import Profile from "./pages/admin/profile/Profile";
+import Insights from "./pages/insights/Insights";
+import InsightsDetail from "./pages/insights/InsightsDetail";
 
 // Create a wrapper component to conditionally show Header/Footer
 function AppContent() {
@@ -48,6 +50,8 @@ function AppContent() {
         <Route path="/platform" element={<Platform />} />
         <Route path="/vision" element={<Vision />} />
         <Route path="/opportunity" element={<Crisis />} />
+        <Route path="/insights" element={<Insights />} />
+        <Route path="/insights/:slug" element={<InsightsDetail />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
 

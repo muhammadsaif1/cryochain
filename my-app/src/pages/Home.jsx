@@ -1,8 +1,10 @@
 import React from "react";
 import "../index.css"; // Your styles (converted from styles.css)
 import logo from "../assets/images/logo-horizontal.png";
-import hubVision from "../assets/images/hub-vision.png";
+import hubVision from "../assets/images/home.jpeg";
+import fourPillars from "../assets/images/four-pillars.png";
 import MissingSections from "../components/HomeMissingSections";
+import HubInteractive from "../components/HubInteractive";
 
 const CryoChain = () => {
   return (
@@ -32,10 +34,10 @@ const CryoChain = () => {
               to preserve and move it.
             </h1>
             <p className="lede" style={{ maxWidth: "64ch" }}>
-              A vertically integrated platform — cold storage, electric
-              logistics, solar microgrids, and edge-AI data — designed for the
-              markets where 600 million people still live without reliable
-              refrigeration.
+              A vertically integrated platform combining cold storage, electric
+              vehicle logistics, solar microgrids, and edge AI infrastructure to
+              power resilient food systems across emerging markets where more
+              than 600 million people still lack reliable refrigeration.
             </p>
             <div className="row mt-8">
               <a href="/opportunity" className="btn btn-primary btn-arrow">
@@ -276,6 +278,7 @@ const CryoChain = () => {
                   five at the point of its 2010 IPO.
                 </strong>
               </p>
+
               <div className="row mt-8">
                 <a href="/platform" className="btn btn-green btn-arrow">
                   Explore the platform
@@ -284,7 +287,7 @@ const CryoChain = () => {
             </div>
 
             {/* HUB DIAGRAM */}
-            <div className="reveal">
+            {/* <div className="reveal">
               <div
                 className="hub-diagram"
                 aria-label="Nine verticals on one hub asset"
@@ -333,6 +336,24 @@ const CryoChain = () => {
               >
                 Nine revenue streams. One fixed cost. One building.
               </p>
+            </div> */}
+
+            {/* <div
+              style={{
+                marginTop: "var(--space-8)",
+                marginBottom: "var(--space-8)",
+                borderRadius: "var(--radius-lg)",
+                overflow: "hidden",
+                aspectRatio: "16/9",
+                backgroundImage: `url(${fourPillars})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                width: "100%",
+              }}
+            /> */}
+            <div className="reveal">
+              <HubInteractive />
             </div>
           </div>
         </div>
@@ -419,7 +440,7 @@ const CryoChain = () => {
               }}
             >
               <div>
-                <div className="bignum blue">2%</div>
+                <div className="bignum red">2%</div>
                 <div
                   className="small"
                   style={{ fontWeight: 600, color: "var(--slate-700)" }}

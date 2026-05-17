@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import azureRack from "../assets/images/azure-rack.png";
 import ProofSection from "./ProofSection";
+import HomeInsights from "./HomeImsights";
 
 /**
  * MissingSections — drop these three blocks AFTER the Greenfield section
@@ -18,6 +19,7 @@ const MissingSections = () => {
     <>
       {/* ============================ THE PROOF ============================ */}
       <ProofSection />
+      <HomeInsights />
 
       {/* ============================ THE WIND BEHIND THE SAIL ============================ */}
       <section
@@ -51,10 +53,11 @@ const MissingSections = () => {
                 className="lede"
                 style={{ marginBottom: "var(--space-6)", maxWidth: "56ch" }}
               >
-                Every hub embodies a Microsoft Africa Local appliance — turning
-                our edge-storage layer into a sovereign-cloud node and
-                satisfying national data-residency requirements at near- zero
-                incremental capital cost.
+                Every hub incorporates a localized edge computing and sovereign
+                cloud infrastructure layer, transforming our cold-chain network
+                into a distributed data platform that supports national data
+                residency, AI-enabled operations, and secure in-country
+                processing with minimal incremental capital expenditure.
                 <sup
                   className="cite"
                   data-src="Microsoft Africa Local Initiative, 2024."
@@ -66,11 +69,15 @@ const MissingSections = () => {
                 className="lede"
                 style={{ marginBottom: "var(--space-8)", maxWidth: "56ch" }}
               >
-                HP Device-as-a-Service is integrated into framer and cooperative
-                obboarding. A national Buffer Stock contract anchors
-                approximately 14% of facility utilisation from Day 1. Diplomatic
-                coordination is in place. Free zone status provides a 10-year
-                corporate tax holiday and full ICSID investor protections.
+                Device-as-a-service infrastructure is embedded into farmer and
+                cooperative onboarding, enabling digital access, logistics
+                coordination, and real-time operational visibility across the
+                network. Farmer cooperatives, health organizations, and a
+                national strategic food reserve partnership are expected to
+                anchor approximately 14% of facility utilization from Day 1.
+                Government and diplomatic engagement is already underway, while
+                free zone incentives provide long-term tax advantages and
+                internationally recognized investor protections.
               </p>
 
               <Link to="/opportunity" className="btn btn-primary btn-arrow">
