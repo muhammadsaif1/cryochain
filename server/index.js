@@ -5,6 +5,7 @@ const userRoutes = require("./routes/user");
 const corsHandler = require("./middleware/corsHandler");
 const errorHandler = require("./middleware/errorHandler");
 const noteRoutes = require("./routes/note");
+const blogRoutes = require("./routes/blog");
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use(corsHandler);
 
 app.use("/api/users", userRoutes);
 app.use("/api/notes", noteRoutes);
+app.use("/api/blogs", blogRoutes);
 
 app.use(errorHandler);
 

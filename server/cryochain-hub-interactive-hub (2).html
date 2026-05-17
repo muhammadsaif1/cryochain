@@ -1,0 +1,572 @@
+<!--
+  CryoChain — Interactive Nine Verticals Hub
+  =========================================================================
+  Drop-in component. Single file, no build step, no external dependencies.
+
+  USAGE
+  -----
+  1.  Place this file on your site (e.g. /platform.html), or copy the
+      <section class="cc-hub"> block into an existing page.
+  2.  Update the <img> src to point to your hosted hub render
+      (cryochain-hub.png in this bundle, 1672×941).
+  3.  All hotspot positions are percentage-based (left/top), so the layout
+      stays accurate at any width.
+
+  HOTSPOT POSITIONS
+  -----------------
+  Each .cc-hotspot has `style="left:X%; top:Y%"`. If a marker needs to be
+  nudged, edit those two numbers — that's the only change required.
+
+  BRAND
+  -----
+  Palette and stripe colors mirror Slide 4 of the Phase I Investor Memo
+  (Cryo Blue #1F78B4, Chain Green #4CAF50, Dark Slate #1A2530, Solar
+  Orange #F39C12).
+  =========================================================================
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CryoChain — The Platform: Nine Compounding Verticals</title>
+<style>
+  :root {
+    --cc-slate:   #1A2530;
+    --cc-blue:    #1F78B4;
+    --cc-green:   #4CAF50;
+    --cc-leaf:    #A5D6A7;
+    --cc-ice:     #EBF5FB;
+    --cc-orange:  #F39C12;
+    --cc-ink:     #0F1A22;
+    --cc-mute:    #5A6873;
+    --cc-line:    #E3E8EC;
+    --cc-bg:      #F7FAFC;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color: var(--cc-ink);
+    background: var(--cc-bg);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  /* ----- Section wrapper ------------------------------------------------ */
+  .cc-hub {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+  .cc-hub__eyebrow {
+    color: var(--cc-blue);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+  .cc-hub__title {
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.1;
+    font-weight: 800;
+    color: var(--cc-slate);
+    margin: 0 0 10px;
+    letter-spacing: -0.02em;
+  }
+  .cc-hub__subtitle {
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: var(--cc-mute);
+    max-width: 720px;
+    margin: 0 0 36px;
+  }
+  .cc-hub__subtitle em {
+    font-style: normal;
+    color: var(--cc-slate);
+    font-weight: 600;
+  }
+
+  /* ----- Image stage --------------------------------------------------- */
+  .cc-stage {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--cc-slate);
+    box-shadow:
+      0 1px 0 rgba(15,26,34,0.04),
+      0 20px 40px -20px rgba(15,26,34,0.25);
+  }
+  .cc-stage__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  /* Optional dimming layer that activates when a hotspot is selected */
+  .cc-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 26, 34, 0);
+    pointer-events: none;
+    transition: background 220ms ease;
+  }
+  .cc-stage[data-active="true"]::after {
+    background: rgba(15, 26, 34, 0.38);
+  }
+
+  /* ----- Hotspot markers ----------------------------------------------- */
+  .cc-hotspot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    z-index: 2;
+  }
+  .cc-hotspot__dot {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,0.95),
+      0 6px 14px rgba(15,26,34,0.35);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+  .cc-hotspot:hover .cc-hotspot__dot,
+  .cc-hotspot:focus-visible .cc-hotspot__dot {
+    transform: scale(1.12);
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,1),
+      0 10px 22px rgba(15,26,34,0.45);
+  }
+  .cc-hotspot:focus-visible { outline: none; }
+
+  /* Pulse ring */
+  .cc-hotspot__pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    animation: cc-pulse 2.4s ease-out infinite;
+    opacity: 0.7;
+  }
+  @keyframes cc-pulse {
+    0%   { transform: scale(1);   opacity: 0.55; }
+    80%  { transform: scale(2.0); opacity: 0; }
+    100% { transform: scale(2.0); opacity: 0; }
+  }
+
+  /* Color variants — match slide 4 stripes */
+  .cc-hotspot[data-c="blue"]   .cc-hotspot__dot,
+  .cc-hotspot[data-c="blue"]   .cc-hotspot__pulse { background: var(--cc-blue); }
+  .cc-hotspot[data-c="green"]  .cc-hotspot__dot,
+  .cc-hotspot[data-c="green"]  .cc-hotspot__pulse { background: var(--cc-green); }
+  .cc-hotspot[data-c="slate"]  .cc-hotspot__dot,
+  .cc-hotspot[data-c="slate"]  .cc-hotspot__pulse { background: var(--cc-slate); }
+  .cc-hotspot[data-c="orange"] .cc-hotspot__dot,
+  .cc-hotspot[data-c="orange"] .cc-hotspot__pulse { background: var(--cc-orange); }
+
+  /* Selected state — bring marker to front, kill pulse, enlarge */
+  .cc-hotspot.is-active { z-index: 5; }
+  .cc-hotspot.is-active .cc-hotspot__dot {
+    transform: scale(1.25);
+    box-shadow:
+      0 0 0 4px #fff,
+      0 0 0 8px rgba(31,120,180,0.35),
+      0 12px 24px rgba(15,26,34,0.5);
+  }
+  .cc-hotspot.is-active .cc-hotspot__pulse { animation: none; opacity: 0; }
+
+  /* Hover label that appears above the dot */
+  .cc-hotspot__label {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--cc-slate);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 160ms ease, transform 160ms ease;
+  }
+  .cc-hotspot__label::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--cc-slate);
+  }
+  .cc-hotspot:hover .cc-hotspot__label,
+  .cc-hotspot:focus-visible .cc-hotspot__label {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ----- Detail panel -------------------------------------------------- */
+  .cc-panel {
+    position: absolute;
+    inset: auto 24px 24px auto;
+    width: min(420px, calc(100% - 48px));
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px 24px 22px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.04) inset,
+      0 24px 48px -16px rgba(15,26,34,0.5),
+      0 0 0 1px rgba(15,26,34,0.06);
+    z-index: 6;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+  .cc-panel.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .cc-panel__head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .cc-panel__num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .cc-panel__num[data-c="blue"]   { background: var(--cc-blue); }
+  .cc-panel__num[data-c="green"]  { background: var(--cc-green); }
+  .cc-panel__num[data-c="slate"]  { background: var(--cc-slate); }
+  .cc-panel__num[data-c="orange"] { background: var(--cc-orange); }
+
+  .cc-panel__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cc-slate);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .cc-panel__stripe {
+    height: 3px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+  .cc-panel__stripe[data-c="blue"]   { background: var(--cc-blue); }
+  .cc-panel__stripe[data-c="green"]  { background: var(--cc-green); }
+  .cc-panel__stripe[data-c="slate"]  { background: var(--cc-slate); }
+  .cc-panel__stripe[data-c="orange"] { background: var(--cc-orange); }
+
+  .cc-panel__body {
+    font-size: 14.5px;
+    color: var(--cc-slate);
+    line-height: 1.55;
+    margin: 0 0 14px;
+  }
+  .cc-panel__spec {
+    font-size: 12.5px;
+    color: var(--cc-mute);
+    border-top: 1px solid var(--cc-line);
+    padding-top: 12px;
+    margin: 0;
+  }
+  .cc-panel__spec strong { color: var(--cc-slate); font-weight: 600; }
+  .cc-panel__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 0;
+    background: var(--cc-ice);
+    color: var(--cc-slate);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 140ms ease;
+  }
+  .cc-panel__close:hover { background: #DDEAF3; }
+
+  /* ----- Footer caption ------------------------------------------------ */
+  .cc-caption {
+    margin-top: 22px;
+    text-align: center;
+    color: var(--cc-mute);
+    font-size: 14px;
+  }
+  .cc-caption strong { color: var(--cc-green); }
+
+  /* ----- Mobile -------------------------------------------------------- */
+  @media (max-width: 720px) {
+    .cc-hub { padding: 32px 16px 48px; }
+    .cc-hotspot { width: 32px; height: 32px; }
+    .cc-hotspot__dot { font-size: 13px; }
+    .cc-hotspot__label { font-size: 11px; padding: 4px 8px; }
+    .cc-panel {
+      position: fixed;
+      inset: auto 12px 12px 12px;
+      width: auto;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+  }
+</style>
+</head>
+<body>
+
+<section class="cc-hub" id="cc-hub">
+
+  <p class="cc-hub__eyebrow">The Platform</p>
+  <h1 class="cc-hub__title">Nine Compounding Verticals.</h1>
+  <p class="cc-hub__subtitle">
+    Cold storage anchors the hub. Eight adjacent verticals follow on the same
+    physical asset — <em>a more diversified vertical-integration thesis than
+    Tesla's five at the point of its 2010 IPO.</em>
+  </p>
+
+  <div class="cc-stage" id="cc-stage">
+
+    <!-- Hub render. Replace src with the path on your site. -->
+    <img class="cc-stage__img"
+         src="cryochain-hub.png"
+         alt="CryoChain 30,000 sqft hub showing nine integrated verticals"
+         draggable="false" />
+
+    <!-- ===============================================================
+         HOTSPOTS — positions in % of the image (1672 × 941 base).
+         Order: 1 Cold Storage, 2 Food Processing, 3 Grocery & Retail,
+         4 Pharma & Health, 5 EV Logistics, 6 EV Manufacturing,
+         7 Solar + BESS, 8 Edge Data Centre, 9 Warehouse AI.
+         =============================================================== -->
+
+    <button class="cc-hotspot" data-c="blue"   data-id="1" style="left:42%; top:23%">
+      <span class="cc-hotspot__pulse"></span>
+      <span class="cc-hotspot__dot">1</span>
+      <span class="cc-hotspot__label">Cold Storage</span>
+    </button>
+
+    <button class="cc-hotspot" data-c="blue"   data-id="2" style="left:13%; top:42%">
+      <span class="cc-hotspot__pulse"></span>
+      <span class="cc-hotspot__dot">2</span>
+      <span class="cc-hotspot__label">Food Processing</span>
+    </button>
+
+    <button class="cc-hotspot" data-c="green"  data-id="3" style="left:6%; top:56%">
+      <span class="cc-hotspot__pulse"></span>
+      <span class="cc-hotspot__dot">3</span>
+      <span class="cc-hotspot__label">Grocery &amp; Retail</span>
+    </button>
+
+    <button class="cc-hotspot" data-c="green"  data-id="4" style="left:26%; top:60%">
+      <span class="cc-hotspot__pulse"></span>
+      <span class="cc-hotspot__dot">4</span>
+      <span class="cc-hotspot__label">Pharma &amp; Health</span>
+    </button>
+
+    <button class="cc-hotspot" data-c="slate"  data-id="5" style="left:20%; top:82%">
+      <span class="cc-hotspot__pulse"></span>
+      <span class="cc-hotspot__dot">5</span>
+      <span class="cc-hotspot__label">EV Logistics</span>
+    </button>
+
+    <button class="cc-hotspot" data-c="slate"  data-id="6" style="left:88%; top:52%">
+      <span class="cc-hotspot__pulse"></span>
+      <span class="cc-hotspot__dot">6</span>
+      <span class="cc-hotspot__label">EV Manufacturing JV</span>
+    </button>
+
+    <button class="cc-hotspot" data-c="orange" data-id="7" style="left:73%; top:45%">
+      <span class="cc-hotspot__pulse"></span>
+      <span class="cc-hotspot__dot">7</span>
+      <span class="cc-hotspot__label">Solar + BESS</span>
+    </button>
+
+    <button class="cc-hotspot" data-c="blue"   data-id="8" style="left:95%; top:36%">
+      <span class="cc-hotspot__pulse"></span>
+      <span class="cc-hotspot__dot">8</span>
+      <span class="cc-hotspot__label">Edge Data Centre</span>
+    </button>
+
+    <button class="cc-hotspot" data-c="green"  data-id="9" style="left:68%; top:22%">
+      <span class="cc-hotspot__pulse"></span>
+      <span class="cc-hotspot__dot">9</span>
+      <span class="cc-hotspot__label">Warehouse AI / SCADA</span>
+    </button>
+
+    <!-- ===============================================================
+         Detail panel — content swapped in via JS
+         =============================================================== -->
+    <aside class="cc-panel" id="cc-panel" role="dialog" aria-live="polite" aria-labelledby="cc-panel-title">
+      <button class="cc-panel__close" id="cc-panel-close" aria-label="Close">×</button>
+      <div class="cc-panel__head">
+        <span class="cc-panel__num" id="cc-panel-num">1</span>
+        <h3 class="cc-panel__title" id="cc-panel-title">Cold Storage</h3>
+      </div>
+      <div class="cc-panel__stripe" id="cc-panel-stripe"></div>
+      <p class="cc-panel__body" id="cc-panel-body"></p>
+      <p class="cc-panel__spec" id="cc-panel-spec"></p>
+    </aside>
+  </div>
+
+  <p class="cc-caption">
+    9 revenue streams × 1 fixed cost = <strong>the most diversified hub-asset thesis in African infrastructure.</strong>
+  </p>
+
+</section>
+
+<script>
+  /* =================================================================
+     Vertical data — pulled from Slide 4 of the Phase I Investor Memo
+     ================================================================= */
+  const VERTICALS = {
+    1: {
+      title: "Cold Storage",
+      color: "blue",
+      body: "The anchor asset of every CryoChain hub. A 30,000 sqft multi-zone HACCP-grade facility built on NH₃/CO₂ cascade refrigeration — the gold standard for industrial cold chain efficiency.",
+      spec: "<strong>Spec:</strong> 30,000 sqft · NH₃/CO₂ cascade · six temperature zones from +2 °C to −80 °C · WHO GDP &amp; GCCA compliant."
+    },
+    2: {
+      title: "Food Processing",
+      color: "blue",
+      body: "Value-add tenancy that converts raw agricultural inputs into branded, export-ready product. Co-located with the cold store so feedstock never leaves the controlled cold chain.",
+      spec: "<strong>Anchor tenancies:</strong> cocoa butter · coconut oil · packaging &amp; primary processing for AfCFTA export."
+    },
+    3: {
+      title: "Grocery & Retail",
+      color: "green",
+      body: "Fresh produce supply to urban grocery and quick-commerce channels — closing the gap between farm output and city consumers that drives the 37% post-harvest loss rate.",
+      spec: "<strong>Channels:</strong> CryoChain Fresh Market storefronts · urban grocery wholesale · quick-commerce platform supply."
+    },
+    4: {
+      title: "Pharma & Health",
+      color: "green",
+      body: "WHO GDP-compliant pharmaceutical and vaccine cold chain. Dedicated zones at +2 to +8 °C, −20 °C, and −80 °C support routine immunisation, biologics, and ultra-cold mRNA logistics.",
+      spec: "<strong>Compliance:</strong> WHO GDP · USP 1079 · FDA 21 CFR · validated temperature mapping &amp; chain-of-custody."
+    },
+    5: {
+      title: "EV Logistics",
+      color: "slate",
+      body: "Refrigerated last-mile and inter-hub delivery on an all-electric fleet. Vehicle-to-grid capability turns idle trucks into grid-stabilising battery assets during peak demand.",
+      spec: "<strong>Fleet:</strong> Yutong T7E refrigerated box trucks · ABB Terra 184/360 charging · V2G-capable · route-optimised AI dispatch."
+    },
+    6: {
+      title: "EV Manufacturing JV",
+      color: "slate",
+      body: "Local assembly of specialty electric trucks engineered for African road conditions, climate, and load profiles. A Phase II vertical that compounds off the EV logistics demand base.",
+      spec: "<strong>Scope:</strong> joint-venture light-duty &amp; medium-duty EV truck assembly · localised supply chain · Ghana Free Zone export base."
+    },
+    7: {
+      title: "Solar + BESS",
+      color: "orange",
+      body: "Behind-the-meter generation that powers the hub, cuts diesel dependence, and feeds surplus back to the Ghanaian grid. Battery storage smooths intermittency and provides grid stabilisation services.",
+      spec: "<strong>System:</strong> 250 kW solar PV · 500 kWh LFP battery (BYD/Sungrow) · microgrid controller · grid-tied with islanding capability."
+    },
+    8: {
+      title: "Edge Data Centre",
+      color: "blue",
+      body: "Microsoft Azure Local sovereign-cloud node deployed inside every hub. Powers warehouse AI, runs latency-sensitive workloads for partners, and monetises spare compute as an enterprise tenant service.",
+      spec: "<strong>Spec:</strong> 2,500 sqft Edge DC · Uptime Tier II Phase I, Tier III Phase II · Azure Local · NH₃/CO₂ cascade chilled-water loop shared with cold store."
+    },
+    9: {
+      title: "Warehouse AI / SCADA",
+      color: "green",
+      body: "Predictive operations layer running on the Edge DC. Automates cold chain monitoring, demand forecasting, and route optimisation — and delivers farmer-facing intelligence via SMS and USSD on basic phones.",
+      spec: "<strong>Stack:</strong> SCADA automation · predictive maintenance ML · demand forecasting · multilingual SMS/USSD farmer interface."
+    }
+  };
+
+  /* =================================================================
+     Interaction
+     ================================================================= */
+  const stage      = document.getElementById('cc-stage');
+  const panel      = document.getElementById('cc-panel');
+  const panelNum   = document.getElementById('cc-panel-num');
+  const panelTitle = document.getElementById('cc-panel-title');
+  const panelStrip = document.getElementById('cc-panel-stripe');
+  const panelBody  = document.getElementById('cc-panel-body');
+  const panelSpec  = document.getElementById('cc-panel-spec');
+  const panelClose = document.getElementById('cc-panel-close');
+  const hotspots   = document.querySelectorAll('.cc-hotspot');
+
+  function openVertical(id) {
+    const v = VERTICALS[id];
+    if (!v) return;
+
+    panelNum.textContent     = id;
+    panelNum.dataset.c       = v.color;
+    panelTitle.textContent   = v.title;
+    panelStrip.dataset.c     = v.color;
+    panelBody.textContent    = v.body;
+    panelSpec.innerHTML      = v.spec;
+
+    panel.classList.add('is-open');
+    stage.dataset.active = "true";
+
+    hotspots.forEach(h => h.classList.toggle('is-active', h.dataset.id === String(id)));
+  }
+
+  function closeVertical() {
+    panel.classList.remove('is-open');
+    stage.dataset.active = "false";
+    hotspots.forEach(h => h.classList.remove('is-active'));
+  }
+
+  hotspots.forEach(h => {
+    h.addEventListener('click', e => {
+      e.stopPropagation();
+      openVertical(h.dataset.id);
+    });
+  });
+
+  panelClose.addEventListener('click', closeVertical);
+
+  // Click outside panel/hotspot to dismiss
+  document.addEventListener('click', e => {
+    if (!stage.contains(e.target)) closeVertical();
+  });
+
+  // Esc key closes
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeVertical();
+  });
+
+  // Open #1 by default so first-time visitors see how it works
+  openVertical(1);
+</script>
+
+</body>
+</html>
