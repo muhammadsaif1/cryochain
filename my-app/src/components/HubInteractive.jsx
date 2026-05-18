@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import hubImage from "../assets/images/four-pillars.png"; // update path if different
+import { useState, useEffect, useRef, useCallback } from "react";
+import hubImage from "../assets/images/four-pillars.png";
 import lineage from "../assets/images/lineage.jpeg";
 import tesla from "../assets/images/tesla.jpeg";
 
@@ -63,61 +63,152 @@ const VERTICALS = {
 };
 
 const HOTSPOTS = [
-  { id: 1, left: "42%", top: "23%" },
-  { id: 2, left: "13%", top: "42%" },
+  { id: 1, left: "42%", top: "23%", panelWidth: 260 },
+  { id: 2, left: "13%", top: "42%", panelWidth: 260 },
   { id: 3, left: "6%", top: "56%" },
   { id: 4, left: "26%", top: "60%" },
   { id: 5, left: "20%", top: "82%" },
-  { id: 6, left: "88%", top: "52%" },
+  { id: 6, left: "88%", top: "52%", panelAlign: "left-center" }, // ← override for 6
   { id: 7, left: "73%", top: "45%" },
-  { id: 8, left: "95%", top: "36%" },
-  { id: 9, left: "68%", top: "22%" },
+  { id: 8, left: "95%", top: "36%", panelWidth: 260 },
+  { id: 9, left: "68%", top: "22%", panelWidth: 250 },
 ];
 
 const HubInteractive = () => {
   const [activeId, setActiveId] = useState(null);
+  const [isTouch, setIsTouch] = useState(false);
   const stageRef = useRef(null);
-  const panelRef = useRef(null);
+  const closeTimer = useRef(null);
 
-  const open = (id) => setActiveId(id);
-  const close = () => setActiveId(null);
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: none) and (pointer: coarse)");
+    setIsTouch(mq.matches);
+    const handler = (e) => setIsTouch(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
-  // Close on Escape key
+  const open = useCallback((id) => {
+    clearTimeout(closeTimer.current);
+    setActiveId(id);
+  }, []);
+
+  const close = useCallback(() => setActiveId(null), []);
+
+  const scheduleClose = useCallback(() => {
+    closeTimer.current = setTimeout(() => setActiveId(null), 120);
+  }, []);
+
+  const cancelClose = useCallback(() => {
+    clearTimeout(closeTimer.current);
+  }, []);
+
+  useEffect(() => () => clearTimeout(closeTimer.current), []);
+
+  useEffect(() => {
+    if (!isTouch || !activeId) return;
+    const handler = (e) => {
+      if (!e.target.closest(".cc-panel") && !e.target.closest(".cc-hotspot")) {
+        close();
+      }
+    };
+    document.addEventListener("pointerdown", handler);
+    return () => document.removeEventListener("pointerdown", handler);
+  }, [isTouch, activeId, close]);
+
   useEffect(() => {
     const handler = (e) => {
       if (e.key === "Escape") close();
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, []);
-
-  // Close when clicking outside the panel
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (panelRef.current && !panelRef.current.contains(e.target)) {
-        close();
-      }
-    };
-
-    if (activeId) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [activeId]);
+  }, [close]);
 
   const active = activeId ? VERTICALS[activeId] : null;
+  const activeHotspot = activeId
+    ? HOTSPOTS.find((h) => h.id === activeId)
+    : null;
+
+  const getPanelStyle = () => {
+    if (!activeHotspot) return {};
+    const leftPct = parseFloat(activeHotspot.left);
+    const topPct = parseFloat(activeHotspot.top);
+    const panelWidth = activeHotspot.panelWidth ?? 340;
+    const style = {
+      position: "absolute",
+      width: `${panelWidth}px`,
+      zIndex: 6,
+    };
+
+    // Special override: open left and vertically centered on the hotspot
+    if (activeHotspot.panelAlign === "left-center") {
+      style.left = "55%"; // sits between hotspot 7 (73%) and center — adjust if needed
+      style.top = "20%"; // aligns with hotspot 9's vertical position
+      style.transform = "none";
+      return style;
+    }
+
+    // Default logic for all other hotspots
+    if (leftPct > 55) {
+      style.right = `${100 - leftPct + 3}%`;
+    } else {
+      style.left = `${leftPct + 3}%`;
+    }
+
+    if (topPct > 45) {
+      style.bottom = `${100 - topPct + 3}%`;
+    } else {
+      style.top = `${topPct + 3}%`;
+    }
+
+    return style;
+  };
+
+  const getHotspotHandlers = (id) => {
+    if (isTouch) {
+      return {
+        onClick: (e) => {
+          e.stopPropagation();
+          activeId === id ? close() : open(id);
+        },
+      };
+    }
+    return {
+      onMouseEnter: () => open(id),
+      onMouseLeave: scheduleClose,
+    };
+  };
+
+  const PanelContent = () => (
+    <>
+      <button className="cc-panel__close" onClick={close} aria-label="Close">
+        ×
+      </button>
+      <div className="cc-panel__head">
+        <span className={`cc-panel__num cc-panel__num--${active.color}`}>
+          {activeId}
+        </span>
+        <h3 className="cc-panel__title">{active.title}</h3>
+      </div>
+      {active.img && (
+        <img
+          src={active.img}
+          alt={active.title}
+          style={{ width: "100%", borderRadius: 8, marginBottom: 10 }}
+        />
+      )}
+      <div className={`cc-panel__stripe cc-panel__stripe--${active.color}`} />
+      <p className="cc-panel__body">{active.body}</p>
+      <p className="cc-panel__spec">
+        <strong>Spec: </strong>
+        {active.spec}
+      </p>
+    </>
+  );
 
   return (
     <div className="cc-hub-wrap">
-      {/* Stage / Backdrop */}
-      <div
-        ref={stageRef}
-        className={`cc-stage ${activeId ? "cc-stage--dimmed" : ""}`}
-        onClick={close} // Clicking anywhere on stage closes it
-      >
+      <div ref={stageRef} className="cc-stage">
         <img
           className="cc-stage__img"
           src={hubImage}
@@ -125,19 +216,17 @@ const HubInteractive = () => {
           draggable="false"
         />
 
-        {/* Hotspots */}
         {HOTSPOTS.map(({ id, left, top }) => {
           const v = VERTICALS[id];
           return (
             <button
               key={id}
-              className={`cc-hotspot cc-hotspot--${v.color} ${activeId === id ? "cc-hotspot--active" : ""}`}
+              className={`cc-hotspot cc-hotspot--${v.color} ${
+                activeId === id ? "cc-hotspot--active" : ""
+              }`}
               style={{ left, top }}
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent closing when clicking hotspot
-                open(id);
-              }}
               aria-label={v.title}
+              {...getHotspotHandlers(id)}
             >
               <span className="cc-hotspot__pulse" />
               <span className="cc-hotspot__dot">{id}</span>
@@ -146,43 +235,27 @@ const HubInteractive = () => {
           );
         })}
 
-        {/* Detail Panel */}
-        {active && (
+        {/* Desktop only — absolute panel near the hotspot */}
+        {active && !isTouch && (
           <aside
-            ref={panelRef}
-            className="cc-panel cc-panel--open"
-            onClick={(e) => e.stopPropagation()} // Important: prevent closing when clicking inside panel
+            className="cc-panel cc-panel--open cc-panel--desktop"
+            style={getPanelStyle()}
+            onMouseEnter={cancelClose}
+            onMouseLeave={scheduleClose}
+            onClick={(e) => e.stopPropagation()}
           >
-            <button
-              className="cc-panel__close"
-              onClick={close}
-              aria-label="Close"
-            >
-              ×
-            </button>
-
-            <div className="cc-panel__head">
-              <span className={`cc-panel__num cc-panel__num--${active.color}`}>
-                {activeId}
-              </span>
-              <h3 className="cc-panel__title">{active.title}</h3>
-            </div>
-            {active.img && <img src={active.img} />}
-
-            <div
-              className={`cc-panel__stripe cc-panel__stripe--${active.color}`}
-            />
-
-            <p className="cc-panel__body">{active.body}</p>
-            <p className="cc-panel__spec">
-              <strong>Spec: </strong>
-              {active.spec}
-            </p>
+            <PanelContent />
           </aside>
         )}
       </div>
 
-      {/* Caption */}
+      {/* Mobile only — static panel below the image */}
+      {active && isTouch && (
+        <aside className="cc-panel cc-panel--open cc-panel--mobile">
+          <PanelContent />
+        </aside>
+      )}
+
       <p className="cc-caption">
         9 revenue streams × 1 fixed cost ={" "}
         <strong className="cc-caption__highlight">

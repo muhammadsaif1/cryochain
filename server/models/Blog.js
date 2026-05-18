@@ -41,7 +41,7 @@ const blogSchema = new mongoose.Schema(
 
     readTime: {
       type: Number,
-      default: 0, // minutes
+      default: 1, // minutes
     },
 
     views: {
@@ -72,11 +72,7 @@ blogSchema.pre("save", function () {
   }
 
   // Set publishedAt when status changes to published
-  if (
-    this.status === "published" &&
-    this.isModified("status") &&
-    !this.publishedAt
-  ) {
+  if (this.isPublished && this.isModified("isPublished") && !this.publishedAt) {
     this.publishedAt = new Date();
   }
 
@@ -131,13 +127,13 @@ blogSchema.virtual("relativeTime").get(function () {
 });
 
 // Calculate read time from description
-blogSchema.methods.calculateReadTime = function () {
-  if (!this.description) return 0;
-  const plainText = this.description.replace(/<[^>]*>/g, "");
-  const wordsPerMinute = 200;
-  const wordCount = plainText.split(/\s+/).length;
-  this.readTime = Math.ceil(wordCount / wordsPerMinute);
-  return this.readTime;
-};
+// blogSchema.methods.calculateReadTime = function () {
+//   if (!this.description) return 0;
+//   const plainText = this.description.replace(/<[^>]*>/g, "");
+//   const wordsPerMinute = 200;
+//   const wordCount = plainText.split(/\s+/).length;
+//   this.readTime = Math.ceil(wordCount / wordsPerMinute);
+//   return this.readTime;
+// };
 
 module.exports = mongoose.model("Blog", blogSchema);

@@ -5,7 +5,8 @@ const Blog = require("../models/Blog");
 // @access  Private/Admin
 const createBlog = async (req, res) => {
   try {
-    const { title, description, author, isPublished, tags } = req.body;
+    const { title, description, author, isPublished, tags, readTime } =
+      req.body;
 
     if (!title || !description || !author) {
       return res.status(400).json({
@@ -20,10 +21,11 @@ const createBlog = async (req, res) => {
       author,
       isPublished: isPublished || false,
       tags: tags || [],
+      readTime,
     });
 
     // Calculate read time
-    blog.calculateReadTime();
+
     await blog.save();
 
     res.status(201).json({
@@ -175,10 +177,10 @@ const updateBlog = async (req, res) => {
     });
 
     // Recalculate read time if description was updated
-    if (updateData.description) {
-      blog.calculateReadTime();
-      await blog.save();
-    }
+    // if (updateData.description) {
+    //   blog.calculateReadTime();
+    //   await blog.save();
+    // }
 
     res.status(200).json({
       success: true,

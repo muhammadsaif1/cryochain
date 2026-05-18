@@ -148,22 +148,15 @@ const InsightsDetail = () => {
       <header className="article-hero">
         <div className="container-narrow">
           <div className="reveal" style={{ marginBottom: "var(--space-6)" }}>
-            <Link
-              onClick={(e) => {
-                e.preventDefault();
-                handleGoBack();
+            <button
+              onClick={() => {
+                navigate(-1);
               }}
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.78rem",
-                color: "var(--slate-500)",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-              }}
+              className="btn btn-ghost"
+              style={{ marginTop: "1rem" }}
             >
               ← Go Back
-            </Link>
+            </button>
           </div>
 
           <div className="reveal">

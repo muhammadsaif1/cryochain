@@ -12,6 +12,7 @@ import {
   clearError,
 } from "../../redux/slices/blogSlice";
 import RichEditor from "./RichEditor";
+import { Link } from "react-router-dom";
 
 /* ─── tiny helpers ─── */
 const fmtDate = (iso) => {
@@ -87,8 +88,32 @@ const BlogForm = ({ editBlog, onSaved, onCancel }) => {
       result = await dispatch(createBlog(payload));
     }
 
-    if ((editBlog ? updateBlog : createBlog).fulfilled.match(result)) {
+    const actionCreator = editBlog ? updateBlog : createBlog;
+
+    if (actionCreator.fulfilled.match(result)) {
       onSaved();
+    } else if (actionCreator.rejected.match(result)) {
+      // Catch duplicate title error from backend
+      const errPayload = result.payload || result.error?.message || "";
+      const errStr =
+        typeof errPayload === "string"
+          ? errPayload
+          : errPayload?.message || JSON.stringify(errPayload);
+
+      const duplicate = checkDuplicate(form.title);
+      if (duplicate) {
+        setLocalErr(`"${form.title.trim()}" is already posted.`);
+        return;
+      }
+      if (isDuplicate) {
+        setLocalErr(`"${form.title.trim()}" is already posted.`);
+      } else {
+        setLocalErr(
+          typeof errPayload === "string" && errPayload
+            ? errPayload
+            : "Something went wrong. Please try again.",
+        );
+      }
     }
   };
 
@@ -102,7 +127,10 @@ const BlogForm = ({ editBlog, onSaved, onCancel }) => {
           <input
             type="text"
             value={form.title}
-            onChange={(e) => set("title", e.target.value)}
+            onChange={(e) => {
+              set("title", e.target.value);
+              if (localErr) setLocalErr("");
+            }}
             placeholder="Article title"
             className={
               touched.title && !form.title.trim() ? "bf-input--err" : ""
@@ -200,6 +228,14 @@ const BlogPanel = () => {
     currentPage: 1,
     totalPages: 1,
     totalItems: 0,
+  };
+
+  const checkDuplicate = (title) => {
+    const normalized = title.trim().toLowerCase();
+    return blogs.find(
+      (b) =>
+        b.title.trim().toLowerCase() === normalized && b._id !== editBlog?._id, // exclude current blog when editing
+    );
   };
 
   const [tab, setTab] = useState("list"); // "list" | "new"
@@ -312,6 +348,7 @@ const BlogPanel = () => {
   const onSaved = () => {
     setTab("list");
     setEditBlog(null);
+    setSelected([]);
     dispatch(clearError());
     fetchBlogs(1);
     setPage(1);
@@ -320,6 +357,7 @@ const BlogPanel = () => {
   const openEdit = (blog) => {
     setEditBlog(blog);
     setTab("new");
+    setSelected([]);
   };
 
   return (
@@ -347,6 +385,7 @@ const BlogPanel = () => {
             onClick={() => {
               setTab("list");
               setEditBlog(null);
+              setSelected([]);
               dispatch(clearError());
             }}
           >
@@ -357,6 +396,7 @@ const BlogPanel = () => {
             onClick={() => {
               setTab("new");
               setEditBlog(null);
+              setSelected([]);
               dispatch(clearError());
             }}
           >
@@ -443,6 +483,7 @@ const BlogPanel = () => {
                   />
                 </span>
                 <span>Title</span>
+                <span className="bp-col--view">View</span>
                 <span className="bp-col--author">Author</span>
                 <span className="bp-col--date">Date</span>
                 <span className="bp-col--read">Read</span>
@@ -470,11 +511,43 @@ const BlogPanel = () => {
                   {/* title */}
                   <div className="bp-row__title-wrap">
                     <span className="bp-row__title">{blog.title}</span>
-                    {/* <span className="bp-row__excerpt">
-                      {blog.excerpt ||
-                        stripHtml(blog.description).substring(0, 80)}
-                    </span> */}
                   </div>
+
+                  {/* ── VIEW icon ── */}
+                  <span
+                    className="bp-col--view"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Link
+                      to={`/insights/${blog.slug}`}
+                      className="bp-view-btn"
+                      title="View article"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        width="16"
+                        height="16"
+                      >
+                        <path
+                          d="M1 10s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                          strokeLinejoin="round"
+                        />
+                        <circle
+                          cx="10"
+                          cy="10"
+                          r="2.5"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                        />
+                      </svg>
+                      <span>View</span>
+                    </Link>
+                  </span>
 
                   {/* author */}
                   <span className="bp-col--author bp-row__author">

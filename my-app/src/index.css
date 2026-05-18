@@ -2384,7 +2384,7 @@ body {
     padding: 4px 7px;
   }
   .cc-panel {
-    position: fixed;
+    /* position: fixed; */
     inset: auto 12px 12px 12px;
     width: auto;
     max-height: 55vh;
@@ -2398,6 +2398,20 @@ body {
   transform: scale(0.85); /* Reduce size by 15% - adjust as needed */
   transform-origin: top center;
   padding-bottom: 20px; /* optional breathing room */
+}
+
+/* Mobile panel — sits below the image as a normal document block */
+.cc-panel--mobile {
+  position: static;
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+
+/* Safety net — desktop panel should never show on touch screens */
+.cc-panel--desktop {
+  display: block;
 }
 
 /* Optional: Reduce even more on mobile */
