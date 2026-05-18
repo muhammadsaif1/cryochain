@@ -523,8 +523,10 @@ const Insights = () => {
     );
   }, [dispatch, page]);
 
-  const featured = blogs[0] || null;
-  const gridBlogs = blogs.slice(1); // rest go into grid
+  const publishedBlogs = blogs.filter((blog) => blog.isPublished);
+
+  const featured = publishedBlogs[0] ?? null;
+  const gridBlogs = publishedBlogs.slice(1, 5);
 
   const handleLoadMore = () => setPage((p) => p + 1);
   const hasMore = pagination.currentPage < pagination.totalPages;
@@ -707,7 +709,7 @@ const Insights = () => {
               {!loading && !hasMore && blogs.length > 1 && (
                 <p className="ins-end-note">
                   <span className="ins-end-rule" />
-                  That's everything — {pagination.totalItems ||
+                  That's everything — {publishedBlogs.length ||
                     blogs.length}{" "}
                   article
                   {(pagination.totalItems || blogs.length) !== 1

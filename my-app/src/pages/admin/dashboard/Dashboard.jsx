@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/slices/authSlice"; // adjust path if needed
 import NotesPanel from "../../../components/admin/NotesPanel";
 import "./dashboard.css";
+import BlogPanel from "../../../components/admin/BlogPanel";
 
 const NAV_ITEMS = [
   { id: "notes", label: "Messages", icon: "✉" },
@@ -156,15 +157,7 @@ const Dashboard = () => {
         <div className="db-content">
           {activeTab === "notes" && <NotesPanel />}
 
-          {activeTab === "blogs" && (
-            <div className="db-placeholder">
-              <div className="db-placeholder__icon">✦</div>
-              <h2 className="db-placeholder__title">Blogs</h2>
-              <p className="db-placeholder__text">
-                This section is coming soon. Blog management will appear here.
-              </p>
-            </div>
-          )}
+          {activeTab === "blogs" && <BlogPanel />}
         </div>
       </div>
     </div>

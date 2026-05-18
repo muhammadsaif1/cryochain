@@ -111,13 +111,15 @@ const InsightsDetail = () => {
       <div className="ins-detail-state ins-detail-state--error">
         <span style={{ fontSize: "2rem" }}>⚠</span>
         <p>{error || "Article not found."}</p>
-        <Link
-          to="/insights"
+        <button
+          onClick={() => {
+            navigate(-1);
+          }}
           className="btn btn-ghost"
           style={{ marginTop: "1rem" }}
         >
-          ← Back to insights
-        </Link>
+          ← Go Back
+        </button>
       </div>
     );
   }
@@ -136,6 +138,10 @@ const InsightsDetail = () => {
         .toUpperCase()
     : "AU";
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
       {/* ── ARTICLE HERO ── */}
@@ -143,7 +149,10 @@ const InsightsDetail = () => {
         <div className="container-narrow">
           <div className="reveal" style={{ marginBottom: "var(--space-6)" }}>
             <Link
-              to="/insights"
+              onClick={(e) => {
+                e.preventDefault();
+                handleGoBack();
+              }}
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "0.78rem",
@@ -153,7 +162,7 @@ const InsightsDetail = () => {
                 textDecoration: "none",
               }}
             >
-              ← All insights
+              ← Go Back
             </Link>
           </div>
 

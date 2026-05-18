@@ -100,8 +100,10 @@ const HomeInsights = () => {
     );
   }, [dispatch]);
 
-  const featured = blogs[0] ?? null;
-  const sideList = blogs.slice(1, 5);
+  const publishedBlogs = blogs.filter((blog) => blog.isPublished);
+
+  const featured = publishedBlogs[0] ?? null;
+  const sideList = publishedBlogs.slice(1, 5);
 
   return (
     <section className="hi-section">
