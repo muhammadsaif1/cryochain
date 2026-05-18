@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../index.css";
 
 // Image Import
-import azureRack from "../assets/images/azure-rack.png";
+import azureRack from "../assets/images/data.jpeg";
 import Food from "../assets/images/crisis-01-farmer-loss.jpg";
 import Refrigerator from "../assets/images/crisis-02-pharmacy.jpg";
 import Logistics from "../assets/images/movement.png";

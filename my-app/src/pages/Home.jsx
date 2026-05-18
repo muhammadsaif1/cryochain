@@ -250,7 +250,7 @@ const CryoChain = () => {
       <section>
         <div className="container">
           <div
-            className="grid grid-2"
+            className="grid"
             style={{ alignItems: "center", gap: "var(--space-16)" }}
           >
             <div className="reveal">
@@ -278,83 +278,19 @@ const CryoChain = () => {
                   five at the point of its 2010 IPO.
                 </strong>
               </p>
-
+              <div className="reveal">
+                <HubInteractive />
+              </div>
               <div className="row mt-8">
-                <a href="/platform" className="btn btn-green btn-arrow">
-                  Explore the platform
-                </a>
+                <div className="mx-auto text-center">
+                  <a href="/platform" className="btn btn-green btn-arrow">
+                    Explore the platform
+                  </a>
+                </div>
               </div>
             </div>
 
             {/* HUB DIAGRAM */}
-            {/* <div className="reveal">
-              <div
-                className="hub-diagram"
-                aria-label="Nine verticals on one hub asset"
-              >
-                <div className="hub-center">
-                  CryoChain
-                  <br />
-                  Hub
-                </div>
-                <div className="hub-spoke" style={{ top: "0%", left: "40%" }}>
-                  <span className="num">1</span>
-                  <span className="icon">❄️</span>Cold Storage
-                </div>
-                <div className="hub-spoke" style={{ top: "12%", left: "70%" }}>
-                  <span className="num">2</span>
-                  <span className="icon">🌾</span>Processing
-                </div>
-                <div className="hub-spoke" style={{ top: "40%", left: "80%" }}>
-                  <span className="num">3</span>
-                  <span className="icon">🛒</span>Fresh Retail
-                </div>
-                <div className="hub-spoke" style={{ top: "70%", left: "70%" }}>
-                  <span className="num">4</span>
-                  <span className="icon">💊</span>Pharma
-                </div>
-                <div className="hub-spoke" style={{ top: "82%", left: "40%" }}>
-                  <span className="num">5</span>
-                  <span className="icon">🚚</span>EV Logistics
-                </div>
-                <div className="hub-spoke" style={{ top: "70%", left: "8%" }}>
-                  <span className="num">6</span>
-                  <span className="icon">🔧</span>EV Assembly
-                </div>
-                <div className="hub-spoke" style={{ top: "40%", left: "0%" }}>
-                  <span className="num">7</span>
-                  <span className="icon">☀️</span>Solar + BESS
-                </div>
-                <div className="hub-spoke" style={{ top: "12%", left: "8%" }}>
-                  <span className="num">8</span>
-                  <span className="icon">🖥️</span>Edge Data
-                </div>
-              </div>
-              <p
-                className="small text-center mt-8"
-                style={{ fontStyle: "italic" }}
-              >
-                Nine revenue streams. One fixed cost. One building.
-              </p>
-            </div> */}
-
-            {/* <div
-              style={{
-                marginTop: "var(--space-8)",
-                marginBottom: "var(--space-8)",
-                borderRadius: "var(--radius-lg)",
-                overflow: "hidden",
-                aspectRatio: "16/9",
-                backgroundImage: `url(${fourPillars})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                width: "100%",
-              }}
-            /> */}
-            <div className="reveal">
-              <HubInteractive />
-            </div>
           </div>
         </div>
       </section>

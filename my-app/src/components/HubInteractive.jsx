@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import hubImage from "../assets/images/four-pillars.png"; // update path if different
+import lineage from "../assets/images/lineage.jpeg";
+import tesla from "../assets/images/tesla.jpeg";
 
 const VERTICALS = {
   1: {
@@ -31,12 +33,14 @@ const VERTICALS = {
     color: "slate",
     body: "Refrigerated last-mile and inter-hub delivery on an all-electric fleet. Vehicle-to-grid capability turns idle trucks into grid-stabilising battery assets during peak demand.",
     spec: "Fleet: Yutong T7E refrigerated box trucks · ABB Terra 184/360 charging · V2G-capable · route-optimised AI dispatch.",
+    img: lineage,
   },
   6: {
     title: "EV Manufacturing JV",
     color: "slate",
     body: "Local assembly of specialty electric trucks engineered for African road conditions, climate, and load profiles. A Phase II vertical that compounds off the EV logistics demand base.",
     spec: "Scope: joint-venture light-duty & medium-duty EV truck assembly · localised supply chain · Ghana Free Zone export base.",
+    img: tesla,
   },
   7: {
     title: "Solar + BESS",
@@ -163,6 +167,7 @@ const HubInteractive = () => {
               </span>
               <h3 className="cc-panel__title">{active.title}</h3>
             </div>
+            {active.img && <img src={active.img} />}
 
             <div
               className={`cc-panel__stripe cc-panel__stripe--${active.color}`}

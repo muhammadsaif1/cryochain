@@ -113,9 +113,18 @@ const HomeInsights = () => {
           <div className="hi-header__left">
             <p className="hi-eyebrow">
               <span className="hi-rule" />
-              Insights &amp; Field Notes
             </p>
-            <h2 className="hi-title">Dispatches from the build.</h2>
+            <h1
+              className="mag-h1"
+              style={{
+                marginTop: "var(--space-6)",
+                fontSize: "clamp(2.4rem, 5.5vw, 4.6rem)",
+              }}
+            >
+              Insights &amp; <em> Notes</em>
+              <br />
+              Dispatches from the team.
+            </h1>
             <p className="hi-sub">
               Founder essays, field reports, and analysis on the cold chain, EV
               logistics, and sovereign edge compute — written by the team
@@ -273,13 +282,26 @@ const HomeInsights = () => {
           margin-left: 12px;
         }
 
-        .hi-feat__excerpt {
-          font-size: 0.95rem;
-          line-height: 1.55;
-          color: var(--slate-600);
-          margin: 0;
-          margin-left: 12px;
-        }
+     .hi-feat__excerpt {
+  font-size: clamp(0.9rem, 2.8vw, 1rem);
+  line-height: 1.6;
+  color: var(--slate-600);
+  margin: 0 0 0 12px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .hi-feat__excerpt {
+    margin-left: 4px;
+    -webkit-line-clamp: 3;
+    line-height: 1.5;
+  }
+}
 
 
         /* List */
@@ -366,6 +388,36 @@ const HomeInsights = () => {
             height: 28px;
           }
         }
+          /* All Insights Link Button */
+.hi-all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: white;
+  color: var(--cryo-blue, #1e40af);
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+  border: 1px solid #e5e7eb;
+  white-space: nowrap;
+  margin-bottom: var(--space-8);
+}
+
+.hi-all-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(30, 64, 175, 0.15);
+  background: var(--cryo-blue, #1e40af);
+  color: white;
+  border-color: var(--cryo-blue, #1e40af);
+}
+
+.hi-all-link:active {
+  transform: scale(0.97);
+}
       `}</style>
     </section>
   );

@@ -2406,3 +2406,26 @@ body {
     transform: scale(0.78);
   }
 }
+
+/* Default size for desktop */
+.expansion-map {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Mobile view - smaller size */
+@media (max-width: 768px) {
+  .expansion-map {
+    width: 95%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+/* For very small mobile devices */
+@media (max-width: 480px) {
+  .expansion-map {
+    width: 90%;
+    max-width: 350px;
+  }
+}

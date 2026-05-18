@@ -378,26 +378,31 @@ const Contact = () => {
                 className="card-tinted reveal"
                 style={{ marginBottom: "var(--space-6)" }}
               >
-                <span className="eyebrow">Direct Contact</span>
+                <span className="eyebrow">Offices</span>
                 <h3 style={{ marginTop: "var(--space-2)", fontSize: "1.4rem" }}>
                   For strategic conversations
                 </h3>
                 <div style={{ marginTop: "var(--space-6)" }}>
                   {[
                     {
-                      label: "General Inquiries",
-                      email: "hello@cryochain.com",
+                      label: "Ghana ",
+                      email: "4th Floor, Stanbic Heights, Accra, Ghana",
+                      flag: "https://flagcdn.com/gh.svg",
                     },
                     {
-                      label: "Partner Relations",
-                      email: "partners@cryochain.com",
+                      label: "USA",
+                      email:
+                        "611 South DuPont Highway, Suite 102, Dover, DE 19901",
+                      flag: "https://flagcdn.com/us.svg",
                     },
-                    { label: "Press", email: "media@cryochain.com" },
-                  ].map(({ label, email }) => (
+                  ].map(({ label, email, flag }) => (
                     <div key={label} style={{ marginBottom: "var(--space-4)" }}>
-                      <p
+                      <div
                         className="small"
                         style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
                           textTransform: "uppercase",
                           letterSpacing: "0.12em",
                           fontWeight: 600,
@@ -405,12 +410,24 @@ const Contact = () => {
                           marginBottom: "var(--space-2)",
                         }}
                       >
-                        {label}
-                      </p>
+                        <span>{label}</span>
+                        <img
+                          src={flag}
+                          alt={`${label} flag`}
+                          width={20}
+                          height={14}
+                          style={{
+                            display: "inline-block",
+                            verticalAlign: "middle",
+                          }}
+                        />
+                      </div>
+
+                      {/* Address */}
                       <p
                         style={{
                           margin: 0,
-                          fontWeight: 500,
+                          fontWeight: 800,
                           color: "var(--slate-900)",
                         }}
                       >
@@ -422,7 +439,7 @@ const Contact = () => {
               </div>
 
               <div className="card-tinted  reveal" id="delegation">
-                <span className="eyebrow green">Site Visits</span>
+                <span className="eyebrow green">Visit Phase I</span>
                 <h3 style={{ marginTop: "var(--space-2)", fontSize: "1.4rem" }}>
                   Join the West Africa Delegation
                 </h3>
@@ -432,14 +449,26 @@ const Contact = () => {
                     marginTop: "var(--space-4)",
                   }}
                 >
-                  We coordinate periodic curated visits to the Phase I site and
-                  the surrounding region — with diplomatic coordination,
-                  ministerial meetings, and direct engagement with national
-                  agricultural and trade institutions.
+                  West Africa is entering a new era of infrastructure, trade,
+                  and agricultural transformation, beginning with Ghana as the
+                  gateway for regional growth and development.
                 </p>
                 <p style={{ color: "var(--slate-700)" }}>
-                  Mention "delegation" in your message and we will share the
-                  next available dates.
+                  Our curated delegations provide direct access to the Phase I
+                  development site in Ghana, along with diplomatic coordination,
+                  ministerial engagement, and meetings with agricultural,
+                  logistics, and trade institutions helping shape the region’s
+                  future.
+                </p>
+                <p style={{ color: "var(--slate-700)" }}>
+                  This is an opportunity to engage early, build relationships on
+                  the ground, and participate in the development of Western
+                  Africa’s next-generation infrastructure economy, not observe
+                  it from the sidelines.
+                </p>
+                <p style={{ color: "var(--slate-700)" }}>
+                  Mention “delegation” in your message, and we will share the
+                  next available visit dates.
                 </p>
               </div>
 

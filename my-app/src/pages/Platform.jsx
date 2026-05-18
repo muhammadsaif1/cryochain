@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../index.css";
 
-import opsCollage from "../assets/images/ops-collage.png";
-import azureRack from "../assets/images/azure-rack.png";
+import opsCollage from "../assets/images/azure-rack2.png";
+import azureRack from "../assets/images/hub-vision.png";
 import ProofSection from "../components/ProofSection";
 import HubInteractive from "../components/HubInteractive";
 

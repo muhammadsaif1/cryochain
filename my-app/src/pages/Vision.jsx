@@ -58,6 +58,7 @@ const Vision = () => {
           <img
             src={mapImage}
             alt="CryoChain fifteen-hub Pan-African expansion map — phased rollout from Ghana through West Africa to the continent"
+            className="expansion-map"
             style={{
               width: "100%",
               height: "auto",

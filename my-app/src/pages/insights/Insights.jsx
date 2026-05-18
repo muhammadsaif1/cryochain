@@ -539,7 +539,7 @@ const Insights = () => {
           <div className="reveal" style={{ maxWidth: "900px" }}>
             <span className="kicker">
               <span className="dot" />
-              &nbsp;The Magazine&nbsp;·&nbsp;Issue No. 1
+              &nbsp;Cryochain&nbsp;·&nbsp;Phase I
             </span>
             <h1
               className="mag-h1"
@@ -548,9 +548,9 @@ const Insights = () => {
                 fontSize: "clamp(2.4rem, 5.5vw, 4.6rem)",
               }}
             >
-              Insights &amp; <em>field notes</em>
+              Insights &amp; <em> Notes</em>
               <br />
-              from the build.
+              Dispatches from the team.
             </h1>
             <p className="lede" style={{ maxWidth: "64ch" }}>
               Founder essays, field reports, and analysis on cold chain
@@ -737,7 +737,7 @@ const Insights = () => {
                 marginRight: "auto",
               }}
             >
-              One signal a month.{" "}
+              Focused signals.{" "}
               <em style={{ color: "var(--cryo-blue)", fontStyle: "italic" }}>
                 Zero noise.
               </em>
@@ -749,9 +749,9 @@ const Insights = () => {
                 margin: "var(--space-4) auto var(--space-8)",
               }}
             >
-              Monthly briefing: build-progress updates, sector analysis, and
-              field dispatches from the Phase I hub. Curated for partners and
-              operators.
+              Periodic briefings featuring build progress, sector intelligence,
+              and on-the-ground dispatches from the Phase I hub — curated for
+              partners and operators.
             </p>
             <form
               className="ins-subscribe-form"
