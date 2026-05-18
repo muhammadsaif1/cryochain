@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import azureRack from "../assets/images/azure-rack.png";
+import azureRack from "../assets/images/home.jpeg";
 import ProofSection from "./ProofSection";
 import HomeInsights from "./HomeImsights";
 

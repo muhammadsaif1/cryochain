@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../index.css";
+import mapImage from "../assets/images/map.jpeg";
 
 const Vision = () => {
   // Add this inside your Vision component, before the return statement
@@ -45,194 +46,37 @@ const Vision = () => {
 
       {/* ========================== EXPANSION MAP ========================== */}
       <section className="tight">
-        <div className="container">
-          <div
-            className="reveal text-center"
-            style={{ maxWidth: "720px", margin: "0 auto var(--space-12)" }}
-          >
-            <span className="eyebrow green">The Footprint</span>
-            <h2>Fifteen hubs. ~$122.5M of deployed network value.</h2>
-          </div>
-
-          <div
-            className="reveal"
+        <div
+          className="reveal"
+          style={{
+            maxWidth: "1000px",
+            margin: "0 auto",
+            borderRadius: "var(--radius-xl)",
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src={mapImage}
+            alt="CryoChain fifteen-hub Pan-African expansion map — phased rollout from Ghana through West Africa to the continent"
             style={{
-              maxWidth: "1000px",
-              margin: "0 auto",
-              background:
-                "linear-gradient(135deg, var(--sky-tint), var(--leaf-mint))",
-              borderRadius: "var(--radius-xl)",
-              padding: "var(--space-12)",
+              width: "100%",
+              height: "auto",
+              display: "block",
+              marginTop: "4px",
+            }}
+          />
+          <p
+            className="small text-center"
+            style={{
+              marginTop: "var(--space-6)",
+              fontStyle: "italic",
+              paddingBottom: "var(--space-4)",
             }}
           >
-            <svg
-              viewBox="0 0 800 500"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ width: "100%", height: "auto" }}
-            >
-              <path
-                d="M 80 220 Q 120 160 200 150 L 280 130 Q 340 120 400 140 L 460 130 Q 540 140 600 180 L 660 220 Q 700 260 690 320 L 660 380 Q 600 420 540 410 L 460 400 Q 380 410 320 400 L 240 390 Q 160 380 120 340 L 90 290 Z"
-                fill="#FFFFFF"
-                stroke="#BAC2CC"
-                strokeWidth="1.5"
-                opacity="0.9"
-              />
-              <g
-                stroke="#E8ECEF"
-                strokeWidth="1"
-                strokeDasharray="3 4"
-                fill="none"
-                opacity="0.6"
-              >
-                <path d="M 200 150 L 220 380" />
-                <path d="M 310 135 L 320 395" />
-                <path d="M 420 135 L 430 405" />
-                <path d="M 540 145 L 540 410" />
-              </g>
-              <g
-                fill="#6B7785"
-                fontFamily="Inter"
-                fontSize="11"
-                fontWeight="500"
-                letterSpacing="1.5"
-              >
-                <text x="140" y="290" textAnchor="middle">
-                  SENEGAL
-                </text>
-                <text x="260" y="290" textAnchor="middle">
-                  CÔTE D'IVOIRE
-                </text>
-                <text x="370" y="290" textAnchor="middle">
-                  GHANA
-                </text>
-                <text x="480" y="290" textAnchor="middle">
-                  NIGERIA
-                </text>
-                <text x="600" y="290" textAnchor="middle">
-                  CAMEROON
-                </text>
-              </g>
-              <g>
-                <circle
-                  cx="380"
-                  cy="310"
-                  r="22"
-                  fill="#1F78B4"
-                  opacity="0.18"
-                />
-                <circle cx="380" cy="310" r="12" fill="#1F78B4" />
-                <circle cx="380" cy="310" r="5" fill="#FFFFFF" />
-                <text
-                  x="380"
-                  y="345"
-                  textAnchor="middle"
-                  fill="#1A2330"
-                  fontFamily="Fraunces"
-                  fontSize="13"
-                  fontWeight="500"
-                >
-                  Phase I Anchor
-                </text>
-                <text
-                  x="380"
-                  y="360"
-                  textAnchor="middle"
-                  fill="#6B7785"
-                  fontFamily="Inter"
-                  fontSize="10"
-                >
-                  Eastern Region · 2026
-                </text>
-              </g>
-              <circle cx="350" cy="300" r="7" fill="#4CAF50" />
-              <circle cx="395" cy="290" r="7" fill="#4CAF50" />
-              <circle cx="360" cy="270" r="7" fill="#4CAF50" />
-              <circle cx="365" cy="220" r="7" fill="#A5D6A7" />
-              <circle cx="375" cy="195" r="7" fill="#A5D6A7" />
-              <circle cx="140" cy="260" r="6" fill="#E0A92B" />
-              <circle cx="260" cy="320" r="6" fill="#E0A92B" />
-              <circle cx="475" cy="320" r="6" fill="#E0A92B" />
-              <circle cx="500" cy="350" r="6" fill="#E0A92B" />
-              <circle cx="610" cy="340" r="6" fill="#E0A92B" />
-              <g
-                stroke="#1F78B4"
-                strokeWidth="1"
-                strokeDasharray="2 3"
-                fill="none"
-                opacity="0.4"
-              >
-                <path d="M 380 310 Q 270 280 140 260" />
-                <path d="M 380 310 Q 350 340 260 320" />
-                <path d="M 380 310 Q 430 320 475 320" />
-                <path d="M 380 310 Q 500 320 500 350" />
-                <path d="M 380 310 Q 510 320 610 340" />
-              </g>
-              <g transform="translate(80, 430)">
-                <rect
-                  x="0"
-                  y="0"
-                  width="640"
-                  height="50"
-                  rx="8"
-                  fill="#FFFFFF"
-                  opacity="0.9"
-                />
-                <circle cx="20" cy="25" r="6" fill="#1F78B4" />
-                <text
-                  x="34"
-                  y="29"
-                  fill="#2E3A46"
-                  fontFamily="Inter"
-                  fontSize="11"
-                  fontWeight="600"
-                >
-                  Phase I (2026)
-                </text>
-                <circle cx="160" cy="25" r="6" fill="#4CAF50" />
-                <text
-                  x="174"
-                  y="29"
-                  fill="#2E3A46"
-                  fontFamily="Inter"
-                  fontSize="11"
-                  fontWeight="600"
-                >
-                  Phase I+ &amp; II (2027–28)
-                </text>
-                <circle cx="340" cy="25" r="6" fill="#A5D6A7" />
-                <text
-                  x="354"
-                  y="29"
-                  fill="#2E3A46"
-                  fontFamily="Inter"
-                  fontSize="11"
-                  fontWeight="600"
-                >
-                  Phase III &amp; IV (2028–30)
-                </text>
-                <circle cx="510" cy="25" r="6" fill="#E0A92B" />
-                <text
-                  x="524"
-                  y="29"
-                  fill="#2E3A46"
-                  fontFamily="Inter"
-                  fontSize="11"
-                  fontWeight="600"
-                >
-                  Phase V — Pan-African
-                </text>
-              </g>
-            </svg>
-
-            <p
-              className="small text-center"
-              style={{ marginTop: "var(--space-6)", fontStyle: "italic" }}
-            >
-              Sequenced expansion across West Africa, with continental extension
-              into Côte d'Ivoire, Nigeria, Senegal, and seven additional markets
-              by 2031.
-            </p>
-          </div>
+            Sequenced expansion across West Africa, with continental extension
+            into Côte d'Ivoire, Nigeria, Senegal, and seven additional markets
+            by 2031.
+          </p>
         </div>
       </section>
 

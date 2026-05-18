@@ -1,7 +1,7 @@
 import React from "react";
 import "../index.css"; // Your styles (converted from styles.css)
 import logo from "../assets/images/logo-horizontal.png";
-import hubVision from "../assets/images/home.jpeg";
+import hubVision from "../assets/images/azure-rack.png";
 import fourPillars from "../assets/images/four-pillars.png";
 import MissingSections from "../components/HomeMissingSections";
 import HubInteractive from "../components/HubInteractive";
