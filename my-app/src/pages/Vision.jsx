@@ -537,7 +537,7 @@ const Vision = () => {
                   marginBottom: "var(--space-3)",
                 }}
               >
-                Microsoft
+                Hyperscale
               </p>
               <p
                 className="small"
@@ -547,13 +547,14 @@ const Vision = () => {
                   marginBottom: "var(--space-3)",
                 }}
               >
-                Hyperscale Cloud
+                Cloud Infrastructure
               </p>
               <p className="small" style={{ color: "var(--slate-700)" }}>
-                Each hub embeds a Microsoft Africa Local appliance — turning our
-                edge-storage layer into a sovereign-cloud node and satisfying
-                national data-residency requirements at near-zero incremental
-                capital cost.
+                Each hub is embedded with tier 1 cloud infrastructure,
+                transforming the edge-storage layer into a sovereign cloud node
+                that supports national data residency and secure in-country
+                processing at minimal incremental cost. -country AI workloads at
+                near-zero incremental capital cost.
               </p>
             </div>
 
@@ -576,7 +577,7 @@ const Vision = () => {
                   marginBottom: "var(--space-3)",
                 }}
               >
-                HP
+                Enablement
               </p>
               <p
                 className="small"
@@ -589,8 +590,8 @@ const Vision = () => {
                 Device-as-a-Service
               </p>
               <p className="small" style={{ color: "var(--slate-700)" }}>
-                Hub operations run on HP Device-as-a-Service infrastructure —
-                reducing capital expenditure and enabling fully managed endpoint
+                Hub operations run on Device-as-a-Service infrastructure.
+                Reducing capital expenditure and enabling fully managed endpoint
                 compute across every node.
               </p>
             </div>

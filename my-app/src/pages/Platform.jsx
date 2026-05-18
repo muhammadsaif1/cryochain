@@ -5,6 +5,7 @@ import "../index.css";
 import opsCollage from "../assets/images/ops-collage.png";
 import azureRack from "../assets/images/azure-rack.png";
 import ProofSection from "../components/ProofSection";
+import HubInteractive from "../components/HubInteractive";
 
 const Platform = () => {
   return (
@@ -36,7 +37,7 @@ const Platform = () => {
 
       {/* ========================== HUB DIAGRAM ========================== */}
       <section className="tight">
-        <div className="container">
+        {/* <div className="container">
           <div
             className="reveal text-center"
             style={{ marginBottom: "var(--space-12)" }}
@@ -109,6 +110,9 @@ const Platform = () => {
               runs across all eight.
             </p>
           </div>
+        </div> */}
+        <div className="hub-interactive-wrapper">
+          <HubInteractive />
         </div>
       </section>
 
