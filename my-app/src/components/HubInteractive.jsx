@@ -64,8 +64,10 @@ const VERTICALS = {
 
 const HOTSPOTS = [
   { id: 1, left: "42%", top: "23%", panelWidth: 260 },
-  { id: 2, left: "13%", top: "42%", panelWidth: 260 },
-  { id: 3, left: "6%", top: "56%" },
+  { id: 2, left: "56%", top: "27%", panelWidth: 260 },
+  // { id: 2, left: "13%", top: "42%", panelWidth: 260 },
+  // { id: 3, left: "6%", top: "56%" },
+  { id: 3, left: "16%", top: "32%" },
   { id: 4, left: "26%", top: "60%" },
   { id: 5, left: "20%", top: "82%" },
   { id: 6, left: "88%", top: "52%", panelAlign: "left-center" }, // ← override for 6
