@@ -24,10 +24,26 @@ import Dashboard from "./pages/admin/dashboard/Dashboard";
 import Profile from "./pages/admin/profile/Profile";
 import Insights from "./pages/insights/Insights";
 import InsightsDetail from "./pages/insights/InsightsDetail";
+import { useEffect } from "react";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [pathname]);
+
+  return null;
+}
 
 // Create a wrapper component to conditionally show Header/Footer
 function AppContent() {
   const location = useLocation();
+
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   // Check if current path is an admin route
@@ -42,9 +58,11 @@ function AppContent() {
   return (
     <>
       {!isAdminRoute && <Header />}
+      <ScrollToTop />
 
       <Routes>
         {/* Public Routes */}
+        {/* <ScrollToTop /> */}
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/platform" element={<Platform />} />

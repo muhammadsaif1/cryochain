@@ -63,17 +63,23 @@ const VERTICALS = {
 };
 
 const HOTSPOTS = [
-  { id: 1, left: "42%", top: "23%", panelWidth: 260 },
-  { id: 2, left: "56%", top: "27%", panelWidth: 260 },
+  { id: 1, left: "42%", top: "23%", panelHeight: 300 },
+  { id: 2, left: "56%", top: "27%", panelHeight: 280 },
   // { id: 2, left: "13%", top: "42%", panelWidth: 260 },
   // { id: 3, left: "6%", top: "56%" },
-  { id: 3, left: "16%", top: "32%" },
+  { id: 3, left: "16%", top: "32%", panelHeight: 280 },
   { id: 4, left: "26%", top: "60%" },
   { id: 5, left: "20%", top: "82%" },
-  { id: 6, left: "88%", top: "52%", panelAlign: "left-center" }, // ← override for 6
-  { id: 7, left: "73%", top: "45%" },
-  { id: 8, left: "95%", top: "36%", panelWidth: 260 },
-  { id: 9, left: "68%", top: "22%", panelWidth: 250 },
+  {
+    id: 6,
+    left: "88%",
+    top: "52%",
+    panelAlign: "left-center",
+    panelHeight: 300,
+  }, // ← override for 6
+  { id: 7, left: "73%", top: "45%", panelHeight: 300 },
+  { id: 8, left: "95%", top: "36%", panelHeight: 300 },
+  { id: 9, left: "68%", top: "22%", panelHeight: 300 },
 ];
 
 const HubInteractive = () => {
@@ -136,11 +142,19 @@ const HubInteractive = () => {
     const leftPct = parseFloat(activeHotspot.left);
     const topPct = parseFloat(activeHotspot.top);
     const panelWidth = activeHotspot.panelWidth ?? 340;
+    const panelHeight = activeHotspot.panelHeight;
     const style = {
       position: "absolute",
       width: `${panelWidth}px`,
       zIndex: 6,
+      maxHeight: "85vh", // safety limit
+      overflowY: "auto",
     };
+
+    if (panelHeight) {
+      style.height = `${panelHeight}px`;
+      style.maxHeight = `${panelHeight}px`;
+    }
 
     // Special override: open left and vertically centered on the hotspot
     if (activeHotspot.panelAlign === "left-center") {
@@ -192,13 +206,13 @@ const HubInteractive = () => {
         </span>
         <h3 className="cc-panel__title">{active.title}</h3>
       </div>
-      {active.img && (
+      {/* {active.img && (
         <img
           src={active.img}
           alt={active.title}
           style={{ width: "100%", borderRadius: 8, marginBottom: 10 }}
         />
-      )}
+      )} */}
       <div className={`cc-panel__stripe cc-panel__stripe--${active.color}`} />
       <p className="cc-panel__body">{active.body}</p>
       <p className="cc-panel__spec">

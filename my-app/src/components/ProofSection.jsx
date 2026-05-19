@@ -1,4 +1,6 @@
 import React from "react";
+import tesla from "../assets/images/tesla.jpeg";
+import lineage from "../assets/images/lineage.jpeg";
 
 function ProofSection() {
   return (
@@ -88,6 +90,19 @@ function ProofSection() {
                   $18B
                 </span>
               </div>
+              <div>
+                <img
+                  src={lineage}
+                  alt="Tesla"
+                  style={{
+                    marginBottom: "20px",
+                    display: "block",
+                    maxWidth: "100%",
+                    height: "auto",
+                    borderRadius: "12px",
+                  }}
+                />
+              </div>
               <p
                 className="small"
                 style={{
@@ -128,43 +143,23 @@ function ProofSection() {
               >
                 VERTICAL INTEGRATION
               </span>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  gap: "var(--space-3)",
-                  marginBottom: "var(--space-6)",
-                }}
-              >
-                <span
+              <div className="value-row">
+                <span className="value">5 verticals</span>
+                <span className="arrow">→</span>
+                <span className="value">$700B+</span>
+              </div>
+              <div>
+                <img
+                  src={tesla}
+                  alt="Lineage"
                   style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "clamp(1.75rem, 3vw, 2.5rem)",
-                    fontWeight: 700,
-                    color: "var(--ink)",
+                    marginBottom: "20px",
+                    display: "block",
+                    maxWidth: "100%",
+                    height: "auto",
+                    borderRadius: "12px",
                   }}
-                >
-                  5 verticals
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "1.25rem",
-                    color: "var(--slate-400)",
-                  }}
-                >
-                  →
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "clamp(1.75rem, 3vw, 2.5rem)",
-                    fontWeight: 700,
-                    color: "var(--ink)",
-                  }}
-                >
-                  $700B+
-                </span>
+                />
               </div>
               <p
                 className="small"
@@ -187,6 +182,90 @@ function ProofSection() {
           </div>
         </div>
       </section>
+      <style>{`
+        .proof-card {
+          padding: var(--space-12);
+          border: 1px solid var(--slate-200);
+          border-radius: var(--radius-lg);
+          background: #e4fafb99;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .value-row {
+          display: flex;
+          align-items: baseline;
+          gap: var(--space-3);
+          margin: var(--space-6) 0;
+          flex-wrap: wrap;
+        }
+
+        .value {
+          font-family: var(--font-display);
+          font-size: clamp(1.75rem, 3vw, 2.5rem);
+          font-weight: 700;
+          color: var(--ink);
+          line-height: 1.1;
+        }
+
+        .arrow {
+          font-family: var(--font-display);
+          font-size: 1.4rem;
+          color: var(--slate-400);
+        }
+
+        .proof-img {
+          width: 100%;
+          height: auto;
+          border-radius: 12px;
+          margin-bottom: 20px;
+          object-fit: cover;
+        }
+
+        .uppercase {
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: var(--slate-600);
+          margin-bottom: var(--space-3);
+        }
+
+        .description {
+          color: var(--slate-700);
+          margin-top: auto; /* pushes text to bottom */
+        }
+
+        /* ==================== MOBILE FIXES ==================== */
+        @media (max-width: 768px) {
+          .grid.grid-2 {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 32px !important;
+          }
+
+          .proof-card {
+            text-align: center;
+            padding: 28px 20px;
+          }
+
+          .value-row {
+            justify-content: center;
+            margin: 24px 0;
+          }
+
+          .value-row .value {
+            font-size: 2.1rem;
+          }
+
+          .proof-img {
+            margin: 16px auto 20px;
+          }
+
+          .small {
+            text-align: center;
+          }
+        }
+      `}</style>
     </div>
   );
 }
