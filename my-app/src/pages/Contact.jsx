@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createNote, clearError } from "../redux/slices/noteSlice"; // adjust path
 import "../index.css";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const EMPTY_FORM = {
   first: "",
@@ -11,6 +12,7 @@ const EMPTY_FORM = {
   role: "",
   interest: "Strategic partnership",
   message: "",
+  _open: false,
 };
 
 const Contact = () => {
@@ -20,6 +22,8 @@ const Contact = () => {
   const [form, setForm] = useState(EMPTY_FORM);
   const [touched, setTouched] = useState({});
   const [popup, setPopup] = useState(null); // null | "success" | "error"
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const recaptchaRef = useRef(null);
 
   /* ── field change ── */
   const handleChange = (e) => {
@@ -46,6 +50,18 @@ const Contact = () => {
 
   const errors = validate();
   const isInvalid = Object.keys(errors).length > 0;
+  const isFormValid = Object.keys(errors).length === 0;
+
+  const onRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
+  };
+
+  const resetRecaptcha = () => {
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset();
+    }
+    setRecaptchaToken(null);
+  };
 
   /* ── submit ── */
   const handleSubmit = async (e) => {
@@ -71,6 +87,7 @@ const Contact = () => {
       role: form.role,
       areaOfInterest: form.interest,
       message: form.message,
+      recaptchaToken,
     };
 
     const result = await dispatch(createNote(noteData));
@@ -80,8 +97,10 @@ const Contact = () => {
       setTouched({});
       dispatch(clearError());
       setPopup("success");
+      resetRecaptcha();
     } else {
       setPopup("error");
+      resetRecaptcha();
     }
   };
 
@@ -93,6 +112,8 @@ const Contact = () => {
   /* ── helpers ── */
   const fieldErr = (name) => touched[name] && errors[name];
   const inputCls = (name) => `${fieldErr(name) ? "error-input" : ""}`;
+
+  const isSubmitDisabled = loading || !isFormValid || !recaptchaToken;
 
   return (
     <>
@@ -353,13 +374,25 @@ const Contact = () => {
                     <span className="error-text">{errors.message}</span>
                   )}
                 </div>
+                <div
+                  className="form-field"
+                  style={{ marginTop: "var(--space-4)" }}
+                >
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                    onChange={onRecaptchaChange}
+                    theme="light"
+                    size="normal"
+                  />
+                </div>
 
                 {/* Submit */}
                 <button
                   type="submit"
                   className="btn btn-primary btn-arrow"
                   style={{ justifySelf: "start", marginTop: "var(--space-2)" }}
-                  disabled={loading}
+                  disabled={isSubmitDisabled}
                 >
                   {loading ? "Sending…" : "Send"}
                 </button>
