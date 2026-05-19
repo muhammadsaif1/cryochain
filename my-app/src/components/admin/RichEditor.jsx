@@ -136,6 +136,8 @@ const RichEditor = ({
   );
 
   // ── Clear ALL formatting — robust version ──
+  // ── Clear ALL formatting — Much more reliable ──
+  // ── Clear / Turn OFF currently active formatting only ──
   const clearFormatting = useCallback(() => {
     const editor = editorRef.current;
     if (!editor) return;
@@ -608,7 +610,7 @@ const RichEditor = ({
         >
           ✂
         </button>
-        <button
+        {/* <button
           type="button"
           title="Insert Image"
           className="rte-btn"
@@ -618,7 +620,7 @@ const RichEditor = ({
           }}
         >
           🖼
-        </button>
+        </button> */}
         <button
           type="button"
           title="Horizontal Rule"
@@ -656,7 +658,7 @@ const RichEditor = ({
         >
           ↪
         </button>
-        <button
+        {/* <button
           type="button"
           title="Clear All Formatting"
           className={btn(false, true)}
@@ -666,7 +668,7 @@ const RichEditor = ({
           }}
         >
           ✕ Clear
-        </button>
+        </button> */}
       </div>
 
       {/* ── Editor body ── */}

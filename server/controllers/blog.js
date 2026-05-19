@@ -62,6 +62,9 @@ const getAllBlogs = async (req, res) => {
     const filter = {};
 
     // For public access, only show published posts unless admin
+    if (isPublished !== undefined) {
+      filter.isPublished = isPublished === "true"; // query params are strings
+    }
 
     // Search functionality
     if (search) {
