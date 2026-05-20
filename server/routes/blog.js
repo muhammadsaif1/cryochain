@@ -12,6 +12,7 @@ const {
   bulkDeleteBlogs,
 } = require("../controllers/blog");
 
+const upload = require("../middleware/upload");
 // Public routes
 router.get("/", getAllBlogs);
 router.get("/stats", getBlogStats); // Make sure to add auth middleware for this
@@ -22,8 +23,8 @@ router.get("/:id/related", getRelatedBlogs);
 // router.use(protect); // Uncomment when you have auth middleware
 // router.use(admin); // Uncomment for admin-only access
 
-router.post("/", createBlog);
-router.put("/:id", updateBlog);
+router.post("/", upload.single("coverImage"), createBlog);
+router.put("/:id", upload.single("coverImage"), updateBlog);
 router.delete("/:id", deleteBlog);
 router.patch("/:id/publish", togglePublishStatus);
 router.delete("/bulk/delete", bulkDeleteBlogs);

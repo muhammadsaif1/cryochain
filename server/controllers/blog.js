@@ -1,4 +1,5 @@
 const Blog = require("../models/Blog");
+const cloudinary = require("../config/cloudinary");
 
 // @desc    Create a new blog post
 // @route   POST /api/blogs
@@ -15,6 +16,11 @@ const createBlog = async (req, res) => {
       });
     }
 
+    // req.file is populated by multer if an image was uploaded
+    const coverImage = req.file
+      ? { url: req.file.path, publicId: req.file.filename }
+      : { url: null, publicId: null };
+
     const blog = await Blog.create({
       title,
       description,
@@ -22,6 +28,7 @@ const createBlog = async (req, res) => {
       isPublished: isPublished || false,
       tags: tags || [],
       readTime,
+      coverImage,
     });
 
     // Calculate read time
@@ -172,6 +179,15 @@ const updateBlog = async (req, res) => {
         message: "Blog not found",
       });
     }
+    if (req.file) {
+      if (existingBlog.coverImage?.publicId) {
+        await cloudinary.uploader.destroy(existingBlog.coverImage.publicId);
+      }
+      updateData.coverImage = {
+        url: req.file.path,
+        publicId: req.file.filename,
+      };
+    }
 
     // Update blog
     const blog = await Blog.findByIdAndUpdate(id, updateData, {
@@ -206,15 +222,20 @@ const updateBlog = async (req, res) => {
 const deleteBlog = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const blog = await Blog.findByIdAndDelete(id);
+    const blog = await Blog.findById(id);
 
     if (!blog) {
-      return res.status(404).json({
-        success: false,
-        message: "Blog not found",
-      });
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not found" });
     }
+
+    // Delete image from Cloudinary if it exists
+    if (blog.coverImage?.publicId) {
+      await cloudinary.uploader.destroy(blog.coverImage.publicId);
+    }
+
+    await Blog.findByIdAndDelete(id);
 
     res.status(200).json({
       success: true,

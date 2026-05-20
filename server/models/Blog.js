@@ -43,6 +43,16 @@ const blogSchema = new mongoose.Schema(
       type: Number,
       default: 1, // minutes
     },
+    coverImage: {
+      url: {
+        type: String,
+        default: null,
+      },
+      publicId: {
+        type: String, // needed to delete from Cloudinary later
+        default: null,
+      },
+    },
 
     views: {
       type: Number,

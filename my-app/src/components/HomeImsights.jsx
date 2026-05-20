@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBlogs } from "../redux/slices/blogSlice";
+import BlogImage from "./BlogImagePlaceholder";
 
 /* ── Small icons for the right-column list items ── */
 const ICONS = [
@@ -144,23 +145,14 @@ const HomeInsights = () => {
             {/* Featured */}
             <Link to={`/insights/${featured.slug}`} className="hi-featured">
               <div className="hi-feat__image">
-                {featured.coverImage ? (
-                  <img
-                    src={featured.coverImage}
-                    alt={featured.title}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                    }}
-                  />
-                ) : (
-                  <div className="hi-feat__icon-wrap">{getIcon(0)}</div>
-                )}
-                <div className="hi-feat__image-bg" />
+                <BlogImage
+                  url={featured?.coverImage?.url}
+                  title={featured?.title}
+                  idx={0}
+                  height="100%"
+                  borderRadius="0"
+                  objectFit="cover"
+                />
               </div>
               <div className="hi-feat__body">
                 <div className="hi-feat__meta">
@@ -187,7 +179,19 @@ const HomeInsights = () => {
                     to={`/insights/${post.slug}`}
                     className="hi-item"
                   >
-                    <div className="hi-item__icon">{getIcon(idx + 1)}</div>
+                    <div
+                      className="hi-item__icon"
+                      style={{ overflow: "hidden", padding: 0 }}
+                    >
+                      <BlogImage
+                        url={post?.coverImage?.url}
+                        title={post?.title}
+                        idx={idx + 1}
+                        height="68px"
+                        borderRadius="14px"
+                        objectFit="cover"
+                      />
+                    </div>
                     <div className="hi-item__body">
                       <h4 className="hi-item__title">{post.title}</h4>
                       <p className="hi-item__meta">
@@ -330,16 +334,18 @@ const HomeInsights = () => {
         }
 
         .hi-item__icon {
-          width: 68px;
-          height: 68px;
-          border-radius: 14px;
-          background: linear-gradient(135deg, #eef4fb, #f0f8f3);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--cryo-blue);
-          flex-shrink: 0;
-        }
+  width: 68px;
+  height: 68px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #eef4fb, #f0f8f3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cryo-blue);
+  flex-shrink: 0;
+  overflow: hidden;  /* add this */
+  padding: 0;        /* add this */
+}
 
         .hi-item__icon svg {
           width: 32px;

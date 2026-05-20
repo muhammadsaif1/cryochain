@@ -79,7 +79,10 @@ export const createBlog = createAsyncThunk(
     try {
       const token = getState().auth?.token;
       const res = await axios.post(`${API}/blogs`, blogData, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       });
       return res.data.data;
     } catch (err) {
@@ -93,11 +96,15 @@ export const createBlog = createAsyncThunk(
 // PUT /blogs/:id  — admin
 export const updateBlog = createAsyncThunk(
   "blogs/update",
-  async ({ id, ...updateData }, { rejectWithValue, getState }) => {
+  // ✅ correct — destructure formData explicitly
+  async ({ id, formData }, { rejectWithValue, getState }) => {
     try {
       const token = getState().auth?.token;
-      const res = await axios.put(`${API}/blogs/${id}`, updateData, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await axios.put(`${API}/blogs/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       });
       return res.data.data;
     } catch (err) {

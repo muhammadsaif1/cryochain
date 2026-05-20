@@ -6,53 +6,9 @@ import {
   getAllBlogs,
   clearCurrentBlog,
 } from "../../redux/slices/blogSlice";
+import BlogImage from "../../components/BlogImagePlaceholder";
 
 /* ── same icon pool as Insights index ── */
-const ICONS = [
-  <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.3">
-    <rect x="8" y="44" width="12" height="28" rx="1.5" />
-    <rect x="28" y="28" width="12" height="44" rx="1.5" />
-    <rect x="48" y="16" width="12" height="56" rx="1.5" />
-    <rect x="68" y="36" width="12" height="36" rx="1.5" />
-  </svg>,
-  <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.3">
-    <polyline points="8,64 24,48 40,52 56,28 72,16" strokeLinejoin="round" />
-    <circle cx="8" cy="64" r="3" fill="currentColor" />
-    <circle cx="24" cy="48" r="3" fill="currentColor" />
-    <circle cx="40" cy="52" r="3" fill="currentColor" />
-    <circle cx="56" cy="28" r="3" fill="currentColor" />
-    <circle cx="72" cy="16" r="3" fill="currentColor" />
-  </svg>,
-  <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.3">
-    <rect x="4" y="24" width="44" height="32" rx="2" />
-    <path d="M48 36 L72 36 L72 56 L48 56 Z" />
-    <path d="M48 36 L60 24 L72 36" />
-    <circle cx="16" cy="60" r="6" />
-    <circle cx="60" cy="60" r="6" />
-  </svg>,
-  <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.3">
-    <rect x="8" y="20" width="64" height="36" rx="2" />
-    <line x1="8" y1="38" x2="72" y2="38" />
-    <line x1="29" y1="20" x2="29" y2="56" />
-    <line x1="51" y1="20" x2="51" y2="56" />
-    <line x1="40" y1="56" x2="40" y2="68" />
-    <line x1="24" y1="68" x2="56" y2="68" />
-  </svg>,
-  <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.3">
-    <rect x="12" y="12" width="56" height="16" rx="2" />
-    <rect x="12" y="32" width="56" height="16" rx="2" />
-    <rect x="12" y="52" width="56" height="16" rx="2" />
-    <circle cx="60" cy="20" r="3" fill="currentColor" />
-    <circle cx="60" cy="40" r="3" fill="currentColor" />
-    <circle cx="60" cy="60" r="3" fill="currentColor" />
-  </svg>,
-  <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.3">
-    <path d="M12 68 C12 68 16 20 64 12 C64 12 68 56 20 68 Z" />
-    <line x1="12" y1="68" x2="64" y2="12" />
-  </svg>,
-];
-
-const getIcon = (i) => ICONS[i % ICONS.length];
 
 const fmt = (iso) => {
   if (!iso) return "";
@@ -163,7 +119,12 @@ const InsightsDetail = () => {
             <h1 style={{ marginTop: "var(--space-4)" }}>{blog.title}</h1>
 
             {blog.excerpt && <p className="deck">{blog.excerpt}</p>}
-
+            <BlogImage
+              url={blog?.coverImage?.url}
+              title={blog?.title}
+              idx={0}
+              height="420px"
+            />
             <div className="byline">
               <div className="by-avatar">{initials}</div>
               <div>
@@ -234,7 +195,20 @@ const InsightsDetail = () => {
                   to={`/insights/${post.slug}`}
                   className="article-card"
                 >
-                  <div className="ac-image ill">{getIcon(idx + 2)}</div>
+                  <div
+                    className="ac-image ill"
+                    style={{
+                      overflow: "hidden",
+                      padding: 0,
+                      borderRadius: "var(--radius-md, 8px)",
+                    }}
+                  >
+                    <BlogImage
+                      url={post?.coverImage?.url}
+                      title={post?.title}
+                      idx={idx + 2}
+                    />
+                  </div>
                   <div className="ac-body">
                     <h3 style={{ fontSize: "1.2rem" }}>{post.title}</h3>
                     <p className="ac-excerpt">

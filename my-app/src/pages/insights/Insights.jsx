@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllBlogs, clearError } from "../../redux/slices/blogSlice";
 import fourPillars from "../../assets/images/four-pillars.png";
+import BlogImage from "../../components/BlogImagePlaceholder";
 
 /* ── 35 rotating SVG icons for blog cards ── */
 const ICONS = [
@@ -603,9 +604,13 @@ const Insights = () => {
                 to={`/insights/${featured.slug}`}
                 style={{ display: "block", textDecoration: "none" }}
               >
-                <div className="feat-image">
-                  <div className="feat-icon-wrap">{getIcon(0)}</div>
-                </div>
+                <BlogImage
+                  url={featured?.coverImage?.url}
+                  title={featured?.title}
+                  idx={0}
+                  height="340px"
+                  borderRadius="var(--radius-lg, 12px)"
+                />
               </Link>
               <div>
                 <h2 style={{ marginTop: "var(--space-4)" }}>
@@ -665,7 +670,13 @@ const Insights = () => {
                   to={`/insights/${blog.slug}`}
                   className="article-card"
                 >
-                  <div className="ac-image ill">{getIcon(idx + 1)}</div>
+                  <BlogImage
+                    url={blog?.coverImage?.url}
+                    title={blog?.title}
+                    idx={idx + 1}
+                    height="180px"
+                    borderRadius="var(--radius-md, 8px)"
+                  />
                   <div className="ac-body">
                     <h3>{blog.title}</h3>
                     <p className="ac-excerpt">

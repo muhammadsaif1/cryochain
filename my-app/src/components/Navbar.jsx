@@ -132,7 +132,10 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/insights"> Insights</NavLink>
+            <NavLink to="/insights" onClick={closeMenu}>
+              {" "}
+              Insights
+            </NavLink>
           </li>
           <li style={{ marginTop: "auto", paddingTop: "var(--space-8)" }}>
             <NavLink

@@ -61,15 +61,12 @@ const RichEditor = ({
   // Sync controlled value only on mount or external change
   const lastValue = useRef(value);
   useEffect(() => {
-    if (
-      editorRef.current &&
-      value !== undefined &&
-      value !== lastValue.current
-    ) {
+    if (editorRef.current && value !== undefined) {
       editorRef.current.innerHTML = value || "";
       lastValue.current = value;
+      updateCounts(value);
     }
-  }, [value]);
+  }, []); // ← empty deps = runs once on mount only
 
   const updateCounts = useCallback((text) => {
     const plain = text

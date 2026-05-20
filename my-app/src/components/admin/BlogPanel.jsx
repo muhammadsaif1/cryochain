@@ -38,7 +38,7 @@ const EMPTY_FORM = {
 
 const BlogForm = ({ editBlog, onSaved, onCancel }) => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((s) => s.blogs ?? s.blog ?? {});
+  const { loading, error, blogs } = useSelector((s) => s.blogs ?? s.blog ?? {});
 
   const [form, setForm] = useState(
     editBlog
@@ -52,9 +52,33 @@ const BlogForm = ({ editBlog, onSaved, onCancel }) => {
       : EMPTY_FORM,
   );
   const [touched, setTouched] = useState({});
+  const [imageFile, setImageFile] = useState(null);
+  const [imageName, setImageName] = useState(
+    editBlog?.coverImage?.url ? "Current image (upload new to replace)" : "",
+  );
+  const [imageError, setImageError] = useState("");
   const [localErr, setLocalErr] = useState("");
 
   const set = (k, v) => setForm((p) => ({ ...p, [k]: v }));
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (!allowed.includes(file.type)) {
+      setImageError("Only JPG, PNG, or WEBP images are allowed.");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setImageError("Image must be under 10MB.");
+      return;
+    }
+
+    setImageError("");
+    setImageFile(file);
+    setImageName(file.name);
+  };
 
   const validate = () => {
     if (!form.title.trim()) return "Title is required.";
@@ -73,19 +97,19 @@ const BlogForm = ({ editBlog, onSaved, onCancel }) => {
     }
     setLocalErr("");
 
-    const payload = {
-      title: form.title.trim(),
-      author: form.author.trim(),
-      readTime: Number(form.readTime) || 0,
-      description: form.description,
-      isPublished: form.isPublished,
-    };
+    const formData = new FormData();
+    formData.append("title", form.title.trim());
+    formData.append("author", form.author.trim());
+    formData.append("readTime", Number(form.readTime) || 0);
+    formData.append("description", form.description);
+    formData.append("isPublished", form.isPublished);
+    if (imageFile) formData.append("coverImage", imageFile);
 
     let result;
     if (editBlog) {
-      result = await dispatch(updateBlog({ id: editBlog._id, ...payload }));
+      result = await dispatch(updateBlog({ id: editBlog._id, formData }));
     } else {
-      result = await dispatch(createBlog(payload));
+      result = await dispatch(createBlog(formData));
     }
 
     const actionCreator = editBlog ? updateBlog : createBlog;
@@ -93,19 +117,13 @@ const BlogForm = ({ editBlog, onSaved, onCancel }) => {
     if (actionCreator.fulfilled.match(result)) {
       onSaved();
     } else if (actionCreator.rejected.match(result)) {
-      // Catch duplicate title error from backend
       const errPayload = result.payload || result.error?.message || "";
-      const errStr =
-        typeof errPayload === "string"
-          ? errPayload
-          : errPayload?.message || JSON.stringify(errPayload);
-
-      const duplicate = checkDuplicate(form.title);
+      const duplicate = blogs?.find(
+        (b) =>
+          b.title.trim().toLowerCase() === form.title.trim().toLowerCase() &&
+          b._id !== editBlog?._id,
+      );
       if (duplicate) {
-        setLocalErr(`"${form.title.trim()}" is already posted.`);
-        return;
-      }
-      if (isDuplicate) {
         setLocalErr(`"${form.title.trim()}" is already posted.`);
       } else {
         setLocalErr(
@@ -162,6 +180,62 @@ const BlogForm = ({ editBlog, onSaved, onCancel }) => {
             onChange={(e) => set("readTime", e.target.value)}
             placeholder="e.g. 7"
           />
+        </div>
+        <div className="bf-field">
+          <label style={{ display: "block", marginBottom: 6, fontWeight: 500 }}>
+            Cover Image{" "}
+            <span style={{ color: "#888", fontWeight: 400, fontSize: 13 }}>
+              (optional · JPG, PNG, WEBP · max 10 MB)
+            </span>
+          </label>
+          <label
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              cursor: "pointer",
+              padding: "10px 14px",
+              border: "1.5px dashed #cbd5e1",
+              borderRadius: 8,
+              background: "#f8fafc",
+              flexWrap: "wrap",
+            }}
+          >
+            <span
+              style={{
+                background: "#1a2330",
+                color: "#fff",
+                borderRadius: 6,
+                padding: "6px 14px",
+                fontSize: 13,
+                fontWeight: 600,
+                whiteSpace: "nowrap",
+                flexShrink: 0,
+              }}
+            >
+              Choose file
+            </span>
+            <span
+              style={{
+                fontSize: 13,
+                color: imageName ? "#1a2330" : "#94a3b8",
+                wordBreak: "break-all",
+              }}
+            >
+              {imageName || "No file chosen"}
+            </span>
+            <input
+              type="file"
+              accept="image/jpeg,image/jpg,image/png,image/webp"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+            />
+          </label>
+          {imageError && (
+            <p style={{ color: "#e53e3e", fontSize: 12, marginTop: 5 }}>
+              {imageError}
+            </p>
+          )}
         </div>
         <div className="bf-field bf-field--check">
           <label className="bf-toggle">
