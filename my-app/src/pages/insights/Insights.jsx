@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllBlogs, clearError } from "../../redux/slices/blogSlice";
@@ -507,10 +507,10 @@ const Insights = () => {
   const pagination = rawState.pagination ?? {
     currentPage: 1,
     totalPages: 1,
-    totalItems: 0,
   };
-
+  const [allBlogs, setAllBlogs] = useState([]);
   const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     dispatch(
@@ -524,14 +524,31 @@ const Insights = () => {
     );
   }, [dispatch, page]);
 
-  const publishedBlogs = blogs.filter((blog) => blog.isPublished);
+  useEffect(() => {
+    const newBlogs = rawState.blogs ?? [];
 
-  const featured = publishedBlogs[0] ?? null;
-  const gridBlogs = publishedBlogs.slice(1, 5);
+    if (newBlogs.length > 0) {
+      setAllBlogs((prev) => {
+        const existingIds = new Set(prev.map((b) => b._id));
+        const uniqueNewBlogs = newBlogs.filter((b) => !existingIds.has(b._id));
+        return [...prev, ...uniqueNewBlogs];
+      });
 
-  const handleLoadMore = () => setPage((p) => p + 1);
-  const hasMore = pagination.currentPage < pagination.totalPages;
+      // Update hasMore
+      if (pagination.currentPage >= pagination.totalPages) {
+        setHasMore(false);
+      }
+    }
+  }, [rawState.blogs, pagination]);
 
+  const featured = useMemo(() => allBlogs[0] ?? null, [allBlogs]);
+  const gridBlogs = useMemo(() => allBlogs.slice(1), [allBlogs]); // max 9 in grid
+
+  const handleLoadMore = () => {
+    if (!loading && hasMore) {
+      setPage((prev) => prev + 1);
+    }
+  };
   return (
     <>
       {/* ── HERO ── */}
@@ -659,10 +676,10 @@ const Insights = () => {
       </header>
 
       {/* ── GRID SECTION ── */}
-      {blogs.length > 1 && (
+      {/* GRID SECTION */}
+      {allBlogs.length > 0 && (
         <section style={{ paddingTop: "var(--space-16)" }}>
           <div className="container">
-            {/* Grid */}
             <div className="articles-grid reveal">
               {gridBlogs.map((blog, idx) => (
                 <Link
@@ -697,7 +714,7 @@ const Insights = () => {
               ))}
             </div>
 
-            {/* Load more / end states */}
+            {/* Load More Section */}
             <div className="text-center mt-12 reveal">
               {loading && (
                 <div
@@ -717,16 +734,10 @@ const Insights = () => {
                 </button>
               )}
 
-              {!loading && !hasMore && blogs.length > 1 && (
+              {!loading && !hasMore && allBlogs.length > 0 && (
                 <p className="ins-end-note">
                   <span className="ins-end-rule" />
-                  That's everything — {publishedBlogs.length ||
-                    blogs.length}{" "}
-                  article
-                  {(pagination.totalItems || blogs.length) !== 1
-                    ? "s"
-                    : ""}{" "}
-                  published so far.
+                  That's everything — {allBlogs.length} articles published
                   <span className="ins-end-rule" />
                 </p>
               )}

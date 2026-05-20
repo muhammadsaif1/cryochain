@@ -62,7 +62,7 @@ const BlogImage = ({
   idx = 0,
   height = "320px",
   borderRadius = "var(--radius-xl, 16px)",
-  objectFit = "cover",
+  objectFit = "fill",
 }) => {
   const [failed, setFailed] = useState(false);
 
