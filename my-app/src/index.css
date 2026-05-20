@@ -2413,6 +2413,11 @@ body {
 .cc-panel--desktop {
   display: block;
 }
+@media (max-width: 1024px) {
+  .cc-panel--desktop {
+    display: none !important;
+  }
+}
 
 /* Optional: Reduce even more on mobile */
 @media (max-width: 768px) {

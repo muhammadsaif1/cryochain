@@ -90,10 +90,18 @@ const HubInteractive = () => {
 
   useEffect(() => {
     const mq = window.matchMedia("(hover: none) and (pointer: coarse)");
-    setIsTouch(mq.matches);
-    const handler = (e) => setIsTouch(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
+    const widthMq = window.matchMedia("(max-width: 1024px)");
+    const checkIsTouch = () => {
+      setIsTouch(mq.matches || widthMq.matches); // either touch OR narrow screen
+    };
+    checkIsTouch();
+
+    mq.addEventListener("change", checkIsTouch);
+    widthMq.addEventListener("change", checkIsTouch);
+    return () => {
+      mq.removeEventListener("change", checkIsTouch);
+      widthMq.removeEventListener("change", checkIsTouch);
+    };
   }, []);
 
   const open = useCallback((id) => {

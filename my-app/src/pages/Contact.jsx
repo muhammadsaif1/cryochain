@@ -376,11 +376,12 @@ const Contact = () => {
                 </div>
                 <div
                   className="form-field"
-                  style={{ marginTop: "var(--space-4)" }}
+                  style={{ marginTop: "var(--space-4)", cursor: "pointer" }}
                 >
                   <ReCAPTCHA
                     ref={recaptchaRef}
                     sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                    style={{ cursor: "pointer" }}
                     onChange={onRecaptchaChange}
                     theme="light"
                     size="normal"
