@@ -148,7 +148,7 @@ function ProofSection() {
                 <span className="arrow">→</span>
                 <span className="value">$700B+</span>
               </div>
-              <div>
+              <div style={{ marginTop: "38px" }}>
                 <img
                   src={tesla}
                   alt="Lineage"
