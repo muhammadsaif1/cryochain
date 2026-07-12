@@ -1,6 +1,9 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createNote, clearError } from "../redux/slices/noteSlice"; // adjust path
+import founderWill from "../assets/images/founder-will.jpg";
+import founderMaabena from "../assets/images/founder-maabena.jpg";
+import founderBaffour from "../assets/images/founder-baffour.jpg";
 import "../index.css";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -14,6 +17,38 @@ const EMPTY_FORM = {
   message: "",
   _open: false,
 };
+
+const founders = [
+  {
+    name: "Will McCoy II",
+    role: "Founder & Chief Executive Officer",
+    bio:
+      "Will brings over 17 years of experience in real estate development, spanning EV infrastructure, solar, and battery storage. He previously founded Urbana Real Estate, where he grew and managed a $60M portfolio, and Vehya, an international EV-charging platform he scaled to $10M+ in revenue over 18 months. His work spans the US, Canada, Mexico, Brazil, Europe, and India — navigating public and private channels to deliver infrastructure solutions. He holds an MBA from the Kogod School of Business at American University. At CryoChain, he leads platform strategy, capital formation, and the vertically integrated infrastructure build across West Africa.",
+    image: founderWill,
+    imageAlt: "Will McCoy II, Founder & CEO of CryoChain",
+    linkedin:
+      "https://www.linkedin.com/in/williammccoyii?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+  },
+  {
+    name: "Maabena A. Webb",
+    role: "Co-Founder · Government Relations & Policy",
+    bio:
+      "Maabena leads CryoChain's engagement with Ghanaian ministries, diplomatic channels, and national institutions. She is Partner and Director of Finance at Agilent Maritime, based at Tema Port, and Founder & Managing Director of the Brighter Purpose Group. She brings twenty years of project finance experience across infrastructure, energy, and cross-border commercial structuring, and holds an MBA from the Kogod School of Business at American University. At CryoChain she anchors the platform's relationships with the Ministry of Fisheries and Aquaculture Development, the Free Zones Authority, and the Presidential 24-Hour Economy Secretariat.",
+    image: founderMaabena,
+    imageAlt: "Maabena A. Webb, Co-Founder of CryoChain",
+    linkedin:
+      "https://www.linkedin.com/in/maabena-webb-838523a6?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+  },
+  {
+    name: "Baffour Ohene-Kena",
+    role: "Co-Founder · Commercial & Business Development",
+    bio:
+      "Baffour leads CryoChain's commercial strategy, offtake contracting, and Pan-African expansion. He works across the cocoa, produce, pharmaceutical, and quick-commerce verticals to structure the anchor customer relationships that carry each hub from Day 1. He brings deep operator networks across Ghana's agri-trade sector and the wider West African region, and coordinates the platform's engagement with cooperatives, aggregators, and export-market channels. Baffour co-founded CryoChain to translate the vertical-integration thesis into signed commercial anchors — the offtake, the onboarding, and the corridors that make a 2%-penetration market financeable.",
+    image: founderBaffour,
+    imageAlt: "Baffour Ohene-Kena, Co-Founder of CryoChain",
+    linkedin: null,
+  },
+];
 
 const Contact = () => {
   const dispatch = useDispatch();
@@ -152,9 +187,10 @@ const Contact = () => {
             <span className="eyebrow green">Get in Touch</span>
             <h1>Let's start a conversation.</h1>
             <p className="lede" style={{ maxWidth: "64ch" }}>
-              Three things in the next thirty days. A 30-minute introductory
-              call. Mutual NDA and a walkthrough of the materials. An optional
-              site visit to West Africa with the team.
+              Share the opportunity you are exploring, the scale of your
+              interest, and whether you would like to discuss a partnership,
+              site visit, or delegation. We will follow up with the most
+              relevant next step.
             </p>
           </div>
         </div>
@@ -171,7 +207,7 @@ const Contact = () => {
             <div className="reveal">
               <span className="eyebrow">Send a Note</span>
               <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.4rem)" }}>
-                Tell us what's interesting.
+                Tell us what you are exploring.
               </h2>
               <p
                 style={{
@@ -179,9 +215,9 @@ const Contact = () => {
                   marginBottom: "var(--space-8)",
                 }}
               >
-                We respond to every inquiry within two business days. For
-                accredited partners, we can share the Phase I memorandum and
-                financial model under mutual NDA.
+                Use the form to start a conversation about a strategic
+                partnership, delegation visit, or broader opportunity in West
+                Africa. We respond to every inquiry within two business days.
               </p>
 
               <form className="form" onSubmit={handleSubmit} noValidate>
@@ -412,24 +448,54 @@ const Contact = () => {
                 className="card-tinted reveal"
                 style={{ marginBottom: "var(--space-6)" }}
               >
-                <span className="eyebrow">Offices</span>
+                <span className="eyebrow">Contact Snapshot</span>
                 <h3 style={{ marginTop: "var(--space-2)", fontSize: "1.4rem" }}>
-                  For strategic conversations
+                  What to expect next
                 </h3>
-                <div style={{ marginTop: "var(--space-6)" }}>
+
+                <div className="contact-highlight-grid" style={{ marginTop: "var(--space-5)" }}>
                   {[
                     {
-                      label: "Ghana ",
-                      email: "4th Floor, Stanbic Heights, Accra, Ghana",
+                      title: "Response window",
+                      value: "48 hours",
+                      desc: "Every inquiry receives a tailored follow-up",
+                    },
+                    {
+                      title: "Access path",
+                      value: "Mutual NDA",
+                      desc: "Qualified partners can review the memorandum and model",
+                    },
+                    {
+                      title: "Visit route",
+                      value: "Delegation",
+                      desc: "Mention delegation in your note to coordinate a site visit",
+                    },
+                  ].map((item) => (
+                    <div className="contact-highlight-card" key={item.title}>
+                      <span className="contact-highlight-label">{item.title}</span>
+                      <strong>{item.value}</strong>
+                      <p>{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ marginTop: "var(--space-6)" }}>
+                  <div className="small" style={{ marginBottom: "var(--space-2)", color: "var(--slate-500)", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                    Office Locations
+                  </div>
+                  {[
+                    {
+                      label: "Ghana",
+                      detail: "4th Floor, Stanbic Heights, Accra, Ghana",
                       flag: "https://flagcdn.com/gh.svg",
                     },
                     {
                       label: "USA",
-                      email:
+                      detail:
                         "611 South DuPont Highway, Suite 102, Dover, DE 19901",
                       flag: "https://flagcdn.com/us.svg",
                     },
-                  ].map(({ label, email, flag }) => (
+                  ].map(({ label, detail, flag }) => (
                     <div key={label} style={{ marginBottom: "var(--space-4)" }}>
                       <div
                         className="small"
@@ -457,7 +523,6 @@ const Contact = () => {
                         />
                       </div>
 
-                      {/* Address */}
                       <p
                         style={{
                           margin: 0,
@@ -465,7 +530,7 @@ const Contact = () => {
                           color: "var(--slate-900)",
                         }}
                       >
-                        {email}
+                        {detail}
                       </p>
                     </div>
                   ))}
@@ -587,9 +652,199 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* ══════════════ FOUNDERS ══════════════ */}
+      <section className="founders-section reveal">
+        <div className="container">
+          <div className="text-center" style={{ maxWidth: "720px", margin: "0 auto var(--space-16)" }}>
+            <span className="eyebrow">The Founders</span>
+            <h2 style={{ marginBottom: "var(--space-4)" }}>
+              Meet the team <span style={{ color: "var(--cryo-blue)", fontStyle: "italic" }}>behind the build.</span>
+            </h2>
+            <p className="lede">
+              The operators building CryoChain — and the people you will speak
+              with when you start a conversation.
+            </p>
+          </div>
+
+          <div className="founders-grid">
+            {founders.map((founder) => (
+              <article className="founder-card" key={founder.name}>
+                <div className="founder-photo">
+                  <img src={founder.image} alt={founder.imageAlt} />
+                </div>
+                <div className="founder-body">
+                  <h3 className="founder-name">{founder.name}</h3>
+                  <span className="founder-role">{founder.role}</span>
+                  <p className="founder-bio">{founder.bio}</p>
+
+                  {founder.linkedin ? (
+                    <a
+                      href={founder.linkedin}
+                      className="founder-linkedin"
+                      aria-label={`${founder.name} on LinkedIn`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43c-1.14 0-2.06-.93-2.06-2.06s.92-2.06 2.06-2.06 2.06.93 2.06 2.06-.92 2.06-2.06 2.06zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+                      </svg>
+                      <span>Connect on LinkedIn</span>
+                    </a>
+                  ) : null}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══════════════ MOBILE FIX ══════════════ */}
       <style>{`
-        /* Center the full page on mobile */
+        .contact-highlight-grid {
+          display: grid;
+          gap: var(--space-3);
+        }
+
+        .founders-section {
+          padding: clamp(4rem, 7vw, 6rem) 0 clamp(4.5rem, 8vw, 6.5rem);
+          background: linear-gradient(180deg, #f8fafc 0%, #f5f7fb 100%);
+        }
+
+        .founders-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: clamp(1rem, 2vw, 1.5rem);
+          align-items: stretch;
+        }
+
+        .founder-card {
+          display: grid;
+          grid-template-rows: auto 1fr;
+          background: var(--paper);
+          border: 1px solid rgba(15, 23, 42, 0.08);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+        }
+
+        .founder-photo {
+          aspect-ratio: 4 / 4.7;
+          overflow: hidden;
+          background: var(--slate-100);
+        }
+
+        .founder-photo img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .founder-body {
+          padding: clamp(1.25rem, 2vw, 1.75rem);
+          display: flex;
+          flex-direction: column;
+          gap: 0.9rem;
+        }
+
+        .founder-name {
+          margin: 0;
+          font-size: clamp(1.2rem, 2vw, 1.5rem);
+          color: var(--slate-900);
+          font-family: var(--font-display);
+          line-height: 1.2;
+        }
+
+        .founder-role {
+          display: block;
+          font-size: clamp(0.72rem, 1.2vw, 0.82rem);
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--cryo-blue);
+          line-height: 1.5;
+        }
+
+        .founder-bio {
+          margin: 0;
+          color: var(--slate-700);
+          font-size: 0.95rem;
+          line-height: 1.8;
+          text-wrap: pretty;
+        }
+
+        .founder-linkedin {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.92rem;
+          font-weight: 600;
+          color: var(--slate-900);
+          text-decoration: none;
+          margin-top: auto;
+          padding-top: 0.45rem;
+        }
+
+        .founder-linkedin:hover {
+          color: var(--cryo-blue);
+        }
+
+        .founder-linkedin svg {
+          flex: none;
+        }
+
+        .contact-highlight-card {
+          padding: var(--space-4);
+          background: rgba(255, 255, 255, 0.74);
+          border: 1px solid rgba(15, 23, 42, 0.06);
+          border-radius: var(--radius-sm);
+        }
+
+        .contact-highlight-label {
+          display: block;
+          font-size: 0.72rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--slate-500);
+          margin-bottom: var(--space-2);
+        }
+
+        .contact-highlight-card strong {
+          display: block;
+          font-size: 1.1rem;
+          color: var(--slate-900);
+          margin-bottom: var(--space-1);
+        }
+
+        .contact-highlight-card p {
+          margin: 0;
+          color: var(--slate-700);
+          line-height: 1.55;
+          font-size: 0.92rem;
+        }
+
+        @media (max-width: 980px) {
+          .founders-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
+        @media (max-width: 600px) {
+          .founder-body {
+            padding: 1rem;
+          }
+
+          .founder-bio {
+            font-size: 0.92rem;
+          }
+        }
+
         @media (max-width: 768px) {
           .grid.grid-2 {
             grid-template-columns: 1fr !important;
@@ -610,102 +865,111 @@ const Contact = () => {
             padding-left: 1.25rem !important;
             padding-right: 1.25rem !important;
           }
+          .contact-highlight-grid {
+            grid-template-columns: 1fr;
+          }
+          .founders-grid {
+            grid-template-columns: 1fr;
+          }
+          .founders-section {
+            padding: var(--space-14) 0 var(--space-16);
+          }
         }
-          /* Select wrapper — constrains dropdown to container */
-.select-wrapper {
-  position: relative;
-  width: 100%;
-}
 
-.select-wrapper select {
-  width: 100%;
-  max-width: 100%;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  padding-right: 2.5rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  box-sizing: border-box;
-}
+        .select-wrapper {
+          position: relative;
+          width: 100%;
+        }
 
-.select-arrow {
-  position: absolute;
-  right: 0.9rem;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--slate-500);
-  font-size: 1rem;
-  line-height: 1;
-}
+        .select-wrapper select {
+          width: 100%;
+          max-width: 100%;
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          padding-right: 2.5rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          box-sizing: border-box;
+        }
 
-/* Prevent native dropdown from escaping on mobile */
-@media (max-width: 768px) {
-  .select-wrapper select {
-    font-size: 16px; /* prevents iOS zoom on focus */
-    max-width: 100%;
-  }
-}
-  .custom-select-trigger {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.65rem 0.9rem;
-  background: #fff;
-  border: 1px solid var(--slate-200);
-  border-radius: var(--radius);
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  color: var(--ink);
-  cursor: pointer;
-  text-align: left;
-  box-sizing: border-box;
-}
+        .select-arrow {
+          position: absolute;
+          right: 0.9rem;
+          top: 50%;
+          transform: translateY(-50%);
+          pointer-events: none;
+          color: var(--slate-500);
+          font-size: 1rem;
+          line-height: 1;
+        }
 
-.custom-select-trigger:focus {
-  outline: 2px solid var(--cryo-blue);
-  outline-offset: 2px;
-}
+        @media (max-width: 768px) {
+          .select-wrapper select {
+            font-size: 16px;
+            max-width: 100%;
+          }
+        }
 
-.custom-select-list {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;           /* ← keys to staying in frame */
-  width: 100%;
-  max-width: 100%;
-  background: #fff;
-  border: 1px solid var(--slate-200);
-  border-radius: var(--radius);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  z-index: 20;
-  list-style: none;
-  margin: 0;
-  padding: 0.3rem 0;
-  overflow: hidden;
-  box-sizing: border-box;
-}
+        .custom-select-trigger {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.65rem 0.9rem;
+          background: #fff;
+          border: 1px solid var(--slate-200);
+          border-radius: var(--radius);
+          font-family: var(--font-sans);
+          font-size: 0.95rem;
+          color: var(--ink);
+          cursor: pointer;
+          text-align: left;
+          box-sizing: border-box;
+        }
 
-.custom-select-option {
-  padding: 0.65rem 1rem;
-  font-size: 0.92rem;
-  color: var(--ink);
-  cursor: pointer;
-  transition: background 0.15s;
-}
+        .custom-select-trigger:focus {
+          outline: 2px solid var(--cryo-blue);
+          outline-offset: 2px;
+        }
 
-.custom-select-option:hover {
-  background: var(--sky-tint, #f0f7ff);
-}
+        .custom-select-list {
+          position: absolute;
+          top: calc(100% + 4px);
+          left: 0;
+          right: 0;
+          width: 100%;
+          max-width: 100%;
+          background: #fff;
+          border: 1px solid var(--slate-200);
+          border-radius: var(--radius);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+          z-index: 20;
+          list-style: none;
+          margin: 0;
+          padding: 0.3rem 0;
+          overflow: hidden;
+          box-sizing: border-box;
+        }
 
-.custom-select-option.selected {
-  background: var(--leaf-mint, #f0faf4);
-  font-weight: 600;
-  color: var(--chain-green-deep);
-}
+        .custom-select-option {
+          padding: 0.65rem 1rem;
+          font-size: 0.92rem;
+          color: var(--ink);
+          cursor: pointer;
+          transition: background 0.15s;
+        }
+
+        .custom-select-option:hover {
+          background: var(--sky-tint, #f0f7ff);
+        }
+
+        .custom-select-option.selected {
+          background: var(--leaf-mint, #f0faf4);
+          font-weight: 600;
+          color: var(--chain-green-deep);
+        }
       `}</style>
     </>
   );
